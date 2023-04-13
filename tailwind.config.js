@@ -24,7 +24,7 @@ module.exports = {
       md: "728px",
       lg: "984px",
       xl: "1080px",
-      "2xl": "1336px",
+      "2xl": "1280px",
     },
   },
   plugins: [],
