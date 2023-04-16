@@ -26,7 +26,7 @@ const FeatureGallery = () => {
               value={selection}
               onChange={(val) => {
                 if (val === null) {
-                  return setSelection(FEATURE_GALLERY[0].title);
+                  return setSelection(selection);
                 }
                 setSelection(val);
               }}
