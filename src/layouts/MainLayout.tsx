@@ -7,7 +7,7 @@ interface IMainLayout {
 
 const MainLayout: React.FC<IMainLayout> = ({ children }) => {
   return (
-    <div className="h-screen overflow-y-auto">
+    <div className="h-screen overflow-y-auto bg-black">
       <Header />
       <main className="flex flex-1">{children}</main>
     </div>

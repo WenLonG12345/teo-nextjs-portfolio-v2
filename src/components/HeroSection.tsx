@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const HeroSection = () => {
   return (
-    <div className="flex flex-col pt-16 pb-8 mx-5 md:flex-row md:pt-12 md:pb-24">
+    <section className="flex flex-col pt-16 pb-8 mx-5 md:flex-row md:pt-12 md:pb-24">
       <div className="flex items-center w-full md:w-1/2">
         <div className="max-w-2xl mb-8">
           <h1 className="text-3xl font-bold leading-snug tracking-tight lg:text-4xl lg:leading-tight xl:text-5xl xl:leading-tight dark:text-white">
@@ -29,7 +29,7 @@ const HeroSection = () => {
       <div className="flex items-center justify-center">
         <Image src="/hero.png" alt="hero" width="600" height="600" />
       </div>
-    </div>
+    </section>
   );
 };
 

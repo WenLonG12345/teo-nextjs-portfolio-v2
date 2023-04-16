@@ -9,8 +9,8 @@ import { IoClose, IoMenu } from "react-icons/io5";
 
 const Header = () => {
   return (
-    <header className="w-full">
-      <nav className="container relative flex items-center justify-between py-8 mx-auto md:justify-between">
+    <header className="w-full shadow">
+      <nav className="container relative flex items-center justify-between py-4 mx-auto md:justify-between">
         <Disclosure>
           {({ open }) => (
             <div className="flex flex-col w-full">
@@ -27,12 +27,15 @@ const Header = () => {
                   </span>
                 </Link>
 
-                <Disclosure.Button
-                  aria-label="Toggle Menu"
-                  className="px-2 py-1 ml-auto text-gray-500 rounded-md md:hidden"
-                >
-                  {open ? <IoClose size={20} /> : <IoMenu size={20} />}
-                </Disclosure.Button>
+                <div className="flex gap-2 md:hidden">
+                  <ThemeSwitch iconColor="#6b7280" />
+                  <Disclosure.Button
+                    aria-label="Toggle Menu"
+                    className="px-2 py-1 ml-auto text-gray-500"
+                  >
+                    {open ? <IoClose size={24} /> : <IoMenu size={24} />}
+                  </Disclosure.Button>
+                </div>
               </div>
 
               <Disclosure.Panel className="flex flex-col w-full my-5 md:hidden">
@@ -50,7 +53,7 @@ const Header = () => {
                     href="/"
                     className="w-full px-6 py-2 mt-3 text-center text-white rounded-md bg-primary md:ml-5"
                   >
-                    Get Started
+                    Start
                   </Link>
                 </>
               </Disclosure.Panel>
@@ -78,7 +81,7 @@ const Header = () => {
             href="/"
             className="px-6 py-2 text-white rounded-md bg-primary md:ml-5"
           >
-            Get Started
+            Start
           </Link>
 
           <ThemeSwitch />

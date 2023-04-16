@@ -11,7 +11,7 @@ const poppins = Poppins({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider>
+    <ThemeProvider attribute="class">
       <MainLayout>
         <Component {...pageProps} />
       </MainLayout>
