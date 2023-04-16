@@ -8,7 +8,7 @@ export default function Home() {
     <main className="container mx-auto">
       <HeroSection />
 
-      <BaseSection imageUrl="/hero.png" title="title1" overTitle="OVER TITLE 1">
+      <BaseSection imageUrl="/hero.png" title="This is Title 1" overTitle="OVER TITLE 1">
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, quidem
           error incidunt a doloremque voluptatem porro inventore voluptate quo
@@ -18,8 +18,8 @@ export default function Home() {
 
       <BaseSection
         imageUrl="/hero.png"
-        title="title1"
-        overTitle="OVER TITLE 1"
+        title="This is Title 2"
+        overTitle="OVER TITLE 2"
         reversed
       >
         <p>
@@ -28,8 +28,6 @@ export default function Home() {
           deleniti animi laboriosam.
         </p>
       </BaseSection>
-
-      <Button>Join the Devolution</Button>
 
       <FeatureGallery />
     </main>

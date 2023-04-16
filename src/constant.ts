@@ -1,17 +1,17 @@
 export const FEATURE_GALLERY = [
   {
-    title: "Find relevant media contacts - multiline title",
+    title: "Feature 1",
     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.",
-    imageUrl: '/hero.png',
+    imageUrl: '/images/demo-1.png',
   },
   {
-    title: "Find relevant media contacts - multiline title",
+    title: "Feature 2",
     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.",
-    imageUrl: '/hero.png',
+    imageUrl: '/images/demo-2.png',
   },
   {
-    title: "Find relevant media contacts - multiline title",
+    title: "Feature 3",
     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.",
-    imageUrl: '/hero.png',
+    imageUrl: '/images/demo-3.png',
   }
 ]

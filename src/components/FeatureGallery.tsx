@@ -1,45 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import { Disclosure } from "@headlessui/react";
 import { FEATURE_GALLERY } from "@/constant";
 import { BsChevronDown } from "react-icons/bs";
 import Image from "next/image";
+import { Accordion } from "@mantine/core";
+import OverTitle from "./OverTitle";
 
 const FeatureGallery = () => {
+  const [selection, setSelection] = useState<string | null>(
+    FEATURE_GALLERY[0].title
+  );
+
   return (
-    <div className="flex flex-col items-center lg:flex-row">
-      <div className="flex flex-col flex-1 w-full gap-2 my-8">
-        {FEATURE_GALLERY.map((gallery) => (
-          <div
-            className="bg-gray-200 rounded-lg hover:bg-gray-100"
-            key={gallery.title}
-          >
-            <Disclosure>
-              {({ open }) => (
-                <>
-                  <Disclosure.Button className="flex justify-between w-full px-4 py-2 text-sm font-medium text-left">
-                    <span>{gallery.title}</span>
-                    <BsChevronDown
-                      className={`${
-                        open ? "rotate-180 transform" : ""
-                      } h-5 w-5`}
-                    />
-                  </Disclosure.Button>
-                  <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                    {gallery.description}
-                  </Disclosure.Panel>
-                </>
-              )}
-            </Disclosure>
-          </div>
-        ))}
+    <div className="flex flex-col items-center my-[100px]">
+      <OverTitle title='Features'/>
+      <h2 className="text-3xl font-bold text-center">What are you signing in for?</h2>
+      <div className="flex flex-col items-center gap-5 lg:flex-row">
+        <div className="flex flex-col flex-1 w-full lg:max-w-[400px] gap-2 my-8">
+          {FEATURE_GALLERY.map((gallery) => (
+            <Accordion
+              key={gallery.title}
+              variant="separated"
+              defaultValue={selection}
+              multiple={false}
+              value={selection}
+              onChange={(val) => {
+                if (val === null) {
+                  return setSelection(FEATURE_GALLERY[0].title);
+                }
+                setSelection(val);
+              }}
+            >
+              <Accordion.Item value={gallery.title}>
+                <Accordion.Control>{gallery.title}</Accordion.Control>
+                <Accordion.Panel>{gallery.description}</Accordion.Panel>
+              </Accordion.Item>
+            </Accordion>
+          ))}
+        </div>
+        <Image
+          alt="image"
+          src={
+            FEATURE_GALLERY.find((gal) => gal.title === selection)?.imageUrl ||
+            ""
+          }
+          width={600}
+          height={100}
+          className="flex-1"
+        />
       </div>
-      <Image
-        alt="image"
-        src="/hero.png"
-        width={600}
-        height={100}
-        className="flex-1"
-      />
     </div>
   );
 };

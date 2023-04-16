@@ -19,7 +19,7 @@ const BaseSection: React.FC<IBaseSection> = ({
 }) => {
   return (
     <div
-      className={`flex items-center flex-col  ${
+      className={`flex items-center flex-col mx-5 md:mx-0 my-8 md:my-[100px]  ${
         reversed
           ? "md:flex-row-reverse"
           : "md:flex-row"
@@ -35,7 +35,7 @@ const BaseSection: React.FC<IBaseSection> = ({
 
       <div className="flex-1">
         <OverTitle title={overTitle} />
-        <div className="mb-3 text-2xl font-medium">{title}</div>
+        <div className="mb-3 text-3xl font-bold">{title}</div>
         <div>{children}</div>
       </div>
     </div>

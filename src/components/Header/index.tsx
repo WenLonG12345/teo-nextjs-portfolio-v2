@@ -13,7 +13,7 @@ const Header = () => {
       <nav className="container relative flex items-center justify-between py-4 mx-auto md:justify-between">
         <Disclosure>
           {({ open }) => (
-            <div className="flex flex-col w-full">
+            <div className="flex flex-col w-full mx-5">
               <div className="flex items-center justify-between w-full md:w-auto">
                 <Link href="/" className="flex items-center space-x-2">
                   <Image
