@@ -18,3 +18,9 @@ body {
 
   background: var(--background);
 }
+
+@layer base {
+  body {
+    font-family: greycliff, sans-serif;
+  }
+}

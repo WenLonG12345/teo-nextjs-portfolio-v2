@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 module.exports = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx}",
@@ -18,6 +20,9 @@ module.exports = {
         primary_light: "#02A687",
         secondary: "#87C1B5",
       },
+    },
+    fontFamily: {
+      greycliff: ["var(--greycliff-font)", ...defaultTheme.fontFamily.sans],
     },
     screens: {
       sm: "600px",

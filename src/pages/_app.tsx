@@ -1,20 +1,51 @@
 import MainLayout from "@/layouts/MainLayout";
 import "@/styles/globals.css";
-import { ThemeProvider } from "next-themes";
+import ThemeProvider from "@/layouts/ThemeProvider";
 import type { AppProps } from "next/app";
-import { Poppins } from "next/font/google";
+import localFont from "next/font/local";
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
+const greycliffCF = localFont({
+  src: [
+    {
+      path: "../../public/fonts/Greycliff/greycliffcf-thin.otf",
+      weight: "100",
+    },
+    {
+      path: "../../public/fonts/Greycliff/greycliffcf-light.otf",
+      weight: "300",
+    },
+    {
+      path: "../../public/fonts/Greycliff/greycliffcf-regular.otf",
+      weight: "400",
+    },
+    {
+      path: "../../public/fonts/Greycliff/greycliffcf-medium.otf",
+      weight: "500",
+    },
+    {
+      path: "../../public/fonts/Greycliff/greycliffcf-heavy.otf",
+      weight: "600",
+    },
+    {
+      path: "../../public/fonts/Greycliff/greycliffcf-bold.otf",
+      weight: "700",
+    },
+  ],
 });
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider attribute="class">
-      <MainLayout>
-        <Component {...pageProps} />
-      </MainLayout>
-    </ThemeProvider>
+    <>
+      <style jsx global>{`
+        :root {
+          --greycliff-font: ${greycliffCF.style.fontFamily};
+        }
+      `}</style>
+      <ThemeProvider customFont={greycliffCF}>
+        <MainLayout>
+          <Component {...pageProps} />
+        </MainLayout>
+      </ThemeProvider>
+    </>
   );
 }
