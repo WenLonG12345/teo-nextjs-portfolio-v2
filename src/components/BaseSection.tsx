@@ -19,7 +19,7 @@ const BaseSection: React.FC<IBaseSection> = ({
 }) => {
   return (
     <div
-      className={`flex items-center flex-col mx-5 md:mx-0 my-8 md:my-[100px]  ${
+      className={`flex items-center flex-col mx-5 md:mx-0 my-5 md:my-[100px]  ${
         reversed
           ? "md:flex-row-reverse"
           : "md:flex-row"
@@ -29,7 +29,7 @@ const BaseSection: React.FC<IBaseSection> = ({
         src={imageUrl}
         alt={title}
         className="flex-1"
-        width={700}
+        width={500}
         height={200}
       />
 

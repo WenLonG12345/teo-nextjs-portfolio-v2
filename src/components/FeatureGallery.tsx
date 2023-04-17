@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Disclosure } from "@headlessui/react";
-import { FEATURE_GALLERY } from "@/constant";
 import { BsChevronDown } from "react-icons/bs";
 import Image from "next/image";
 import { Accordion } from "@mantine/core";
 import OverTitle from "./OverTitle";
+import { FEATURE_GALLERY } from "@/constants";
 
 const FeatureGallery = () => {
   const [selection, setSelection] = useState<string | null>(

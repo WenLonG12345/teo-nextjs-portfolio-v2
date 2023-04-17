@@ -1,4 +1,4 @@
-import { navLinks } from "@/constants";
+import { NAV_LINKS } from "@/constants";
 import Image from "next/image";
 import React from "react";
 import { Disclosure } from "@headlessui/react";
@@ -40,7 +40,7 @@ const Header = () => {
 
               <Disclosure.Panel className="flex flex-col w-full my-5 md:hidden">
                 <>
-                  {navLinks.map((item) => (
+                  {NAV_LINKS.map((item) => (
                     <Link
                       key={item.name}
                       href={item.href}
@@ -63,7 +63,7 @@ const Header = () => {
 
         <div className="hidden text-center md:flex md:items-center">
           <ul className="items-center justify-end flex-1 gap-2 pt-6 list-none md:pt-0 md:flex">
-            {navLinks.map((menu) => (
+            {NAV_LINKS.map((menu) => (
               <li className="mr-3 nav__item" key={menu.name}>
                 <Link
                   href={menu.href}

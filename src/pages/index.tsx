@@ -1,6 +1,7 @@
 import BaseSection from "@/components/BaseSection";
 import FeatureGallery from "@/components/FeatureGallery";
 import HeroSection from "@/components/HeroSection";
+import { BASE_SECTION } from "@/constants";
 import { Button } from "@mantine/core";
 
 export default function Home() {
@@ -8,26 +9,27 @@ export default function Home() {
     <main className="container mx-auto">
       <HeroSection />
 
-      <BaseSection imageUrl="/hero.png" title="This is Title 1" overTitle="OVER TITLE 1">
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, quidem
-          error incidunt a doloremque voluptatem porro inventore voluptate quo
-          deleniti animi laboriosam.
-        </p>
-      </BaseSection>
+      {BASE_SECTION && BASE_SECTION[0] && (
+        <BaseSection
+          imageUrl={BASE_SECTION[0].imageUrl}
+          title={BASE_SECTION[0].title}
+          overTitle={BASE_SECTION[0].overTitle}
+          reversed={BASE_SECTION[0].reversed || false}
+        >
+          {BASE_SECTION[0].description}
+        </BaseSection>
+      )}
 
-      <BaseSection
-        imageUrl="/hero.png"
-        title="This is Title 2"
-        overTitle="OVER TITLE 2"
-        reversed
-      >
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, quidem
-          error incidunt a doloremque voluptatem porro inventore voluptate quo
-          deleniti animi laboriosam.
-        </p>
-      </BaseSection>
+      {BASE_SECTION && BASE_SECTION[1] && (
+        <BaseSection
+          imageUrl={BASE_SECTION[1].imageUrl}
+          title={BASE_SECTION[1].title}
+          overTitle={BASE_SECTION[1].overTitle}
+          reversed={BASE_SECTION[1].reversed || false}
+        >
+          {BASE_SECTION[1].description}
+        </BaseSection>
+      )}
 
       <FeatureGallery />
     </main>
