@@ -5,6 +5,9 @@ import { ThemeProvider } from "@/components/layout/theme-provider";
 import "./globals.css";
 import { cn } from "@/utils/cn";
 
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 const outfit = Outfit({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -52,6 +55,8 @@ export default function RootLayout({
 
           {children}
         </ThemeProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
