@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Card,
   CardContent,
@@ -27,6 +28,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import {motion} from 'framer-motion';
 
 const formSchema = z.object({
   firstName: z.string().min(2).max(255),
@@ -57,7 +59,13 @@ export const ContactSection = () => {
   return (
     <section id="contact" className="container py-24 sm:py-32">
       <section className="grid grid-cols-1 gap-8 md:grid-cols-2">
-        <div>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.5,
+          }}
+        >
           <div className="mb-4">
             <h2 className="mb-2 text-lg tracking-wider text-primary">
               Contact
@@ -117,134 +125,143 @@ export const ContactSection = () => {
               </div>
             </div> */}
           </div>
-        </div>
+        </motion.div>
 
-        <Card className="bg-muted/60 dark:bg-card">
-          <CardHeader className="text-2xl text-primary"> </CardHeader>
-          <CardContent>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="grid w-full gap-4"
-              >
-                <div className="flex flex-col md:!flex-row gap-8">
-                  <FormField
-                    control={form.control}
-                    name="firstName"
-                    render={({ field }) => (
-                      <FormItem className="w-full">
-                        <FormLabel>First Name</FormLabel>
-                        <FormControl>
-                          <Input placeholder="First Name" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="lastName"
-                    render={({ field }) => (
-                      <FormItem className="w-full">
-                        <FormLabel>Last Name</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Last Name" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="email"
-                            placeholder="Email Address"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <FormField
-                    control={form.control}
-                    name="subject"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Subject</FormLabel>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.5,
+          }}
+        >
+          {" "}
+          <Card className="bg-muted/60 dark:bg-card">
+            <CardHeader className="text-2xl text-primary"> </CardHeader>
+            <CardContent>
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="grid w-full gap-4"
+                >
+                  <div className="flex flex-col md:!flex-row gap-8">
+                    <FormField
+                      control={form.control}
+                      name="firstName"
+                      render={({ field }) => (
+                        <FormItem className="w-full">
+                          <FormLabel>First Name</FormLabel>
                           <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select a subject" />
-                            </SelectTrigger>
+                            <Input placeholder="First Name" {...field} />
                           </FormControl>
-                          <SelectContent>
-                            <SelectItem value="Project Inquiry">
-                              Project Inquiry
-                            </SelectItem>
-                            <SelectItem value="Web Development">
-                              Web Development
-                            </SelectItem>
-                            <SelectItem value="Mobile Development">
-                              Mobile Development
-                            </SelectItem>
-                            <SelectItem value="Figma Design">
-                              Figma Design
-                            </SelectItem>
-                            <SelectItem value="API Development">
-                              API Development
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="lastName"
+                      render={({ field }) => (
+                        <FormItem className="w-full">
+                          <FormLabel>Last Name</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Last Name" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
 
-                <div className="flex flex-col gap-1.5">
-                  <FormField
-                    control={form.control}
-                    name="message"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Message</FormLabel>
-                        <FormControl>
-                          <Textarea
-                            rows={5}
-                            placeholder="Your message..."
-                            className="resize-none"
-                            {...field}
-                          />
-                        </FormControl>
+                  <div className="flex flex-col gap-1.5">
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="email"
+                              placeholder="Email Address"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
 
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
+                  <div className="flex flex-col gap-1.5">
+                    <FormField
+                      control={form.control}
+                      name="subject"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Subject</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select a subject" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="Project Inquiry">
+                                Project Inquiry
+                              </SelectItem>
+                              <SelectItem value="Web Development">
+                                Web Development
+                              </SelectItem>
+                              <SelectItem value="Mobile Development">
+                                Mobile Development
+                              </SelectItem>
+                              <SelectItem value="Figma Design">
+                                Figma Design
+                              </SelectItem>
+                              <SelectItem value="API Development">
+                                API Development
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
 
-                <Button className="mt-4">Send message</Button>
-              </form>
-            </Form>
-          </CardContent>
+                  <div className="flex flex-col gap-1.5">
+                    <FormField
+                      control={form.control}
+                      name="message"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Message</FormLabel>
+                          <FormControl>
+                            <Textarea
+                              rows={5}
+                              placeholder="Your message..."
+                              className="resize-none"
+                              {...field}
+                            />
+                          </FormControl>
 
-          <CardFooter></CardFooter>
-        </Card>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <Button className="mt-4">Send message</Button>
+                </form>
+              </Form>
+            </CardContent>
+
+            <CardFooter></CardFooter>
+          </Card>
+        </motion.div>
       </section>
     </section>
   );

@@ -2,92 +2,87 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icon } from "@/components/ui/icon";
 import { icons } from "lucide-react";
 
-interface FeaturesProps {
+interface ServicesProps {
   icon: string;
   title: string;
   description: string;
 }
 
-const featureList: FeaturesProps[] = [
+const serviceList: ServicesProps[] = [
   {
-    icon: "TabletSmartphone",
-    title: "Web and Mobile Development",
+    icon: "Blocks",
+    title: "Build Brand Trust",
     description:
-      "Our team builds robust web and mobile applications, leveraging the latest technologies to ensure functionality, speed, and security.",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. A odio velit cum aliquam. Natus consectetur dolores.",
   },
   {
-    icon: "BadgeCheck",
-    title: "E-commerce Solutions",
+    icon: "LineChart",
+    title: "More Leads",
     description:
-      "From product listing management to payment gateway integration, we ensure your e-commerce business is set for seamless online shopping experiences.",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. A odio velit cum aliquam, natus consectetur.",
   },
   {
-    icon: "Goal",
-    title: "Content Management Systems (CMS)",
+    icon: "Wallet",
+    title: "Higher Conversions",
     description:
-      "We create user-friendly systems that allow you to update, manage, and organize your digital content without needing technical expertise.",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus consectetur. A odio velit cum aliquam",
   },
   {
-    icon: "PictureInPicture",
-    title: "API Development & Integration",
+    icon: "Sparkle",
+    title: "Test Marketing Ideas",
     description:
-      "Our API development services ensure smooth communication between your applications and external services.",
-  },
-  {
-    icon: "MousePointerClick",
-    title: "DevOps & Continuous Integration",
-    description:
-      "We implement continuous integration, automated testing, and streamlined workflows to ensure quick, reliable releases of your software products.",
-  },
-  {
-    icon: "Newspaper",
-    title: "Maintenance & Support",
-    description:
-      "We provide ongoing support and maintenance services to ensure your website or app stays up to date, secure, and performing optimally.",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. A odio velit cum aliquam. Natus consectetur dolores.",
   },
 ];
 
-export const FeaturesSection = () => {
+const FeaturesSection = () => {
   return (
     <section id="features" className="container py-24 sm:py-32">
-      <h2 className="mb-2 text-lg tracking-wider text-center text-primary">
-        Services
-      </h2>
+      <div className="grid lg:grid-cols-2 place-items-center lg:gap-24">
+        <div>
+          <h2 className="mb-2 text-lg tracking-wider text-primary">Features</h2>
 
-      <h2 className="mb-4 text-3xl font-bold text-center md:text-4xl">
-        What Makes Us Different
-      </h2>
+          <h2 className="mb-4 text-3xl font-bold md:text-4xl">
+            Your Shortcut to Success
+          </h2>
+          <p className="mb-8 text-xl text-muted-foreground">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non
+            ducimus reprehenderit architecto rerum similique facere odit
+            deleniti necessitatibus quo quae.
+          </p>
+        </div>
 
-      <h3 className="mx-auto mb-8 text-xl text-center md:w-1/2 text-muted-foreground">
-        At WannaDev, we deliver tailored, innovative solutions with a
-        client-first approach, global expertise, and a commitment to quality,
-        offering end-to-end support for your success.
-      </h3>
-
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {featureList.map(({ icon, title, description }) => (
-          <div key={title}>
-            <Card className="h-full border-0 shadow-none bg-background">
-              <CardHeader className="flex items-center justify-center">
-                <div className="p-2 mb-4 rounded-full bg-primary/20 ring-8 ring-primary/10">
+        <div className="grid w-full gap-4 lg:grid-cols-2">
+          {serviceList.map(({ icon, title, description }, index) => (
+            <Card
+              key={title}
+              className="transition-all delay-75 bg-muted/50 dark:bg-card hover:bg-background group/number"
+            >
+              <CardHeader>
+                <div className="flex justify-between">
                   <Icon
                     name={icon as keyof typeof icons}
-                    size={24}
+                    size={32}
                     color="hsl(var(--primary))"
-                    className="text-primary"
+                    className="mb-6 text-primary"
                   />
+                  <span className="text-5xl font-medium transition-all delay-75 text-muted-foreground/15 group-hover/number:text-muted-foreground/30">
+                    0{index + 1}
+                  </span>
                 </div>
 
                 <CardTitle>{title}</CardTitle>
               </CardHeader>
 
-              <CardContent className="text-center text-muted-foreground">
+              <CardContent className="text-muted-foreground">
                 {description}
               </CardContent>
             </Card>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
 };
+
+export default FeaturesSection;

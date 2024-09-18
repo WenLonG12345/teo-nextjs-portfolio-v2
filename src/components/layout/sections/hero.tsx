@@ -9,7 +9,7 @@ const HeroSection = () => {
   const { theme } = useTheme();
   return (
     <section className="container w-full">
-      <div className="grid gap-8 py-20 mx-auto place-items-center lg:max-w-screen-xl md:py-56">
+      <div className="grid gap-8 py-32 mx-auto place-items-center lg:max-w-screen-xl md:py-56">
         <div className="absolute top-2 lg:-top-20 left-1/2 transform -translate-x-1/2 w-[90%] mx-auto h-24 lg:h-60 bg-primary/50 rounded-full blur-3xl" />
         <div className="space-y-6 text-center">
           <motion.div

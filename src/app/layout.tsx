@@ -7,33 +7,29 @@ import { cn } from "@/utils/cn";
 
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import Footer from "@/components/layout/footer";
 
 const outfit = Outfit({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "WannaDev",
-  description: "Free Shadcn landing page for developers",
+  description: "Join the Devolution, Build Better with WannaDev",
+  icons: {
+    icon: "/favicon.ico",
+  },
   openGraph: {
     type: "website",
     title: "WannaDev",
+    url: "https://home.wannadev.link/",
     description: "Join the Devolution, Build Better with WannaDev",
-    images: [
-      {
-        url: "https://res.cloudinary.com/dbzv9xfjp/image/upload/v1723499276/og-images/shadcn-vue.jpg",
-        width: 1200,
-        height: 630,
-        alt: "WannaDev",
-      },
-    ],
+    images: ["/og_image.png"],
   },
   twitter: {
     card: "summary_large_image",
-    site: "https://github.com/nobruf/shadcn-landing-page.git",
+    site: "https://home.wannadev.link/",
     title: "WannaDev",
     description: "Join the Devolution, Build Better with WannaDev",
-    images: [
-      "https://res.cloudinary.com/dbzv9xfjp/image/upload/v1723499276/og-images/shadcn-vue.jpg",
-    ],
+    images: ["/og_image.png"],
   },
 };
 
@@ -52,8 +48,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navbar />
-
           {children}
+          <Footer />
         </ThemeProvider>
         <Analytics />
         <SpeedInsights />
