@@ -5,15 +5,18 @@ import { Icon } from "@/components/ui/icon";
 import { serviceList } from "@/constants";
 import { icons } from "lucide-react";
 import { motion } from "framer-motion";
+import { MotionSection } from "@/utils/motion-div";
 
 const ServiceSection = () => {
   return (
     <section id="services" className="container py-24 sm:py-32">
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{
-          duration: 0.5,
+      <MotionSection
+        animationProps={{
+          initial: { opacity: 0, y: 50 },
+          whileInView: { opacity: 1, y: 0 },
+          transition: {
+            duration: 0.5,
+          },
         }}
       >
         <h2 className="mb-2 text-lg tracking-wider text-center text-primary">
@@ -29,13 +32,15 @@ const ServiceSection = () => {
           client-first approach, global expertise, and a commitment to quality,
           offering end-to-end support for your success.
         </h3>
-      </motion.div>
+      </MotionSection>
 
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{
-          duration: 0.5,
+      <MotionSection
+        animationProps={{
+          initial: { opacity: 0, y: 50 },
+          whileInView: { opacity: 1, y: 0 },
+          transition: {
+            duration: 0.5,
+          },
         }}
       >
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -62,7 +67,7 @@ const ServiceSection = () => {
             </div>
           ))}
         </div>
-      </motion.div>
+      </MotionSection>
     </section>
   );
 };

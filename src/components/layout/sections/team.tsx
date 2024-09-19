@@ -13,6 +13,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 import { FaLinkedin, FaGithub, FaLink } from "react-icons/fa";
+import { MotionSection } from "@/utils/motion-div";
 
 export const TeamSection = () => {
   const socialIcon = (socialName: string) => {
@@ -28,11 +29,13 @@ export const TeamSection = () => {
 
   return (
     <section id="team" className="container lg:w-[75%] py-24 sm:py-32">
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{
-          duration: 0.5,
+      <MotionSection
+        animationProps={{
+          initial: { opacity: 0, y: 50 },
+          whileInView: { opacity: 1, y: 0 },
+          transition: {
+            duration: 0.5,
+          },
         }}
       >
         <div className="mb-8 text-center">
@@ -44,13 +47,15 @@ export const TeamSection = () => {
             The Company Dream Team
           </h2>
         </div>
-      </motion.div>
+      </MotionSection>
 
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{
-          duration: 0.5,
+      <MotionSection
+        animationProps={{
+          initial: { opacity: 0, y: 50 },
+          whileInView: { opacity: 1, y: 0 },
+          transition: {
+            duration: 0.5,
+          },
         }}
       >
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
@@ -106,7 +111,7 @@ export const TeamSection = () => {
             )
           )}
         </div>
-      </motion.div>
+      </MotionSection>
     </section>
   );
 };

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
+import { MotionSection } from "@/utils/motion-div";
 
 const HeroSection = () => {
   const { theme } = useTheme();
@@ -12,32 +13,37 @@ const HeroSection = () => {
       <div className="grid gap-8 py-32 mx-auto place-items-center lg:max-w-screen-xl md:py-56">
         <div className="absolute top-2 lg:-top-20 left-1/2 transform -translate-x-1/2 w-[90%] mx-auto h-24 lg:h-60 bg-primary/50 rounded-full blur-3xl" />
         <div className="space-y-6 text-center">
-          <motion.div
-            className="max-w-screen-lg mx-auto text-4xl font-bold text-center md:text-6xl"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              delay: 0.4,
-              type: "spring",
-              stiffness: 100,
-              damping: 10,
+          <MotionSection
+            animationProps={{
+              initial: { opacity: 0, y: 50 },
+              animate: { opacity: 1, y: 0 },
+              transition: {
+                delay: 0.4,
+                type: "spring",
+                stiffness: 100,
+                damping: 10,
+              },
             }}
           >
-            <h1>Join the Devolution</h1>
-            <h1>
-              Build better with
-              <span className="text-transparent px-2 bg-gradient-to-r from-[#6089CF] to-primary bg-clip-text">
-                WannaDev
-              </span>
-            </h1>
-          </motion.div>
+            <div className="max-w-screen-lg mx-auto text-4xl font-bold text-center md:text-6xl">
+              <h1>Join the Devolution</h1>
+              <h1>
+                Build better with
+                <span className="text-transparent px-2 bg-gradient-to-r from-[#6089CF] to-primary bg-clip-text">
+                  WannaDev
+                </span>
+              </h1>
+            </div>
+          </MotionSection>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{
-              delay: 0.2,
-              duration: 1,
+          <MotionSection
+            animationProps={{
+              initial: { opacity: 0 },
+              animate: { opacity: 1 },
+              transition: {
+                delay: 0.2,
+                duration: 1,
+              },
             }}
           >
             <p className="max-w-screen-sm mx-auto text-xl text-muted-foreground">
@@ -57,7 +63,7 @@ const HeroSection = () => {
                 Contact Us
               </Button>
             </div>
-          </motion.div>
+          </MotionSection>
         </div>
 
         {/* <div className="relative group mt-14">

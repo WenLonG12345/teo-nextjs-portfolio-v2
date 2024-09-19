@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import {motion} from 'framer-motion';
+import { MotionSection } from "@/utils/motion-div";
 
 const formSchema = z.object({
   firstName: z.string().min(2).max(255),
@@ -59,11 +60,13 @@ export const ContactSection = () => {
   return (
     <section id="contact" className="container py-24 sm:py-32">
       <section className="grid grid-cols-1 gap-8 md:grid-cols-2">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.5,
+        <MotionSection
+          animationProps={{
+            initial: { opacity: 0, y: 50 },
+            whileInView: { opacity: 1, y: 0 },
+            transition: {
+              duration: 0.5,
+            },
           }}
         >
           <div className="mb-4">
@@ -125,16 +128,17 @@ export const ContactSection = () => {
               </div>
             </div> */}
           </div>
-        </motion.div>
+        </MotionSection>
 
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.5,
+        <MotionSection
+          animationProps={{
+            initial: { opacity: 0, y: 50 },
+            whileInView: { opacity: 1, y: 0 },
+            transition: {
+              duration: 0.5,
+            },
           }}
         >
-          {" "}
           <Card className="bg-muted/60 dark:bg-card">
             <CardHeader className="text-2xl text-primary"> </CardHeader>
             <CardContent>
@@ -261,7 +265,7 @@ export const ContactSection = () => {
 
             <CardFooter></CardFooter>
           </Card>
-        </motion.div>
+        </MotionSection>
       </section>
     </section>
   );
