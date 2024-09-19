@@ -27,3 +27,11 @@ export interface FAQProps {
   answer: string;
   value: string;
 }
+
+export interface ProjectProps {
+  image: string;
+  name: string;
+  description: string;
+  url: string;
+  techStack?: string[];
+}

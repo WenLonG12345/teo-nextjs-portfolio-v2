@@ -1,4 +1,4 @@
-import { FAQProps, NavItemProps, ServiceProps, TeamProps } from "./types";
+import { FAQProps, NavItemProps, ProjectProps, ServiceProps, TeamProps } from "./types";
 
 export const navItemList: NavItemProps[] = [
   {
@@ -169,5 +169,71 @@ export const FAQList: FAQProps[] = [
     answer:
       "Yes, we serve clients globally. With our experience in international projects, we ensure that our solutions are adaptable for different markets and regions.",
     value: "item-10",
+  },
+];
+
+export const projectList: ProjectProps[] = [
+  {
+    image: "/images/ideasss.png",
+    name: "Ideasss",
+    description:
+      "NFT Platform for Creativity and Ideas,  First marketplace to connect demanders and designers through transparent competition",
+    url: "https://ideasss.com/",
+    techStack: ["React", "ReactQuery", "TailwindCSS", "Typescript", "Zustand"],
+  },
+  {
+    image: "/images/3commas.png",
+    name: "3CommasClub NFT",
+    description:
+      "NFC business card builder linked with unique NFT. Build business profile embed with NFC that allows others to scan and connect.",
+    url: "https://nextjs-3commasclub-frontend.vercel.app/",
+    techStack: ["NextJS", "ChakraUI", "Ant Design", "Ant Design Pro"],
+  },
+  {
+    image: "/images/tinkercode.png",
+    name: "TinkerCode",
+    description:
+      "Learning website built with Google Blockl, 3D Unity by sending signals to a 3D model and connects with local robots through a local robot server for interactive learning experiences.",
+    url: "https://learn.tinkercode.my/",
+    techStack: ["HTML", "CSS", "Javascript"],
+  },
+  {
+    image: "/images/goldapple_player.png",
+    name: "Gold Apple Player Portal",
+    description:
+      "Online Gaming Player Portal, built with NextJS, TailwindCSS and MantineUI",
+    url: "https://ga-player.vercel.app/",
+    techStack: ["NextJS", "TailwindCSS", "MantineUI", "Zustand"],
+  },
+  {
+    image: "/images/goldapple_admin.png",
+    name: "Gold Apple Admin Portal",
+    description: "Online Gaming Tenant Portal, built with Ant Design Pro",
+    url: "https://ga-admin.vercel.app/",
+    techStack: ["UmiJS", "Ant Design", "Ant Design Pro"],
+  },
+  {
+    image: "/images/quiz1.png",
+    name: "Quiz System + Admin Panel",
+    description:
+      "Quiz system built for rbtxchallenge.com. Admins can manage quizzes through a CRUD interface for different schools, and participants receive their results immediately after submission.",
+    url: "https://rbtxchallenge.com/login/login.php",
+    techStack: ["HTML", "CSS", "Javascript", "PHP"],
+  },
+  {
+    image: "/images/date-picker.png",
+    name: "React Date Dropdown",
+    description:
+      "React Date Dropdown library. Highly customisable and provide individuals components for years, months and days",
+    url: "https://www.npmjs.com/package/react-date-dropdown",
+    techStack: ["React", "StorybookJS", "NPM", "Typescript"],
+  },
+  {
+    image: "/images/masjid.png",
+    name: "MTPI Masjid Project",
+    description:
+      "Dashboard for data presentation for a masjid project and Integrate PayHalal payment gateway for donation",
+    url: "#",
+    techStack: ["HTML", "CSS", "Javascript", "PHP"],
   },
 ];
