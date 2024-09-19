@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
 import { MotionSection } from "@/utils/motion-div";
+import Link from "next/link";
 
 const HeroSection = () => {
   const { theme } = useTheme();
@@ -51,17 +52,21 @@ const HeroSection = () => {
             </p>
 
             <div className="mt-4 space-y-4 md:space-x-4">
-              <Button className="w-5/6 h-full text-lg font-bold md:w-1/4 group/arrow">
-                Get Started
-                <ArrowRight className="ml-2 transition-transform size-5 group-hover/arrow:translate-x-1" />
-              </Button>
+              <Link href="#services">
+                <Button className="w-5/6 h-full text-lg font-bold md:w-1/4 group/arrow">
+                  Get Started
+                  <ArrowRight className="ml-2 transition-transform size-5 group-hover/arrow:translate-x-1" />
+                </Button>
+              </Link>
 
-              <Button
-                variant="secondary"
-                className="w-5/6 h-full text-lg font-bold md:w-1/4"
-              >
-                Contact Us
-              </Button>
+              <Link href="#contact">
+                <Button
+                  variant="secondary"
+                  className="w-5/6 h-full text-lg font-bold md:w-1/4"
+                >
+                  Contact Us
+                </Button>
+              </Link>
             </div>
           </MotionSection>
         </div>

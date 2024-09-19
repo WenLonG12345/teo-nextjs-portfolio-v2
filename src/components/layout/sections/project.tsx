@@ -1,10 +1,7 @@
 "use client";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -13,7 +10,6 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { Star } from "lucide-react";
 import Autoplay from "embla-carousel-autoplay";
 import { projectList } from "@/constants";
 import Image from "next/image";
