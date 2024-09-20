@@ -38,7 +38,6 @@ const ProjectSection = () => {
           Autoplay({
             delay: 2000,
             playOnInit: true,
-            stopOnFocusIn: true,
           }),
         ]}
         className="relative w-[100%] lg:max-w-screen-xl mx-auto"
