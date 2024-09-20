@@ -199,7 +199,7 @@ export const projectList: ProjectProps[] = [
   },
   {
     image: "/images/goldapple_player.png",
-    name: "Gold Apple Player Portal",
+    name: "GA Player Portal",
     description:
       "Online Gaming Player Portal, built with NextJS, TailwindCSS and MantineUI",
     url: "https://ga-player.vercel.app/",
@@ -207,7 +207,7 @@ export const projectList: ProjectProps[] = [
   },
   {
     image: "/images/goldapple_admin.png",
-    name: "Gold Apple Admin Portal",
+    name: "GA Admin Portal",
     description: "Online Gaming Tenant Portal, built with Ant Design Pro",
     url: "https://ga-admin.vercel.app/",
     techStack: ["UmiJS", "Ant Design", "Ant Design Pro"],
