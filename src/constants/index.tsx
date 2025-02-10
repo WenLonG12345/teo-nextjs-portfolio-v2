@@ -1,31 +1,97 @@
-import { FAQProps, NavItemProps, ProjectProps, ServiceProps, TeamProps } from "./types";
+import {
+  FAQProps,
+  NavItemProps,
+  ProjectProps,
+  ServiceProps,
+  TeamProps,
+} from "./types";
 
-export const navItemList: NavItemProps[] = [
+import {
+  SiKotlin,
+  SiFirebase,
+  SiFastlane,
+  SiGmail,
+  SiTypescript,
+  SiTailwindcss,
+  SiAntdesign,
+  SiRedux,
+} from "react-icons/si";
+import {
+  FaReact,
+  FaJs,
+  FaGitAlt,
+  FaAndroid,
+  FaJava,
+  FaLinkedin,
+  FaStackOverflow,
+  FaMedium,
+  FaGithub,
+  FaSass,
+  FaAws,
+  FaGoogle,
+  FaCloudflare,
+} from "react-icons/fa";
+import { SiReactquery, SiGoogleanalytics } from "react-icons/si";
+import { CgAlbum } from "react-icons/cg";
+import { TbBrandNextjs } from "react-icons/tb";
+import { BiPhoneCall } from "react-icons/bi";
+
+export const METADATA = {
+  title: "Teo | Frontend Engieer",
+  titleTemplate: "%s | Teo",
+  description:
+    "A React/React Native developer, Android developer, UI / UX designer and tech enthusiast.",
+  url: "https://teowenlong.com/",
+};
+
+export const NAV_ITEM_LIST: NavItemProps[] = [
   {
-    href: "#services",
-    label: "Services",
+    href: "/",
+    label: "Home",
+  },
+  {
+    href: "/about",
+    label: "About Me",
+  },
+  {
+    href: "/repos",
+    label: "Github",
+  },
+  {
+    href: "/articles",
+    label: "Articles",
+  },
+  {
+    href: "/contact",
+    label: "Contact Me",
   },
   // {
-  //   href: "#features",
-  //   label: "Features",
+  //   href: "#team",
+  //   label: "Team",
   // },
-  {
-    href: "#projects",
-    label: "Projects",
-  },
-  {
-    href: "#team",
-    label: "Team",
-  },
-  {
-    href: "#contact",
-    label: "Contact",
-  },
-  {
-    href: "#faq",
-    label: "FAQ",
-  },
+  // {
+  //   href: "#contact",
+  //   label: "Contact",
+  // },
+  // {
+  //   href: "#faq",
+  //   label: "FAQ",
+  // },
 ];
+
+export const SITE_CONFIG = {
+  resume: {
+    url: "https://drive.google.com/file/d/1Obu0CIWpsB3IlfoUDKZV_caATVPc040O/view",
+    icon: <CgAlbum />,
+    name: "Resume",
+  },
+  contact: {
+    url: "/contact",
+    icon: <BiPhoneCall />,
+    name: "Contact Me",
+    email: "teowenlong0316@gmail.com"
+  },
+};
 
 export const teamList: TeamProps[] = [
   {

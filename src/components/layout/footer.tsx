@@ -1,5 +1,5 @@
 "use client";
-import { navItemList } from "@/constants";
+import { NAV_ITEM_LIST } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -19,7 +19,7 @@ function Footer() {
             <h2 className="ml-3 text-lg font-bold leading-5">WannaDev</h2>
           </div>
           <div className="mx-auto lg:block">
-            {navItemList.map((route) => (
+            {NAV_ITEM_LIST.map((route) => (
               <Link
                 key={route?.href}
                 href={route?.href}

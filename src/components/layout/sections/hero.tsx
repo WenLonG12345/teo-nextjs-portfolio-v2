@@ -6,15 +6,33 @@ import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
 import { MotionSection } from "@/utils/motion-div";
 import Link from "next/link";
+import { SITE_CONFIG } from "@/constants";
+import { SiSpotify } from "react-icons/si";
+import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
+import { getSpotifyNowPlaying } from "@/utils/api";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const HeroSection = () => {
   const { theme } = useTheme();
+
+  const spotifyQuery = useQuery({
+    queryKey: ["spotify"],
+    queryFn: getSpotifyNowPlaying,
+    refetchOnWindowFocus: true,
+  });
+
+  const song = spotifyQuery?.data;
+
+  console.log("@song", song)
+
   return (
     <section className="container w-full">
       <div className="grid gap-8 py-32 mx-auto place-items-center lg:max-w-screen-xl md:py-56">
         <div className="absolute top-2 lg:-top-20 left-1/2 transform -translate-x-1/2 w-[90%] mx-auto h-24 lg:h-60 bg-primary/50 rounded-full blur-3xl" />
         <div className="space-y-6 text-center">
           <MotionSection
+            key="intro_1"
             animationProps={{
               initial: { opacity: 0, y: 50 },
               animate: { opacity: 1, y: 0 },
@@ -27,17 +45,17 @@ const HeroSection = () => {
             }}
           >
             <div className="max-w-screen-lg mx-auto text-4xl font-bold text-center md:text-6xl">
-              <h1>Join the Devolution</h1>
               <h1>
-                Build better with
+                Hey, I am{" "}
                 <span className="text-transparent px-2 bg-gradient-to-r from-[#6089CF] to-primary bg-clip-text">
-                  WannaDev
+                  Teo
                 </span>
               </h1>
             </div>
           </MotionSection>
 
           <MotionSection
+            key="intro_2"
             animationProps={{
               initial: { opacity: 0 },
               animate: { opacity: 1 },
@@ -48,45 +66,78 @@ const HeroSection = () => {
             }}
           >
             <p className="max-w-screen-sm mx-auto text-xl text-muted-foreground">
-              {`Unlock your development potential with the expert services and powerful tools provided by WannaDev.`}
+              Frontend Engineer from Malaysia 🇲🇾
+            </p>
+
+            <p className="max-w-screen-sm mx-auto text-xl text-muted-foreground">
+              Focused on Web & Mobile Development (Android & iOS). Passionate
+              about beautiful UI/UX and a Tech Writer on Medium. 🔥
             </p>
 
             <div className="mt-4 space-y-4 md:space-x-4">
-              <Link href="#services">
-                <Button className="w-5/6 h-full text-lg font-bold md:w-1/4 group/arrow">
-                  Get Started
+              <Link href={SITE_CONFIG.resume.url} target="_blank">
+                <Button className="w-5/6 h-full text-lg font-semibold md:w-1/4 group/arrow">
+                  <i className="mr-2">{SITE_CONFIG.resume.icon}</i>
+                  {SITE_CONFIG.resume.name}
                   <ArrowRight className="ml-2 transition-transform size-5 group-hover/arrow:translate-x-1" />
                 </Button>
               </Link>
 
-              <Link href="#contact">
+              <Link href={SITE_CONFIG.contact.url}>
                 <Button
                   variant="secondary"
-                  className="w-5/6 h-full text-lg font-bold md:w-1/4"
+                  className="w-5/6 h-full mt-3 text-lg font-semibold md:mt-0 md:w-1/4"
                 >
-                  Contact Us
+                  <i className="mr-2">{SITE_CONFIG.contact.icon}</i>
+                  {SITE_CONFIG.contact.name}
                 </Button>
               </Link>
             </div>
           </MotionSection>
+
+          <MotionSection
+            key="intro_3"
+            animationProps={{
+              initial: { opacity: 0 },
+              animate: { opacity: 1 },
+              transition: {
+                delay: 0.2,
+                duration: 1,
+              },
+            }}
+          >
+            <Card className="flex flex-col items-center transition-all delay-75 md:items-start bg-muted/50 dark:bg-card hover:bg-background group/number">
+              <CardHeader className="flex flex-row items-center gap-2 space-y-0">
+                <SiSpotify color="#1ED760" className="rotating" />
+                <div>Spotify</div>
+              </CardHeader>
+
+              <CardContent>
+                <div className="flex flex-col items-center gap-5 md:flex-row">
+                  {song?.isPlaying ? (
+                    <img
+                      src={song?.albumImageUrl}
+                      alt={song?.album}
+                      width={70}
+                      height={70}
+                    />
+                  ) : (
+                    <SiSpotify size={70} color={"#1ED760"} />
+                  )}
+
+                  <div className="flex flex-col items-center gap-2 md:items-start">
+                    <CardTitle>
+                      {song?.isPlaying ? song?.title : "Not Listening"}
+                    </CardTitle>
+                    <div className="text-muted-foreground">
+                      {song?.isPlaying ? song?.artist : "Spotify"}
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </MotionSection>
         </div>
-
-        {/* <div className="relative group mt-14">
-          <div className="absolute top-2 lg:-top-8 left-1/2 transform -translate-x-1/2 w-[90%] mx-auto h-24 lg:h-80 bg-primary/50 rounded-full blur-3xl"></div>
-          <Image
-            width={1200}
-            height={1200}
-            className="w-full md:w-[1200px] mx-auto rounded-lg relative rouded-lg leading-none flex items-center border border-t-2 border-secondary  border-t-primary/30"
-            src={
-              theme === "light"
-                ? "/hero-image-light.jpeg"
-                : "/hero-image-dark.jpeg"
-            }
-            alt="dashboard"
-          />
-
-          <div className="absolute bottom-0 left-0 w-full h-20 rounded-lg md:h-28 bg-gradient-to-b from-background/0 via-background/50 to-background"></div>
-        </div> */}
       </div>
     </section>
   );

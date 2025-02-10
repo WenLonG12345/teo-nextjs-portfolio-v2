@@ -12,6 +12,8 @@ import { SponsorsSection } from "@/components/layout/sections/sponsors";
 import { TeamSection } from "@/components/layout/sections/team";
 import { TestimonialSection } from "@/components/layout/sections/testimonial";
 import ProjectSection from "@/components/layout/sections/project";
+import { CommunitySection } from "@/components/layout/sections/community";
+import FeaturesSection from "@/components/layout/sections/features";
 
 
 export default function Home() {
@@ -20,13 +22,13 @@ export default function Home() {
       <HeroSection />
       {/* <SponsorsSection /> */}
       <ServiceSection />
-      {/* <FeaturesSection /> */}
+      <FeaturesSection />
 
       {/* <TestimonialSection /> */}
       <ProjectSection />
       <TeamSection />
-      {/* <CommunitySection /> */}
-      {/* <PricingSection /> */}
+      <CommunitySection />
+      <PricingSection />
       <ContactSection />
       <FAQSection />
     </>

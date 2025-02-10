@@ -20,7 +20,7 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { ToggleTheme } from "./toogle-theme";
-import { navItemList } from "@/constants";
+import { NAV_ITEM_LIST } from "@/constants";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -31,7 +31,6 @@ export const Navbar = () => {
         className="flex flex-row items-center gap-2 text-lg font-bold"
       >
         <Image src="/logo.png" width={50} height={50} alt="logo" />
-        WannaDev
       </Link>
       {/* <!-- Mobile --> */}
       <div className="flex items-center lg:hidden">
@@ -52,13 +51,12 @@ export const Navbar = () => {
                 <SheetTitle className="flex items-center">
                   <Link href="/" className="flex items-center gap-2">
                     <Image src="/logo.png" width={50} height={50} alt="logo" />
-                    WannaDev
                   </Link>
                 </SheetTitle>
               </SheetHeader>
 
               <div className="flex flex-col gap-2">
-                {navItemList.map(({ href, label }) => (
+                {NAV_ITEM_LIST.map(({ href, label }) => (
                   <Button
                     key={href}
                     onClick={() => setIsOpen(false)}
@@ -85,9 +83,9 @@ export const Navbar = () => {
       <NavigationMenu className="hidden mx-auto lg:block">
         <NavigationMenuList>
           <NavigationMenuItem>
-            {navItemList.map(({ href, label }) => (
+            {NAV_ITEM_LIST.map(({ href, label }) => (
               <NavigationMenuLink key={href} asChild>
-                <Link href={href} className="px-2 text-base hover:text-primary">
+                <Link href={href} className="px-4 text-base hover:text-primary">
                   {label}
                 </Link>
               </NavigationMenuLink>
