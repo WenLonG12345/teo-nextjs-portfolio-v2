@@ -17,10 +17,11 @@ import {
   NavigationMenuList,
 } from "../ui/navigation-menu";
 import { Button } from "../ui/button";
-import Link from "next/link";
 import Image from "next/image";
 import { ToggleTheme } from "./toogle-theme";
 import { NAV_ITEM_LIST } from "@/constants";
+import ToggleLanguage from "./toggle-language";
+import { Link } from "@/i18n/routing";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -70,11 +71,11 @@ export const Navbar = () => {
               </div>
             </div>
 
-            <SheetFooter className="flex-col items-start justify-start sm:flex-col">
+            {/* <SheetFooter className="flex-col items-start justify-start sm:flex-col">
               <Separator className="mb-2" />
 
               <ToggleTheme />
-            </SheetFooter>
+            </SheetFooter> */}
           </SheetContent>
         </Sheet>
       </div>
@@ -94,8 +95,9 @@ export const Navbar = () => {
         </NavigationMenuList>
       </NavigationMenu>
 
-      <div className="hidden lg:flex">
+      <div className="flex flex-row items-center gap-1">
         <ToggleTheme />
+        <ToggleLanguage />
       </div>
     </header>
   );

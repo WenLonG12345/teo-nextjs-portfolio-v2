@@ -2,15 +2,18 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import { Navbar } from "@/components/layout/navbar";
 import { ThemeProvider } from "@/components/layout/theme-provider";
-import "./globals.css";
 import { cn } from "@/utils/cn";
-
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
+import { notFound } from "next/navigation";
+import { routing } from "@/i18n/routing";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Footer from "@/components/layout/footer";
 import { METADATA } from "@/constants";
-import { QueryClientProvider } from "@tanstack/react-query";
 import ReactQueryProvider from "@/components/layout/react-query-provider";
+
+import "./globals.css";
 
 const outfit = Outfit({ subsets: ["latin"] });
 
@@ -39,28 +42,42 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: { locale: string };
 }>) {
+  const { locale } = await params;
+  // Ensure that the incoming `locale` is valid
+  if (!routing.locales.includes(locale as any)) {
+    notFound();
+  }
+
+  // Providing all messages to the client
+  // side is the easiest way to get started
+  const messages = await getMessages();
+
   return (
     <html lang="pt-br" suppressHydrationWarning>
       <body className={cn("min-h-screen bg-background", outfit.className)}>
-        <ReactQueryProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Navbar />
-            {children}
-            <Footer />
-          </ThemeProvider>
-          <Analytics />
-          <SpeedInsights />
-        </ReactQueryProvider>
+        <NextIntlClientProvider messages={messages}>
+          <ReactQueryProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <Navbar />
+              {children}
+              <Footer />
+            </ThemeProvider>
+            <Analytics />
+            <SpeedInsights />
+          </ReactQueryProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

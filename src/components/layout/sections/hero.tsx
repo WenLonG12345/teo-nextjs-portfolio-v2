@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { useTheme } from "next-themes";
+import { useTranslations } from "next-intl";
 import { MotionSection } from "@/utils/motion-div";
 import Link from "next/link";
 import { SITE_CONFIG } from "@/constants";
@@ -13,12 +13,13 @@ import { getSpotifyNowPlaying } from "@/utils/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const HeroSection = () => {
-  const { theme } = useTheme();
-
+  const t = useTranslations();
   const spotifyQuery = useQuery({
     queryKey: ["spotify"],
     queryFn: getSpotifyNowPlaying,
     refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
+    refetchOnMount: true
   });
 
   const song = spotifyQuery?.data;
@@ -43,7 +44,7 @@ const HeroSection = () => {
           >
             <div className="max-w-screen-lg mx-auto text-4xl font-bold text-center md:text-6xl">
               <h1>
-                Hey, I am{" "}
+                {t("home.hero_1")}{" "}
                 <span className="text-transparent px-2 bg-gradient-to-r from-[#6089CF] to-primary bg-clip-text">
                   Teo
                 </span>
