@@ -6,7 +6,7 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { Building2, Clock, Mail, Phone } from "lucide-react";
+import { Mail } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,7 +28,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import {motion} from 'framer-motion';
 import { MotionSection } from "@/utils/motion-div";
 
 const formSchema = z.object({

@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useTheme } from "next-themes";
-import { motion } from "framer-motion";
 import { MotionSection } from "@/utils/motion-div";
 import Link from "next/link";
 import { SITE_CONFIG } from "@/constants";
@@ -23,8 +22,6 @@ const HeroSection = () => {
   });
 
   const song = spotifyQuery?.data;
-
-  console.log("@song", song)
 
   return (
     <section className="container w-full">
@@ -115,7 +112,7 @@ const HeroSection = () => {
               <CardContent>
                 <div className="flex flex-col items-center gap-5 md:flex-row">
                   {song?.isPlaying ? (
-                    <img
+                    <Image
                       src={song?.albumImageUrl}
                       alt={song?.album}
                       width={70}
