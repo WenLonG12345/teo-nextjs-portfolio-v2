@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icon } from "@/components/ui/icon";
 import { serviceList } from "@/constants";
 import { icons } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { MotionSection } from "@/utils/motion-div";
 
 const ServiceSection = () => {

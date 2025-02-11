@@ -10,7 +10,7 @@ import {
 import { teamList } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 import { FaLinkedin, FaGithub, FaLink } from "react-icons/fa";
 import { MotionSection } from "@/utils/motion-div";

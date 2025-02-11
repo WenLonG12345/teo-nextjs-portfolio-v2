@@ -7,7 +7,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { FAQList } from "@/constants";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 export const FAQSection = () => {
   return (

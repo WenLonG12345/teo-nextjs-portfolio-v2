@@ -1,6 +1,12 @@
 "use client";
 
-import { AnimatePresence, AnimationProps, HTMLMotionProps, motion } from "framer-motion";
+import { randomUUID } from "crypto";
+import {
+  AnimatePresence,
+  AnimationProps,
+  HTMLMotionProps,
+  motion,
+} from "motion/react";
 import { useEffect, useState } from "react";
 
 export const MotionDiv = motion.div;
@@ -20,13 +26,7 @@ export const MotionSection = ({
     }
   }, []);
 
-  return (
-    <AnimatePresence initial={false}>
-      {domLoaded ? (
-        <motion.div {...animationProps}>{children}</motion.div>
-      ) : (
-        children
-      )}
-    </AnimatePresence>
-  );
+  if (domLoaded) return <motion.div {...animationProps}>{children}</motion.div>;
+
+  return children;
 };

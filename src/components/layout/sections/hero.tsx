@@ -19,7 +19,7 @@ const HeroSection = () => {
     queryFn: getSpotifyNowPlaying,
     refetchOnWindowFocus: true,
     refetchOnReconnect: true,
-    refetchOnMount: true
+    refetchOnMount: true,
   });
 
   const song = spotifyQuery?.data;
@@ -30,7 +30,6 @@ const HeroSection = () => {
         <div className="absolute top-2 lg:-top-20 left-1/2 transform -translate-x-1/2 w-[90%] mx-auto h-24 lg:h-60 bg-primary/50 rounded-full blur-3xl" />
         <div className="space-y-6 text-center">
           <MotionSection
-            key="intro_1"
             animationProps={{
               initial: { opacity: 0, y: 50 },
               animate: { opacity: 1, y: 0 },
@@ -53,7 +52,6 @@ const HeroSection = () => {
           </MotionSection>
 
           <MotionSection
-            key="intro_2"
             animationProps={{
               initial: { opacity: 0 },
               animate: { opacity: 1 },
@@ -91,20 +89,8 @@ const HeroSection = () => {
                 </Button>
               </Link>
             </div>
-          </MotionSection>
 
-          <MotionSection
-            key="intro_3"
-            animationProps={{
-              initial: { opacity: 0 },
-              animate: { opacity: 1 },
-              transition: {
-                delay: 0.2,
-                duration: 1,
-              },
-            }}
-          >
-            <Card className="flex flex-col items-center transition-all delay-75 md:items-start bg-muted/50 dark:bg-card hover:bg-background group/number">
+            <Card className="flex flex-col items-center mt-5 transition-all delay-75 md:items-start bg-muted/50 dark:bg-card hover:bg-background group/number">
               <CardHeader className="flex flex-row items-center gap-2 space-y-0">
                 <SiSpotify color="#1ED760" className="rotating" />
                 <div>Spotify</div>

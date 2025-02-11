@@ -11,8 +11,8 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { usePathname, useRouter } from "@/i18n/routing";
-import { useParams } from "next/navigation";
+// import { usePathname, useRouter } from "@/i18n/routing";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 
 export const LANGUAGE_OPTIONS = [

@@ -14,7 +14,7 @@ import { TestimonialSection } from "@/components/layout/sections/testimonial";
 import ProjectSection from "@/components/layout/sections/project";
 import { CommunitySection } from "@/components/layout/sections/community";
 import FeaturesSection from "@/components/layout/sections/features";
-
+import { setRequestLocale } from "next-intl/server";
 
 export default function Home() {
   return (

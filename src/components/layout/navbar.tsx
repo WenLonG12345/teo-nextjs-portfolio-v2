@@ -21,7 +21,7 @@ import Image from "next/image";
 import { ToggleTheme } from "./toogle-theme";
 import { NAV_ITEM_LIST } from "@/constants";
 import ToggleLanguage from "./toggle-language";
-import { Link } from "@/i18n/routing";
+import Link from "next/link";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
