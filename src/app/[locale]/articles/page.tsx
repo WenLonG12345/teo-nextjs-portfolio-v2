@@ -5,12 +5,11 @@ import { getTranslations } from "next-intl/server";
 import React from "react";
 import ArticlesClient from "./Articles";
 import { Metadata } from "next";
+import { MetadataProps } from "@/constants/types";
 
 export async function generateMetadata({
   params,
-}: {
-  params: { locale: string };
-}): Promise<Metadata> {
+}: MetadataProps): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale });
 

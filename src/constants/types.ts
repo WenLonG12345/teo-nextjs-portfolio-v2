@@ -1,3 +1,7 @@
+export interface MetadataProps {
+  params: Promise<{ locale: string }>;
+}
+
 export interface NavItemProps {
   href: string;
   label: string;
@@ -57,12 +61,12 @@ export type ISpotifyNowPlayingRes = {
   item?: {
     album?: {
       album_type?: string;
-      artists?: { name?: string; }[];
+      artists?: { name?: string }[];
       available_markets?: string[];
-      external_urls?: { spotify?: string; };
+      external_urls?: { spotify?: string };
       href?: string;
       id?: string;
-      images?: { url?: string; }[];
+      images?: { url?: string }[];
       name?: string;
       release_date?: string;
       release_date_precision?: string;
@@ -70,13 +74,13 @@ export type ISpotifyNowPlayingRes = {
       type?: string;
       uri?: string;
     };
-    artists?: { name?: string; }[];
+    artists?: { name?: string }[];
     available_markets?: string[];
     disc_number?: number;
     duration_ms?: number;
     explicit?: boolean;
-    external_ids?: { isrc?: string; };
-    external_urls?: { spotify?: string; };
+    external_ids?: { isrc?: string };
+    external_urls?: { spotify?: string };
     href?: string;
     id?: string;
     is_local?: boolean;
@@ -88,7 +92,7 @@ export type ISpotifyNowPlayingRes = {
     uri?: string;
   };
   currently_playing_type?: string;
-  actions?: { disallows?: { resuming?: boolean; }; };
+  actions?: { disallows?: { resuming?: boolean } };
   is_playing?: boolean;
 };
 
