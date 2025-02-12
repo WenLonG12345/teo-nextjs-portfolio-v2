@@ -7,23 +7,22 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { getGithubRepos } from "@/utils/api";
+import { Link } from "@/i18n/routing";
+import { getMediumArticles } from "@/utils/api";
 import { MotionSection } from "@/utils/motion-div";
 import { useQuery } from "@tanstack/react-query";
-import { FiGithub } from "react-icons/fi";
-import { BiStar, BiGitRepoForked } from "react-icons/bi";
-import React from "react";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
+import React from "react";
 
-const ReposClient = () => {
+const ArticlesClient = () => {
   const t = useTranslations();
-  const reposQuery = useQuery({
-    queryKey: ["repos"],
-    queryFn: () => getGithubRepos(process.env.GITHUB_USERNAME || ""),
+  const articlesQuery = useQuery({
+    queryKey: ["articles"],
+    queryFn: () => getMediumArticles(process.env.MEDIUM_USERNAME || ""),
   });
 
-  const repos = reposQuery.data;
+  const articles = articlesQuery.data;
 
   return (
     <div className="container py-24 sm:py-32">
@@ -39,18 +38,18 @@ const ReposClient = () => {
         }}
       >
         <h2 className="mb-2 text-lg tracking-wider text-center text-primary">
-          {t("repo.badge")}
+          {t("article.badge")}
         </h2>
 
         <h2 className="mb-4 text-3xl font-bold text-center md:text-4xl">
-          {t("repo.title")}
+          {t("article.title")}
         </h2>
 
         <h3 className="mx-auto text-xl text-center md:w-1/2 text-muted-foreground">
-          {t("repo.description_1")}
+          {t("article.description_1")}
         </h3>
         <h3 className="mx-auto mb-8 text-xl text-center md:w-1/2 text-muted-foreground">
-          {t("repo.description_2")}
+          {t("article.description_2")}
         </h3>
       </MotionSection>
 
@@ -63,33 +62,39 @@ const ReposClient = () => {
           },
         }}
       >
-        <section className="grid grid-cols-1 gap-8 md:grid-cols-2">
-          {repos?.map((repo) => (
-            <Link key={repo.name} href={repo.clone_url} target="_blank">
+        <section className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {articles?.map((article) => (
+            <Link key={article.title} href={article.url} target="_blank">
               <Card className="h-full hover:bg-muted">
-                <CardHeader className="flex flex-col justify-between space-y-0 md:items-center md:flex-row">
-                  <div className="flex flex-row items-center gap-2">
-                    <FiGithub />
-                    {repo.name}
+                <CardHeader className="flex flex-col p-0 space-y-0">
+                  <div className="relative w-full h-[250px]">
+                    <Image
+                      src={article.thumbnail}
+                      alt={article.title}
+                      fill
+                      className="object-cover rounded-t-lg"
+                    />
                   </div>
-                  <div className="flex flex-row items-center gap-2">
-                    <div className="flex flex-row items-center gap-1">
-                      <BiStar />
-                      {repo.stargazers_count}
-                    </div>
-                    <div className="flex flex-row items-center gap-1">
-                      <BiGitRepoForked />
-                      {repo.forks_count}
-                    </div>
+
+                  <div className="flex flex-row items-center gap-2 px-6 py-3 font-semibold">
+                    {article.title}
                   </div>
                 </CardHeader>
 
                 <CardContent>
-                  <p className="text-muted-foreground">{repo.description}</p>
+                  <p className="break-words text-clip text-muted-foreground">
+                    {article.description}
+                  </p>
                 </CardContent>
 
                 <CardFooter>
-                  {repo.language && <Badge>{repo.language}</Badge>}
+                  <div className="flex flex-row flex-wrap gap-x-1 gap-y-2">
+                    {article.categories.map((category) => (
+                      <Badge key={category} className="whitespace-nowrap">
+                        {category}
+                      </Badge>
+                    ))}
+                  </div>
                 </CardFooter>
               </Card>
             </Link>
@@ -100,4 +105,4 @@ const ReposClient = () => {
   );
 };
 
-export default ReposClient;
+export default ArticlesClient;

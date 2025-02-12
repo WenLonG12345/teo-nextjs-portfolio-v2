@@ -21,15 +21,17 @@ import Image from "next/image";
 import { ToggleTheme } from "./toogle-theme";
 import { NAV_ITEM_LIST } from "@/constants";
 import ToggleLanguage from "./toggle-language";
-import { Link } from "@/i18n/routing";
+import { Link, usePathname } from "@/i18n/routing";
+import { cn } from "@/utils/cn";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const pathname = usePathname();
   return (
     <header className="shadow-md bg-opacity-15 w-[90%] md:w-[70%] lg:w-[75%] lg:max-w-screen-xl top-5 mx-auto sticky border border-secondary z-40 rounded-2xl flex justify-between items-center p-2 bg-card">
       <Link
         href="/"
-        className="flex flex-row items-center gap-2 text-lg font-bold"
+        className="flex-row items-center hidden gap-2 text-lg font-bold lg:flex"
       >
         <Image src="/logo.png" width={50} height={50} alt="logo" />
       </Link>
@@ -78,6 +80,12 @@ export const Navbar = () => {
             </SheetFooter> */}
           </SheetContent>
         </Sheet>
+        <Link
+          href="/"
+          className="flex flex-row items-center gap-2 ml-2 text-lg font-bold"
+        >
+          <Image src="/logo.png" width={50} height={50} alt="logo" />
+        </Link>
       </div>
 
       {/* <!-- Desktop --> */}
@@ -86,7 +94,13 @@ export const Navbar = () => {
           <NavigationMenuItem>
             {NAV_ITEM_LIST.map(({ href, label }) => (
               <NavigationMenuLink key={href} asChild>
-                <Link href={href} className="px-4 text-base hover:text-primary">
+                <Link
+                  href={href}
+                  className={cn(
+                    "px-4 text-base hover:text-primary",
+                    pathname === href && "text-primary"
+                  )}
+                >
                   {label}
                 </Link>
               </NavigationMenuLink>

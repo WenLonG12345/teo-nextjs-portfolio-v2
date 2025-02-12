@@ -1,5 +1,17 @@
 {
   "home": {
     "hero_1": "Hey, I am"
+  }, 
+  "repo": {
+    "badge": "Repositories",
+    "title": "My Github Repositories",
+    "description_1": "A list of my top featured GitHub repositories. 🔖",
+    "description_2": "Feel free to visit and don't forget to leave a star! ⭐"
+  },
+  "article": {
+    "badge": "Articles",
+    "title": "My Latest Articles",
+    "description_1": "A list of my latest articles on Medium. 📝",
+    "description_2": "Stay tuned for more articles. Feel free to visit and don't forget to clap! 👏"
   }
 }

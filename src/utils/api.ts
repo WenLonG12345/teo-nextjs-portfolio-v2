@@ -4,6 +4,7 @@ import {
   ISpotifySongRes,
 } from "@/constants/types";
 import dayjs from "dayjs";
+import { shortenDescription } from "./shortenDescription";
 
 export const getSpotifyNowPlaying = async (): Promise<ISpotifySongRes> => {
   return fetch("/api/spotify").then((res) => res.json());
@@ -35,9 +36,9 @@ export const getMediumArticles = async (username: string) => {
       `https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@${username}`
     );
 
-    const res = await fetchRes.json();
+    const res = (await fetchRes.json()) as IMediumArticleRes;
 
-    let { items } = res.data as IMediumArticleRes;
+    let { items } = res || {};
 
     const article = items.map(
       ({ title, thumbnail, guid, pubDate, description, categories }) => {
@@ -56,6 +57,7 @@ export const getMediumArticles = async (username: string) => {
 
     return article;
   } catch (err) {
-    console.log(err);
+    console.error(err);
+    return [];
   }
 };
