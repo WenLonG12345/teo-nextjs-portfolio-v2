@@ -1,99 +1,100 @@
 "use client";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import { projectList } from "@/constants";
+import { PROJECT_LIST, projectList } from "@/constants";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const ProjectSection = () => {
+  const t = useTranslations();
+
   return (
     <section id="projects" className="container py-24 sm:py-32">
       <div className="mb-8 text-center">
         <h2 className="mb-2 text-lg tracking-wider text-center text-primary">
-          Projects
+          {t("project.badge")}
         </h2>
 
         <h2 className="mb-4 text-3xl font-bold text-center md:text-4xl">
-          Project that we done previously
+          {t("project.description_1")}
         </h2>
       </div>
 
-      <Carousel
-        opts={{
-          align: "start",
-          loop: true,
-        }}
-        plugins={[
-          Autoplay({
-            delay: 2000,
-            playOnInit: true,
-          }),
-        ]}
+      <Tabs
+        defaultValue={Object.keys(PROJECT_LIST)[0]}
         className="relative w-[100%] lg:max-w-screen-xl mx-auto"
       >
-        <CarouselContent>
-          {projectList.map((project) => (
-            <CarouselItem
-              key={project.name}
-              className="h-full md:basis-1/2 lg:basis-1/3"
-            >
-              <Link href={project.url}>
-                <Card className="bg-muted/50 dark:bg-card">
-                  <CardContent className="p-0">
-                    <Image
-                      src={project.image}
-                      alt={project.name}
-                      width={0}
-                      height={0}
-                      sizes="100vw"
-                      style={{
-                        width: "100%",
-                        height: "auto",
-                        aspectRatio: "16/9",
-                        objectFit: "cover",
-                        borderTopLeftRadius: "0.5rem",
-                        borderTopRightRadius: "0.5rem",
-                      }}
-                    />
-                  </CardContent>
+        <div className="flex justify-center">
+          <TabsList className="h-full p-2">
+            {Object.entries(PROJECT_LIST).map(([category, projects]) => (
+              <TabsTrigger
+                className="text-lg"
+                key={category}
+                value={category}
+              >{`${t(category)}`}</TabsTrigger>
+            ))}
+          </TabsList>
+        </div>
 
-                  <CardHeader>
-                    <div className="flex flex-row items-center gap-4">
-                      <div className="flex flex-col">
-                        <CardTitle className="text-lg">
-                          {project.name}
-                        </CardTitle>
-                        <div className="text-sm text-muted-foreground">
-                          <div className="flex flex-col justify-between h-[150px]">
-                            <div>{project.description}</div>
+        {Object.entries(PROJECT_LIST).map(([category, projects]) => (
+          <TabsContent key={category} value={category} className="mt-5">
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {projects.map((project) => (
+                <Link key={project.name} href={project.link || ""}>
+                  <Card className="bg-muted/50 dark:bg-card">
+                    <CardContent className="p-0">
+                      <Image
+                        src={project.imageUrl}
+                        alt={project.name}
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                        style={{
+                          width: "100%",
+                          height: "auto",
+                          aspectRatio: "16/9",
+                          objectFit: "cover",
+                          borderTopLeftRadius: "0.5rem",
+                          borderTopRightRadius: "0.5rem",
+                        }}
+                      />
+                    </CardContent>
 
-                            <div className="flex flex-wrap gap-1">
-                              {project.techStack?.map((stack) => (
-                                <Badge key={stack}>{stack}</Badge>
-                              ))}
+                    <CardHeader>
+                      <div className="flex flex-row items-center gap-4">
+                        <div className="flex flex-col">
+                          <CardTitle className="text-lg">
+                            {project.name}
+                          </CardTitle>
+                          <div className="text-sm text-muted-foreground">
+                            <div className="flex flex-col justify-between h-[150px]">
+                              <div>{project.summary}</div>
+
+                              <div className="flex flex-wrap gap-1">
+                                {project.tech?.map((stack) => (
+                                  <Badge key={stack}>{stack}</Badge>
+                                ))}
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </CardHeader>
-                </Card>
-              </Link>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-      </Carousel>
+                    </CardHeader>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </TabsContent>
+        ))}
+      </Tabs>
     </section>
   );
 };

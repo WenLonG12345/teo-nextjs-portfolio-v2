@@ -13,5 +13,14 @@
     "title": "My Latest Articles",
     "description_1": "A list of my latest articles on Medium. 📝",
     "description_2": "Stay tuned for more articles. Feel free to visit and don't forget to clap! 👏"
+  },
+  "project": {
+    "badge": "Projects",
+    "title": "My Projects",
+    "description_1": "A list of my top featured projects. 🚀",
+    "description_2": "List of projects that I involved or have made in the past. ⭐",
+    "works": "Works",
+    "freelance": "Freelance",
+    "opensource": "Open Source"
   }
 }
