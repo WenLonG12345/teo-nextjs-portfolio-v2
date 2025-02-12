@@ -4,12 +4,13 @@ import React from "react";
 import ReposClient from "./Repos";
 import { getGithubRepos } from "@/utils/api";
 import { getTranslations } from "next-intl/server";
+import { Metadata } from "next";
 
 export async function generateMetadata({
   params,
 }: {
   params: { locale: string };
-}) {
+}): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale });
 
