@@ -40,7 +40,7 @@ export const getMediumArticles = async (username: string) => {
 
     let { items } = res || {};
 
-    const article = items.map(
+    const article = items?.map(
       ({ title, thumbnail, guid, pubDate, description, categories }) => {
         return {
           title: title,
