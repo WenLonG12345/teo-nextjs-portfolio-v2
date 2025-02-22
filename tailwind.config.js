@@ -6,14 +6,17 @@ module.exports = {
   safelist: ["dark"],
   prefix: "",
 
-  content: [
-    "./src/**/*.{ts,tsx}",
-  ],
+  content: ["./src/**/*.{ts,tsx}"],
 
   theme: {
     container: {
       center: true,
-      padding: "1.5rem",
+      padding: {
+        DEFAULT: "1.5rem",
+        lg: "2.5rem",
+        xl: "2.5rem",
+        "2xl": "2.5rem",
+      },
       screens: {
         "2xl": "1400px",
       },

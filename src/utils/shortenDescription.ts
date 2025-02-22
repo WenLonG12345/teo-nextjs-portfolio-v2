@@ -3,8 +3,8 @@ export const shortenDescription = (description: string) => {
 
   description = description
     ?.replace(/<h3>.*<\/h3>|<figcaption>.*<\/figcaption>|<[^>]*>/gm, "")
-    .substring(0, 200);
-  if (description.length <= 200 - defaultContinue.length) {
+    .substring(0, 150);
+  if (description.length <= 150 - defaultContinue.length) {
     description += defaultContinue;
   }
   description += "...";

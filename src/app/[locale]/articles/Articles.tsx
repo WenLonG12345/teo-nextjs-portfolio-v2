@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Link } from "@/i18n/routing";
 import { getMediumArticles } from "@/utils/api";
-import { MotionSection } from "@/utils/motion-div";
+import { MotionDiv, MotionSection } from "@/utils/motion-div";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -65,38 +65,40 @@ const ArticlesClient = () => {
         <section className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {articles?.map((article) => (
             <Link key={article.title} href={article.url} target="_blank">
-              <Card className="h-full hover:bg-muted">
-                <CardHeader className="flex flex-col p-0 space-y-0">
-                  <div className="relative w-full h-[250px]">
-                    <Image
-                      src={article.thumbnail}
-                      alt={article.title}
-                      fill
-                      className="object-cover rounded-t-lg"
-                    />
-                  </div>
+              <MotionDiv whileHover={{ y: -5 }} className="h-full">
+                <Card className="h-full hover:bg-muted">
+                  <CardHeader className="flex flex-col p-0 space-y-0">
+                    <div className="relative w-full h-[250px]">
+                      <Image
+                        src={article.thumbnail}
+                        alt={article.title}
+                        fill
+                        className="object-cover rounded-t-lg"
+                      />
+                    </div>
 
-                  <div className="flex flex-row items-center gap-2 px-6 py-3 font-semibold">
-                    {article.title}
-                  </div>
-                </CardHeader>
+                    <div className="flex flex-row items-center gap-2 px-6 py-3 font-semibold">
+                      {article.title}
+                    </div>
+                  </CardHeader>
 
-                <CardContent>
-                  <p className="break-words text-clip text-muted-foreground">
-                    {article.description}
-                  </p>
-                </CardContent>
+                  <CardContent>
+                    <p className="break-words text-clip text-muted-foreground">
+                      {article.description}
+                    </p>
+                  </CardContent>
 
-                <CardFooter>
-                  <div className="flex flex-row flex-wrap gap-x-1 gap-y-2">
-                    {article.categories.map((category) => (
-                      <Badge key={category} className="whitespace-nowrap">
-                        {category}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardFooter>
-              </Card>
+                  <CardFooter>
+                    <div className="flex flex-row flex-wrap gap-x-1 gap-y-2">
+                      {article.categories.map((category) => (
+                        <Badge key={category} className="whitespace-nowrap">
+                          {category}
+                        </Badge>
+                      ))}
+                    </div>
+                  </CardFooter>
+                </Card>
+              </MotionDiv>
             </Link>
           ))}
         </section>

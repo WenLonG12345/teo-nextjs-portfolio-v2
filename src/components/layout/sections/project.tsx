@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { MotionDiv } from "@/utils/motion-div";
 
 const ProjectSection = () => {
   const t = useTranslations();
@@ -49,46 +50,48 @@ const ProjectSection = () => {
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {projects.map((project) => (
                 <Link key={project.name} href={project.link || ""}>
-                  <Card className="bg-muted/50 dark:bg-card">
-                    <CardContent className="p-0">
-                      <Image
-                        src={project.imageUrl}
-                        alt={project.name}
-                        width={0}
-                        height={0}
-                        sizes="100vw"
-                        style={{
-                          width: "100%",
-                          height: "auto",
-                          aspectRatio: "16/9",
-                          objectFit: "cover",
-                          borderTopLeftRadius: "0.5rem",
-                          borderTopRightRadius: "0.5rem",
-                        }}
-                      />
-                    </CardContent>
+                  <MotionDiv whileHover={{ y: -5 }}>
+                    <Card className="bg-muted/50 dark:bg-card hover:bg-muted">
+                      <CardContent className="p-0">
+                        <Image
+                          src={project.imageUrl}
+                          alt={project.name}
+                          width={0}
+                          height={0}
+                          sizes="100vw"
+                          style={{
+                            width: "100%",
+                            height: "auto",
+                            aspectRatio: "16/9",
+                            objectFit: "cover",
+                            borderTopLeftRadius: "0.5rem",
+                            borderTopRightRadius: "0.5rem",
+                          }}
+                        />
+                      </CardContent>
 
-                    <CardHeader>
-                      <div className="flex flex-row items-center gap-4">
-                        <div className="flex flex-col">
-                          <CardTitle className="text-lg">
-                            {project.name}
-                          </CardTitle>
-                          <div className="text-sm text-muted-foreground">
-                            <div className="flex flex-col justify-between h-[150px]">
-                              <div>{project.summary}</div>
+                      <CardHeader>
+                        <div className="flex flex-row items-center gap-4">
+                          <div className="flex flex-col">
+                            <CardTitle className="text-lg">
+                              {project.name}
+                            </CardTitle>
+                            <div className="text-sm text-muted-foreground">
+                              <div className="flex flex-col justify-between h-[150px]">
+                                <div>{project.summary}</div>
 
-                              <div className="flex flex-wrap gap-1">
-                                {project.tech?.map((stack) => (
-                                  <Badge key={stack}>{stack}</Badge>
-                                ))}
+                                <div className="flex flex-wrap gap-1">
+                                  {project.tech?.map((stack) => (
+                                    <Badge key={stack}>{stack}</Badge>
+                                  ))}
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </CardHeader>
-                  </Card>
+                      </CardHeader>
+                    </Card>
+                  </MotionDiv>
                 </Link>
               ))}
             </div>

@@ -14,6 +14,7 @@ import { METADATA } from "@/constants";
 import ReactQueryProvider from "@/components/layout/react-query-provider";
 
 import "./globals.css";
+import ClickSpark from "@/components/click-spark";
 
 const outfit = Outfit({ subsets: ["latin"] });
 
@@ -72,9 +73,11 @@ export default async function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              <Navbar />
-              {children}
-              <Footer />
+              <ClickSpark>
+                <Navbar />
+                {children}
+                <Footer />
+              </ClickSpark>
             </ThemeProvider>
             <Analytics />
             <SpeedInsights />

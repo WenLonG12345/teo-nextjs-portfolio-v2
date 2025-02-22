@@ -8,7 +8,7 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { getGithubRepos } from "@/utils/api";
-import { MotionSection } from "@/utils/motion-div";
+import { MotionDiv, MotionSection } from "@/utils/motion-div";
 import { useQuery } from "@tanstack/react-query";
 import { FiGithub } from "react-icons/fi";
 import { BiStar, BiGitRepoForked } from "react-icons/bi";
@@ -66,32 +66,34 @@ const ReposClient = () => {
         <section className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {repos?.map((repo) => (
             <Link key={repo.name} href={repo.clone_url} target="_blank">
-              <Card className="h-full hover:bg-muted">
-                <CardHeader className="flex flex-col justify-between space-y-0 md:items-center md:flex-row">
-                  <div className="flex flex-row items-center gap-2">
-                    <FiGithub />
-                    {repo.name}
-                  </div>
-                  <div className="flex flex-row items-center gap-2">
-                    <div className="flex flex-row items-center gap-1">
-                      <BiStar />
-                      {repo.stargazers_count}
+              <MotionDiv whileHover={{ y: -5 }} className="h-full">
+                <Card className="h-full hover:bg-muted">
+                  <CardHeader className="flex flex-col justify-between space-y-0 md:items-center md:flex-row">
+                    <div className="flex flex-row items-center gap-2">
+                      <FiGithub />
+                      {repo.name}
                     </div>
-                    <div className="flex flex-row items-center gap-1">
-                      <BiGitRepoForked />
-                      {repo.forks_count}
+                    <div className="flex flex-row items-center gap-2">
+                      <div className="flex flex-row items-center gap-1">
+                        <BiStar />
+                        {repo.stargazers_count}
+                      </div>
+                      <div className="flex flex-row items-center gap-1">
+                        <BiGitRepoForked />
+                        {repo.forks_count}
+                      </div>
                     </div>
-                  </div>
-                </CardHeader>
+                  </CardHeader>
 
-                <CardContent>
-                  <p className="text-muted-foreground">{repo.description}</p>
-                </CardContent>
+                  <CardContent>
+                    <p className="text-muted-foreground">{repo.description}</p>
+                  </CardContent>
 
-                <CardFooter>
-                  {repo.language && <Badge>{repo.language}</Badge>}
-                </CardFooter>
-              </Card>
+                  <CardFooter>
+                    {repo.language && <Badge>{repo.language}</Badge>}
+                  </CardFooter>
+                </Card>
+              </MotionDiv>
             </Link>
           ))}
         </section>

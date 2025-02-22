@@ -90,7 +90,7 @@ const HeroSection = () => {
               </Link>
             </div>
 
-            <Card className="flex flex-col items-center mt-5 transition-all delay-75 md:items-start bg-muted/50 dark:bg-card hover:bg-background group/number">
+            {/* <Card className="flex flex-col items-center mt-5 transition-all delay-75 md:items-start bg-muted/50 dark:bg-card hover:bg-background group/number">
               <CardHeader className="flex flex-row items-center gap-2 space-y-0">
                 <SiSpotify color="#1ED760" className="rotating" />
                 <div>Spotify</div>
@@ -119,7 +119,7 @@ const HeroSection = () => {
                   </div>
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
           </MotionSection>
         </div>
       </div>

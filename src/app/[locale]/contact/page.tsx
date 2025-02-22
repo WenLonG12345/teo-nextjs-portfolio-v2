@@ -91,28 +91,15 @@ const ContactPage = () => {
           </div>
 
           <div className="flex flex-col gap-4">
-            <div>
-              <div className="flex gap-2 mb-1">
-                <Mail />
-                <div className="font-bold">Mail Us</div>
-              </div>
-
-              <Link href={`mailto:${SITE_CONFIG.contact.email}`}>
-                {SITE_CONFIG.contact.email}
-              </Link>
+            <div className="flex flex-row gap-2">
+              {SITE_CONFIG.footer.accounts.map((acc) => (
+                <Link key={acc?.name} href={acc?.url}>
+                  <Button variant="outline" size="icon" className="border-none">
+                    {acc?.icon}
+                  </Button>
+                </Link>
+              ))}
             </div>
-
-            {/* <div>
-              <div className="flex gap-2">
-                <Clock />
-                <div className="font-bold">Visit us</div>
-              </div>
-
-              <div>
-                <div>Monday - Friday</div>
-                <div>8AM - 4PM</div>
-              </div>
-            </div> */}
           </div>
         </MotionSection>
 
@@ -125,8 +112,8 @@ const ContactPage = () => {
             },
           }}
         >
-          <Card className="bg-muted/60 dark:bg-card">
-            <CardHeader className="text-2xl text-primary"> </CardHeader>
+          <Card>
+            <CardHeader className="text-2xl text-primary"/>
             <CardContent>
               <Form {...form}>
                 <form
@@ -249,7 +236,7 @@ const ContactPage = () => {
               </Form>
             </CardContent>
 
-            <CardFooter></CardFooter>
+            <CardFooter/>
           </Card>
         </MotionSection>
       </section>
