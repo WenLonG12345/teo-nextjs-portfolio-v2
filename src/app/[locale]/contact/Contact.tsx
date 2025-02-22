@@ -6,7 +6,6 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { Mail } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,6 +28,9 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { MotionSection } from "@/utils/motion-div";
+import { SITE_CONFIG } from "@/constants";
+import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 const formSchema = z.object({
   firstName: z.string().min(2).max(255),
@@ -38,7 +40,8 @@ const formSchema = z.object({
   message: z.string(),
 });
 
-export const ContactSection = () => {
+const ContactClient = () => {
+  const t = useTranslations();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,12 +55,13 @@ export const ContactSection = () => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const { firstName, lastName, email, subject, message } = values;
-    const mailToLink = `mailto:dev.wannadev@gmail.com?subject=${subject}&body=Hello I am ${firstName} ${lastName}, my Email is ${email}. %0D%0A${message}`;
+    const mailToLink = `mailto:${SITE_CONFIG.contact.email}?subject=${subject}&body=Hello I am ${firstName} ${lastName}, my Email is ${email}. %0D%0A${message}`;
     window.location.href = mailToLink;
   }
 
   return (
-    <section id="contact" className="container py-24 sm:py-32">
+    <div className="container py-24 sm:py-32">
+      <div className="absolute top-2 lg:-top-20 left-1/2 transform -translate-x-1/2 w-[90%] mx-auto h-24 lg:h-60 bg-primary/50 rounded-full blur-3xl" />
       <section className="grid grid-cols-1 gap-8 md:grid-cols-2">
         <MotionSection
           animationProps={{
@@ -70,62 +74,31 @@ export const ContactSection = () => {
         >
           <div className="mb-4">
             <h2 className="mb-2 text-lg tracking-wider text-primary">
-              Contact
+              {t("contact.badge")}
             </h2>
 
             <h2 className="text-3xl font-bold md:text-4xl">
-              Get in Touch with Us
+              {t("contact.title")}
             </h2>
           </div>
           <div className="mb-2 text-muted-foreground lg:w-5/6">
-            {`Have a project in mind or need more information? We're here to help!
-            `}
+            {t("contact.description_1")}
           </div>
 
           <div className="mb-8 text-muted-foreground lg:w-5/6">
-            {`Reach out to us for any inquiries, and we'll get back to you
-            promptly.`}
+            {t("contact.description_2")}
           </div>
 
           <div className="flex flex-col gap-4">
-            {/* <div>
-              <div className="flex gap-2 mb-1">
-                <Building2 />
-                <div className="font-bold">Find us</div>
-              </div>
-
-              <div>742 Evergreen Terrace, Springfield, IL 62704</div>
+            <div className="flex flex-row gap-2">
+              {SITE_CONFIG.footer.accounts.map((acc) => (
+                <Link key={acc?.name} href={acc?.url}>
+                  <Button variant="outline" size="icon" className="border-none">
+                    {acc?.icon}
+                  </Button>
+                </Link>
+              ))}
             </div>
-
-            <div>
-              <div className="flex gap-2 mb-1">
-                <Phone />
-                <div className="font-bold">Call us</div>
-              </div>
-
-              <div>+1 (619) 123-4567</div>
-            </div> */}
-
-            <div>
-              <div className="flex gap-2 mb-1">
-                <Mail />
-                <div className="font-bold">Mail Us</div>
-              </div>
-
-              <div>dev.wannadev@gmail.com</div>
-            </div>
-
-            {/* <div>
-              <div className="flex gap-2">
-                <Clock />
-                <div className="font-bold">Visit us</div>
-              </div>
-
-              <div>
-                <div>Monday - Friday</div>
-                <div>8AM - 4PM</div>
-              </div>
-            </div> */}
           </div>
         </MotionSection>
 
@@ -138,8 +111,8 @@ export const ContactSection = () => {
             },
           }}
         >
-          <Card className="bg-muted/60 dark:bg-card">
-            <CardHeader className="text-2xl text-primary"> </CardHeader>
+          <Card>
+            <CardHeader className="text-2xl text-primary" />
             <CardContent>
               <Form {...form}>
                 <form
@@ -152,9 +125,12 @@ export const ContactSection = () => {
                       name="firstName"
                       render={({ field }) => (
                         <FormItem className="w-full">
-                          <FormLabel>First Name</FormLabel>
+                          <FormLabel>{t("contact.first_name")}</FormLabel>
                           <FormControl>
-                            <Input placeholder="First Name" {...field} />
+                            <Input
+                              placeholder={t("contact.first_name")}
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -165,9 +141,12 @@ export const ContactSection = () => {
                       name="lastName"
                       render={({ field }) => (
                         <FormItem className="w-full">
-                          <FormLabel>Last Name</FormLabel>
+                          <FormLabel>{t("contact.last_name")}</FormLabel>
                           <FormControl>
-                            <Input placeholder="Last Name" {...field} />
+                            <Input
+                              placeholder={t("contact.last_name")}
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -181,11 +160,11 @@ export const ContactSection = () => {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Email</FormLabel>
+                          <FormLabel>{t("contact.email")}</FormLabel>
                           <FormControl>
                             <Input
                               type="email"
-                              placeholder="Email Address"
+                              placeholder={t("contact.email")}
                               {...field}
                             />
                           </FormControl>
@@ -201,7 +180,7 @@ export const ContactSection = () => {
                       name="subject"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Subject</FormLabel>
+                          <FormLabel>{t("contact.subject")}</FormLabel>
                           <Select
                             onValueChange={field.onChange}
                             defaultValue={field.value}
@@ -213,19 +192,19 @@ export const ContactSection = () => {
                             </FormControl>
                             <SelectContent>
                               <SelectItem value="Project Inquiry">
-                                Project Inquiry
+                                {t("contact.project_inquiry")}
                               </SelectItem>
                               <SelectItem value="Web Development">
-                                Web Development
+                                {t("contact.web_development")}
                               </SelectItem>
                               <SelectItem value="Mobile Development">
-                                Mobile Development
+                                {t("contact.mobile_development")}
                               </SelectItem>
-                              <SelectItem value="Figma Design">
-                                Figma Design
+                              <SelectItem value="SEO and Website Ranking">
+                                {t("contact.seo_and_website_ranking")}
                               </SelectItem>
                               <SelectItem value="API Development">
-                                API Development
+                                {t("contact.api_development")}
                               </SelectItem>
                             </SelectContent>
                           </Select>
@@ -241,7 +220,7 @@ export const ContactSection = () => {
                       name="message"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Message</FormLabel>
+                          <FormLabel>{t("contact.message")}</FormLabel>
                           <FormControl>
                             <Textarea
                               rows={5}
@@ -257,15 +236,17 @@ export const ContactSection = () => {
                     />
                   </div>
 
-                  <Button className="mt-4">Send message</Button>
+                  <Button className="mt-4">{t("contact.send_message")}</Button>
                 </form>
               </Form>
             </CardContent>
 
-            <CardFooter></CardFooter>
+            <CardFooter />
           </Card>
         </MotionSection>
       </section>
-    </section>
+    </div>
   );
 };
+
+export default ContactClient;

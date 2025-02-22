@@ -26,6 +26,25 @@
   "about": {
     "badge": "About Me",
     "title_career": "Career",
-    "summary_career": "A brief overview of my professional journey, highlighting key roles and achievements."
+    "title_education": "Education",
+    "summary_career": "An overview of my professional journey, showcasing significant roles and accomplishments.",
+    "summary_education": "An overview of my educational background, highlighting important courses and achievements."
+  },
+  "contact": {
+    "badge": "Contact",
+    "title": "Get in Touch with Me",
+    "description_1": "Have a project in mind or need more information? I am here to help!",
+    "description_2": "Reach out to me for any inquiries, and I'll get back to you promptly.",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "send_message": "Send Message",
+    "project_inquiry": "Project Inquiry",
+    "web_development": "Web Development",
+    "mobile_development": "Mobile Development",
+    "seo_and_website_ranking": "SEO and Website Ranking",
+    "api_development": "API Development"
   }
 }

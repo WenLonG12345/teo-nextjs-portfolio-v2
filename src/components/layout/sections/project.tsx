@@ -37,7 +37,6 @@ const ProjectSection = () => {
           <TabsList className="h-full p-2">
             {Object.entries(PROJECT_LIST).map(([category, projects]) => (
               <TabsTrigger
-                className="text-lg"
                 key={category}
                 value={category}
               >{`${t(category)}`}</TabsTrigger>

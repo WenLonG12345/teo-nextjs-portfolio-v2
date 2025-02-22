@@ -22,7 +22,7 @@ export const getGithubRepos = async (username: string): Promise<IGitRepo[]> => {
 
     let result = repos
       ?.sort((a, b) => b.stargazers_count - a.stargazers_count)
-      .slice(0, 8);
+      .slice(0, 10);
     return result;
   } catch (err) {
     console.error(err);
