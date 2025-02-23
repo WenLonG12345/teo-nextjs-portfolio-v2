@@ -22,6 +22,7 @@ import ToggleLanguage from "./toggle-language";
 import { Link, usePathname } from "@/i18n/routing";
 import { cn } from "@/utils/cn";
 import { useTranslations } from "next-intl";
+import { LuLink } from "react-icons/lu";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -115,6 +116,12 @@ export const Navbar = () => {
       <div className="flex flex-row items-center gap-1">
         <ToggleTheme />
         <ToggleLanguage />
+        <Link href="https://v1.teowenlong.com" target="_blank">
+          <Button variant={"secondary"} >
+            <LuLink size={20} className="mr-2" />
+            v1
+          </Button>
+        </Link>
       </div>
     </header>
   );
