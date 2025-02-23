@@ -10,6 +10,12 @@ import {
 import { MotionDiv, MotionSection } from "@/utils/motion-div";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { AccordionContent } from "@radix-ui/react-accordion";
 
 const CareerTabs = () => {
   const t = useTranslations();
@@ -56,40 +62,50 @@ const CareerTabs = () => {
             key={career.title}
           >
             <Card className="hover:bg-muted">
-              <CardHeader>
-                <div className="flex flex-col justify-between gap-3 space-y-0 md:items-center md:flex-row">
-                  <div className="flex flex-row items-center gap-3">
-                    <Image
-                      src={career.logo}
-                      alt={career.alt}
-                      width={70}
-                      height={70}
-                      className="object-cover rounded-full"
-                    />
-                    <div>
-                      <div className="text-xl font-semibold">
-                        {career.title}
+              <Accordion type="single" collapsible>
+                <AccordionItem value={career.title}>
+                  <AccordionTrigger>
+                    <CardHeader className="w-full">
+                      <div className="flex flex-col justify-between gap-3 space-y-0 md:items-center md:flex-row">
+                        <div className="flex flex-row items-center gap-3">
+                          <Image
+                            src={career.logo}
+                            alt={career.alt}
+                            width={70}
+                            height={70}
+                            className="object-cover rounded-full"
+                          />
+                          <div className="text-left">
+                            <div className="text-xl font-semibold">
+                              {career.title}
+                            </div>
+                            <div className="text-muted-foreground">
+                              {career.role}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="items-start self-start text-muted-foreground">
+                          {career.period}
+                        </div>
                       </div>
-                      <div className="text-muted-foreground">{career.role}</div>
-                    </div>
-                  </div>
+                    </CardHeader>
+                  </AccordionTrigger>
 
-                  <div className="items-start self-start text-muted-foreground">
-                    {career.period}
-                  </div>
-                </div>
-              </CardHeader>
-
-              <CardContent>
-                <ul className="ml-5 text-sm">
-                  {(locale === "en"
-                    ? career.job_scope
-                    : career.job_scope_zh
-                  )?.map((job) => (
-                    <li key={job}>{job}</li>
-                  ))}
-                </ul>
-              </CardContent>
+                  <AccordionContent>
+                    <CardContent>
+                      <ul className="ml-5 text-sm">
+                        {(locale === "en"
+                          ? career.job_scope
+                          : career.job_scope_zh
+                        )?.map((job) => (
+                          <li key={job}>{job}</li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
 
               <CardFooter className="flex flex-row flex-wrap gap-1">
                 {career.skills?.map((skill) => (
