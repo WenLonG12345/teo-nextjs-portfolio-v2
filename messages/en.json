@@ -4,7 +4,8 @@
     "repo": "Repositories",
     "article": "Articles",
     "about": "About",
-    "contact": "Contact"
+    "contact": "Contact",
+    "switch_to_v1": "Switch to V1"
   },
   "home": {
     "hero_1": "Hey, I am",

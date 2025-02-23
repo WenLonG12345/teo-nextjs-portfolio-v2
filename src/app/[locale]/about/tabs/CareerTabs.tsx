@@ -28,7 +28,7 @@ const CareerTabs = () => {
           {t("about.title_career")}
         </h2>
 
-        <h3 className="mx-auto text-base md:text-xl text-center md:w-1/2 text-muted-foreground">
+        <h3 className="mx-auto text-base text-center md:text-xl md:w-1/2 text-muted-foreground">
           {t("about.summary_career")}
         </h3>
       </MotionSection>
@@ -49,28 +49,31 @@ const CareerTabs = () => {
             key={career.title}
           >
             <Card className="hover:bg-muted">
-              <CardHeader className="flex flex-col justify-between space-y-0 md:items-center md:flex-row gap-3">
-                <div className="flex flex-row gap-3 items-center">
-                  <div className="relative h-[70px] w-[70px]">
+              <CardHeader>
+                <div className="flex flex-col justify-between gap-3 space-y-0 md:items-center md:flex-row">
+                  <div className="flex flex-row items-center gap-3">
                     <Image
                       src={career.logo}
                       alt={career.alt}
-                      fill
+                      width={70}
+                      height={70}
                       className="object-cover rounded-full"
                     />
+                    <div>
+                      <div className="text-xl font-semibold">
+                        {career.title}
+                      </div>
+                      <div className="text-muted-foreground">{career.role}</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="text-xl font-semibold">{career.title}</div>
-                    <div className="text-muted-foreground">{career.role}</div>
-                  </div>
-                </div>
 
-                <div className="items-start self-start text-muted-foreground">
-                  {career.period}
+                  <div className="items-start self-start text-muted-foreground">
+                    {career.period}
+                  </div>
                 </div>
               </CardHeader>
 
-              <CardFooter className="flex flex-row gap-1 flex-wrap">
+              <CardFooter className="flex flex-row flex-wrap gap-1">
                 {career.skills?.map((skill) => (
                   <Badge key={skill}>{skill}</Badge>
                 ))}

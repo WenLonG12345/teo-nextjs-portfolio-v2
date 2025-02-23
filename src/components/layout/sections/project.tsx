@@ -3,13 +3,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PROJECT_LIST } from "@/constants";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
+import { useLocale, useTranslations } from "next-intl";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MotionDiv, MotionSection } from "@/utils/motion-div";
 
 const ProjectSection = () => {
   const t = useTranslations();
+  const locale = useLocale();
 
   return (
     <section id="projects" className="container py-24 sm:py-32">
@@ -79,7 +80,11 @@ const ProjectSection = () => {
                             </CardTitle>
                             <div className="text-sm text-muted-foreground">
                               <div className="flex flex-col justify-between h-[150px]">
-                                <div>{project.summary}</div>
+                                <div>
+                                  {locale === "en"
+                                    ? project.summary
+                                    : project.summary_zh}
+                                </div>
 
                                 <div className="flex flex-wrap gap-1">
                                   {project.tech?.map((stack) => (

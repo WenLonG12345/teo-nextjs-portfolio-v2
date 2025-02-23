@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useTranslations } from "next-intl";
 import { MotionSection } from "@/utils/motion-div";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { SITE_CONFIG } from "@/constants";
 import { FaArrowDown } from "react-icons/fa";
 

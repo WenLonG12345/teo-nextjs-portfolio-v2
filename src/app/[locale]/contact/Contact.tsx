@@ -29,8 +29,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { MotionSection } from "@/utils/motion-div";
 import { SITE_CONFIG } from "@/constants";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
 
 const formSchema = z.object({
   firstName: z.string().min(2).max(255),

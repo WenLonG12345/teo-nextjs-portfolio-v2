@@ -97,6 +97,7 @@ export const PROJECT_LIST: {
     imageUrl: string;
     alt: string;
     summary: string;
+    summary_zh?: string;
     link?: string;
     tech: string[];
   }[];
@@ -108,6 +109,8 @@ export const PROJECT_LIST: {
       alt: "AstroVortals",
       summary:
         "Discover Malaysia's premier news portals, offering comprehensive coverage of diverse topics and boasting over 2 million monthly active users (MAU)",
+      summary_zh:
+        "探索马来西亚首屈一指的新闻门户网站，提供涵盖各种主题的全面报道，并拥有超过 200 万月活跃用户 (MAU)。",
       link: "https://www.astroawani.com/",
       tech: ["React", "ReactQuery", "SCSS", "AWS", "Redux", "Typescript"],
     },
@@ -117,6 +120,8 @@ export const PROJECT_LIST: {
       alt: "eco-design-system",
       summary:
         "Design System built with StorybookJS based on design token and publish as open-source in NPM",
+      summary_zh:
+        "基于设计令牌使用 StorybookJS 构建的设计系统，并在 NPM 中以开源形式发布。",
       link: "https://meraki-design-system.eco.astro.com.my/",
       tech: ["React", "StorybookJS", "SCSS", "Emotion", "Typescript"],
     },
@@ -126,6 +131,7 @@ export const PROJECT_LIST: {
       alt: "dfap",
       summary:
         "CMS Assistant Portal for building website with components and make configuration easier",
+      summary_zh: "用于构建带有组件的网站并简化配置的 CMS 辅助门户。",
       link: "https://de-digital-fortress-assistant-stg.eco.astro.com.my/",
       tech: ["React", "ReactQuery", "TailwindCSS", "MantineUI", "Typescript"],
     },
@@ -136,6 +142,7 @@ export const PROJECT_LIST: {
       alt: "chativo",
       summary:
         "Enterprise ready live-chat base customer support & engagement software",
+      summary_zh: "企业级实时聊天客户支持和互动软件。",
       tech: ["Android", "Kotlin", "Android Jetpack", "Coroutine Flow"],
       link: "https://play.google.com/store/apps/details?id=io.chativo.chat",
     },
@@ -146,6 +153,7 @@ export const PROJECT_LIST: {
       alt: "chativo-v",
       summary:
         "Live-chat specifically designed for visitors to communicate with real-time agent instantly",
+      summary_zh: "专为访客设计的实时聊天，可立即与实时代理沟通。",
       tech: ["React Native", "Javascript", "Redux", "Redux Saga", "RealmJS"],
       link: "https://play.google.com/store/apps/details?id=io.chativo.visitor",
     },
@@ -157,6 +165,8 @@ export const PROJECT_LIST: {
       alt: "ideasss",
       summary:
         "NFT Platform for Creativity and Ideas,  First marketplace to connect demanders and designers through transparent competition",
+      summary_zh:
+        "创意和想法的 NFT 平台，第一个通过透明竞争连接需求者和设计师的市场。",
       link: "https://ideasss.com/",
       tech: ["React", "ReactQuery", "TailwindCSS", "Typescript", "Zustand"],
     },
@@ -166,6 +176,8 @@ export const PROJECT_LIST: {
       alt: "3commasclub",
       summary:
         "NFC business card builder linked with unique NFT. Build business profile embed with NFC that allows others to scan and connect.",
+      summary_zh:
+        "与独特 NFT 关联的 NFC 名片构建器。构建嵌入 NFC 的商业档案，允许其他人扫描和连接。",
       link: "https://nextjs-3commasclub-frontend.vercel.app/",
       tech: ["NextJS", "ChakraUI", "Ant Design", "Ant Design Pro"],
     },
@@ -175,6 +187,8 @@ export const PROJECT_LIST: {
       alt: "klusterx",
       summary:
         "Online Gaming Player Portal, built with NextJS, TailwindCSS and MantineUI",
+      summary_zh:
+        "在线游戏玩家门户，使用 NextJS、TailwindCSS 和 MantineUI 构建。",
       tech: ["NextJS", "TailwindCSS", "MantineUI", "Zustand"],
     },
     {
@@ -182,6 +196,7 @@ export const PROJECT_LIST: {
       imageUrl: "/images/klusterx_tenant.png",
       alt: "klusterx",
       summary: "Online Gaming Tenant Portal, built with Ant Design Pro",
+      summary_zh: "在线游戏租户门户，使用 Ant Design Pro 构建。",
       tech: ["UmiJS", "Ant Design", "Ant Design Pro"],
     },
   ],
@@ -192,6 +207,8 @@ export const PROJECT_LIST: {
       alt: "date-picker",
       summary:
         "React Date Dropdown library. Highly customisable and provide individuals components for years, months and days",
+      summary_zh:
+        "React 日期下拉库。高度可定制，并为年、月和日提供单独的组件。",
       tech: ["React", "StorybookJS", "NPM", "Typescript"],
     },
     {
@@ -199,6 +216,7 @@ export const PROJECT_LIST: {
       imageUrl: "/images/cm-script.png",
       alt: "klusterx",
       summary: "CLI script for linting your commit message 🎉",
+      summary_zh: "用于检查提交消息的 CLI 脚本 🎉。",
       tech: ["Javascript", "Bash", "CLI"],
     },
   ],

@@ -13,7 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import { FiGithub } from "react-icons/fi";
 import { BiStar, BiGitRepoForked } from "react-icons/bi";
 import React from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 
 const ReposClient = () => {

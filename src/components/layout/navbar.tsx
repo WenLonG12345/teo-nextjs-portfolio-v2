@@ -74,6 +74,21 @@ export const Navbar = () => {
                     <Link href={href}>{t(`${label}`)}</Link>
                   </Button>
                 ))}
+                <Button
+                  onClick={() => setIsOpen(false)}
+                  asChild
+                  variant="ghost"
+                  className="justify-start text-base"
+                >
+                  <Link
+                    href="https://v1.teowenlong.com"
+                    target="_blank"
+                    className="flex flex-row gap-2"
+                  >
+                    {t("navbar.switch_to_v1")}
+                    <LuLink size={20} />
+                  </Link>
+                </Button>
               </div>
             </div>
           </SheetContent>
@@ -116,8 +131,12 @@ export const Navbar = () => {
       <div className="flex flex-row items-center gap-1">
         <ToggleTheme />
         <ToggleLanguage />
-        <Link href="https://v1.teowenlong.com" target="_blank">
-          <Button variant={"secondary"} >
+        <Link
+          href="https://v1.teowenlong.com"
+          target="_blank"
+          className="hidden md:block"
+        >
+          <Button variant={"secondary"}>
             <LuLink size={20} className="mr-2" />
             v1
           </Button>
