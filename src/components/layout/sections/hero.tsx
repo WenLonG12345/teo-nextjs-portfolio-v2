@@ -1,32 +1,19 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { FaArrowRightLong } from "react-icons/fa6";
 import { useTranslations } from "next-intl";
 import { MotionSection } from "@/utils/motion-div";
 import Link from "next/link";
 import { SITE_CONFIG } from "@/constants";
-import { SiSpotify } from "react-icons/si";
-import Image from "next/image";
-import { useQuery } from "@tanstack/react-query";
-import { getSpotifyNowPlaying } from "@/utils/api";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { FaArrowDown } from "react-icons/fa";
 
 const HeroSection = () => {
   const t = useTranslations();
-  const spotifyQuery = useQuery({
-    queryKey: ["spotify"],
-    queryFn: getSpotifyNowPlaying,
-    refetchOnWindowFocus: true,
-    refetchOnReconnect: true,
-    refetchOnMount: true,
-  });
-
-  const song = spotifyQuery?.data;
 
   return (
     <section className="container w-full">
-      <div className="grid gap-8 py-32 mx-auto place-items-center lg:max-w-screen-xl md:py-56">
+      <div className="grid gap-8 py-32 mx-auto place-items-center lg:max-w-screen-xl md:py-64">
         <div className="absolute top-2 lg:-top-20 left-1/2 transform -translate-x-1/2 w-[90%] mx-auto h-24 lg:h-60 bg-primary/50 rounded-full blur-3xl" />
         <div className="space-y-6 text-center">
           <MotionSection
@@ -62,20 +49,19 @@ const HeroSection = () => {
             }}
           >
             <p className="max-w-screen-sm mx-auto text-xl text-muted-foreground">
-              Frontend Engineer from Malaysia 🇲🇾
+              {t("home.hero_2")}
             </p>
 
             <p className="max-w-screen-sm mx-auto text-xl text-muted-foreground">
-              Focused on Web & Mobile Development (Android & iOS). Passionate
-              about beautiful UI/UX and a Tech Writer on Medium. 🔥
+              {t("home.hero_3")}
             </p>
 
             <div className="mt-4 space-y-4 md:space-x-4">
               <Link href={SITE_CONFIG.resume.url} target="_blank">
                 <Button className="w-5/6 h-full text-lg font-semibold md:w-1/4 group/arrow">
                   <i className="mr-2">{SITE_CONFIG.resume.icon}</i>
-                  {SITE_CONFIG.resume.name}
-                  <ArrowRight className="ml-2 transition-transform size-5 group-hover/arrow:translate-x-1" />
+                  {t(`${SITE_CONFIG.resume.name}`)}
+                  <FaArrowRightLong className="ml-2 transition-transform size-5 group-hover/arrow:translate-x-1" />
                 </Button>
               </Link>
 
@@ -85,41 +71,16 @@ const HeroSection = () => {
                   className="w-5/6 h-full mt-3 text-lg font-semibold md:mt-0 md:w-1/4"
                 >
                   <i className="mr-2">{SITE_CONFIG.contact.icon}</i>
-                  {SITE_CONFIG.contact.name}
+                  {t(`${SITE_CONFIG.contact.name}`)}
+                </Button>
+              </Link>
+
+              <Link href={"#skills"} target="_self" className="hidden md:inline">
+                <Button className="">
+                  <FaArrowDown size={20} className="animate-bounce" />
                 </Button>
               </Link>
             </div>
-
-            {/* <Card className="flex flex-col items-center mt-5 transition-all delay-75 md:items-start bg-muted/50 dark:bg-card hover:bg-background group/number">
-              <CardHeader className="flex flex-row items-center gap-2 space-y-0">
-                <SiSpotify color="#1ED760" className="rotating" />
-                <div>Spotify</div>
-              </CardHeader>
-
-              <CardContent>
-                <div className="flex flex-col items-center gap-5 md:flex-row">
-                  {song?.isPlaying ? (
-                    <Image
-                      src={song?.albumImageUrl}
-                      alt={song?.album}
-                      width={70}
-                      height={70}
-                    />
-                  ) : (
-                    <SiSpotify size={70} color={"#1ED760"} />
-                  )}
-
-                  <div className="flex flex-col items-center gap-2 md:items-start">
-                    <CardTitle>
-                      {song?.isPlaying ? song?.title : "Not Listening"}
-                    </CardTitle>
-                    <div className="text-muted-foreground">
-                      {song?.isPlaying ? song?.artist : "Spotify"}
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card> */}
           </MotionSection>
         </div>
       </div>

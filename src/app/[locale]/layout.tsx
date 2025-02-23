@@ -41,6 +41,14 @@ export const metadata: Metadata = {
     description: METADATA.description,
     images: ["/og_image.png"],
   },
+  metadataBase: new URL(METADATA.url),
+  alternates: {
+    canonical: "/",
+    languages: {
+      en: "/",
+      zh: "/zh",
+    },
+  },
 };
 
 export default async function RootLayout({

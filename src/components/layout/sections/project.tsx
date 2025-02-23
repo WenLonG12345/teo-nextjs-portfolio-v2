@@ -1,25 +1,28 @@
 "use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
-import { PROJECT_LIST, projectList } from "@/constants";
+import { PROJECT_LIST } from "@/constants";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MotionDiv } from "@/utils/motion-div";
+import { MotionDiv, MotionSection } from "@/utils/motion-div";
 
 const ProjectSection = () => {
   const t = useTranslations();
 
   return (
     <section id="projects" className="container py-24 sm:py-32">
-      <div className="mb-8 text-center">
+      <MotionSection
+        animationProps={{
+          initial: { opacity: 0, y: 50 },
+          whileInView: { opacity: 1, y: 0 },
+          transition: {
+            duration: 0.5,
+          },
+          className: "mb-8 text-center",
+        }}
+      >
         <h2 className="mb-2 text-lg tracking-wider text-center text-primary">
           {t("project.badge")}
         </h2>
@@ -27,7 +30,7 @@ const ProjectSection = () => {
         <h2 className="mb-4 text-3xl font-bold text-center md:text-4xl">
           {t("project.description_1")}
         </h2>
-      </div>
+      </MotionSection>
 
       <Tabs
         defaultValue={Object.keys(PROJECT_LIST)[0]}
@@ -36,10 +39,9 @@ const ProjectSection = () => {
         <div className="flex justify-center">
           <TabsList className="h-full p-2">
             {Object.entries(PROJECT_LIST).map(([category, projects]) => (
-              <TabsTrigger
-                key={category}
-                value={category}
-              >{`${t(category)}`}</TabsTrigger>
+              <TabsTrigger key={category} value={category}>{`${t(
+                category
+              )}`}</TabsTrigger>
             ))}
           </TabsList>
         </div>

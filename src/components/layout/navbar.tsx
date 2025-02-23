@@ -1,15 +1,13 @@
 "use client";
-import { ChevronsDown, Github, Menu } from "lucide-react";
+import { GiHamburgerMenu } from "react-icons/gi";
 import React from "react";
 import {
   Sheet,
   SheetContent,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
-import { Separator } from "../ui/separator";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -23,9 +21,11 @@ import { NAV_ITEM_LIST } from "@/constants";
 import ToggleLanguage from "./toggle-language";
 import { Link, usePathname } from "@/i18n/routing";
 import { cn } from "@/utils/cn";
+import { useTranslations } from "next-intl";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const t = useTranslations();
   const pathname = usePathname();
   return (
     <header className="shadow-md bg-opacity-15 w-[90%] md:w-[70%] lg:w-[70%] lg:max-w-screen-xl top-5 mx-auto sticky border border-secondary z-40 rounded-2xl flex justify-between items-center p-2 bg-card">
@@ -39,10 +39,13 @@ export const Navbar = () => {
       <div className="flex items-center lg:hidden">
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
-            <Menu
+            <Button
+              variant="secondary"
               onClick={() => setIsOpen(!isOpen)}
-              className="cursor-pointer lg:hidden"
-            />
+              className="lg:hidden"
+            >
+              <GiHamburgerMenu size={20} />
+            </Button>
           </SheetTrigger>
 
           <SheetContent
@@ -67,24 +70,24 @@ export const Navbar = () => {
                     variant="ghost"
                     className="justify-start text-base"
                   >
-                    <Link href={href}>{label}</Link>
+                    <Link href={href}>{t(`${label}`)}</Link>
                   </Button>
                 ))}
               </div>
             </div>
-
-            {/* <SheetFooter className="flex-col items-start justify-start sm:flex-col">
-              <Separator className="mb-2" />
-
-              <ToggleTheme />
-            </SheetFooter> */}
           </SheetContent>
         </Sheet>
         <Link
           href="/"
-          className="flex flex-row items-center gap-2 ml-2 text-lg font-bold"
+          className="flex flex-row items-center gap-2 ml-2 text-lg font-bold "
         >
-          <Image src="/logo.png" width={50} height={50} alt="logo" />
+          <Image
+            src="/logo.png"
+            width={50}
+            height={50}
+            alt="logo"
+            className="block lg:hidden"
+          />
         </Link>
       </div>
 
@@ -101,7 +104,7 @@ export const Navbar = () => {
                     pathname === href && "text-primary"
                   )}
                 >
-                  {label}
+                  {t(`${label}`)}
                 </Link>
               </NavigationMenuLink>
             ))}

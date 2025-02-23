@@ -1,6 +1,17 @@
 {
+  "navbar": {
+    "home": "Home",
+    "repo": "Repositories",
+    "article": "Articles",
+    "about": "About",
+    "contact": "Contact"
+  },
   "home": {
-    "hero_1": "Hey, I am"
+    "hero_1": "Hey, I am",
+    "hero_2": "Frontend Engineer from Malaysia 🇲🇾",
+    "hero_3": "Focused on Web & Mobile Development (Android & iOS). Passionate about beautiful UI/UX and a Tech Writer on Medium. 🔥",
+    "resume": "Resume",
+    "contact_me": "Contact Me"
   }, 
   "repo": {
     "badge": "Repositories",
@@ -46,5 +57,9 @@
     "mobile_development": "Mobile Development",
     "seo_and_website_ranking": "SEO and Website Ranking",
     "api_development": "API Development"
+  },
+  "skills": {
+    "badge": "Skills",
+    "title": "Top and latest technologies that I always use. 🛠️"
   }
 }

@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import React, { useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { useLocale } from "next-intl";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
@@ -13,20 +12,18 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { usePathname, useRouter } from "@/i18n/routing";
 import { useParams } from "next/navigation";
-import Image from "next/image";
+import { IoLanguage } from "react-icons/io5";
 
 export const LANGUAGE_OPTIONS = [
   {
     key: "en",
     shortTitle: "EN",
     longTitle: "English",
-    image: "/images/locales/en.png",
   },
   {
     key: "zh",
     shortTitle: "CH",
     longTitle: "简体中文",
-    image: "/images/locales/cn.png",
   },
 ];
 
@@ -54,17 +51,8 @@ const ToggleLanguage = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="secondary"
-          className=""
-        >
-          <Image
-            src={selectedLang?.image || ""}
-            alt={selectedLang?.longTitle || ""}
-            width={24}
-            height={24}
-            className="mr-2 rounded-full"
-          />
+        <Button variant="secondary" className="">
+          <IoLanguage className="mr-2" size={20} />
           {selectedLang?.shortTitle}
         </Button>
       </DropdownMenuTrigger>
@@ -76,13 +64,6 @@ const ToggleLanguage = () => {
               value={lang.key}
               className="flex flex-row items-center gap-2"
             >
-              <Image
-                src={lang.image}
-                alt={lang.longTitle}
-                width={24}
-                height={24}
-                className="rounded-full"
-              />
               {lang.longTitle}
             </DropdownMenuRadioItem>
           ))}

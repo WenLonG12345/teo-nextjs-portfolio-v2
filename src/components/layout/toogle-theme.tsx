@@ -1,6 +1,6 @@
 import { useTheme } from "next-themes";
 import { Button } from "../ui/button";
-import { Moon, Sun } from "lucide-react";
+import { LuMoon, LuSun } from "react-icons/lu";
 
 export const ToggleTheme = () => {
   const { theme, setTheme } = useTheme();
@@ -8,16 +8,11 @@ export const ToggleTheme = () => {
     <Button
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
       size="sm"
-      variant="ghost"
-      className="w-[40px]"
+      variant="secondary"
+      className="py-5"
     >
-      <div className="flex dark:hidden">
-        <Moon className="" />
-      </div>
-
-      <div className="hidden dark:flex">
-        <Sun className="" />
-      </div>
+      <LuMoon className="dark:hidden" size={20} />
+      <LuSun className="hidden dark:block" size={20} />
     </Button>
   );
 };
