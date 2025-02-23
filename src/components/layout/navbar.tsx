@@ -44,6 +44,7 @@ export const Navbar = () => {
               variant="secondary"
               onClick={() => setIsOpen(!isOpen)}
               className="lg:hidden"
+              aria-label="menu"
             >
               <GiHamburgerMenu size={20} />
             </Button>
