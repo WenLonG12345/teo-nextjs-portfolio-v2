@@ -57,26 +57,39 @@ const HeroSection = () => {
             </p>
 
             <div className="mt-4 space-y-4 md:space-x-4">
-              <Link href={SITE_CONFIG.resume.url} target="_blank">
-                <Button className="w-5/6 h-full text-lg font-semibold md:w-1/4 group/arrow">
+              <Link
+                href={SITE_CONFIG.resume.url}
+                target="_blank"
+                aria-label="resume"
+              >
+                <Button
+                  className="w-5/6 h-full text-lg font-semibold md:w-1/4 group/arrow"
+                  aria-label="resume"
+                >
                   <i className="mr-2">{SITE_CONFIG.resume.icon}</i>
                   {t(`${SITE_CONFIG.resume.name}`)}
                   <FaArrowRightLong className="ml-2 transition-transform size-5 group-hover/arrow:translate-x-1" />
                 </Button>
               </Link>
 
-              <Link href={SITE_CONFIG.contact.url}>
+              <Link href={SITE_CONFIG.contact.url} aria-label="contact me">
                 <Button
                   variant="secondary"
                   className="w-5/6 h-full mt-3 text-lg font-semibold md:mt-0 md:w-1/4"
+                  aria-label="contact me"
                 >
                   <i className="mr-2">{SITE_CONFIG.contact.icon}</i>
                   {t(`${SITE_CONFIG.contact.name}`)}
                 </Button>
               </Link>
 
-              <Link href={"#skills"} target="_self" className="hidden md:inline">
-                <Button className="">
+              <Link
+                href={"#skills"}
+                target="_self"
+                className="hidden md:inline"
+                aria-label="go down"
+              >
+                <Button aria-label="go down">
                   <FaArrowDown size={20} className="animate-bounce" />
                 </Button>
               </Link>
