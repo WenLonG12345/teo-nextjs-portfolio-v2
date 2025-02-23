@@ -298,10 +298,28 @@ export const CAREER_LIST = [
     title: "Astro",
     alt: "astro image",
     url: "https://www.astro.com.my/",
-    role: "Senior Assiociate Frontend Engineer",
+    role: "Senior Associate Frontend Engineer",
     skills: ["React", "Sass", "Redux", "Redux Saga", "StorybookJS"],
     period: "Oct 2022 - Present",
     logo: "/images/astro.png",
+    job_scope: [
+      "Launched the PageBuilder CMS for Astro Awani, Gempak, Stadium Astro, Xuan, and Ulagam.",
+      "Introduced a Design System using Storybook and published it as open‐source on NPM.",
+      "Migrated from ReactJS to NextJS to improve SEO scoring and page performance, boosting pageviews by 89% and DAU by 50% for Gempak, pageviews by 53% and DAU by 34% for Xuan.",
+      "Managed AWS infrastructure, including CloudFront, ECS, EC2, Lambda, S3, Route 53, and more.",
+      "Managed CDN, DNS, website redirection, and cache optimization on Cloudflare to enhance performance and reliability.",
+      "Monitored website traffic using Google Analytics and continuously optimized performance for better indexing on Google Search Console, improving total impression from 210k to 465k and total click from 9.4k to 30k.",
+      "Improved Core Web Vitals by fixing various bugs, enhancing website performance, and reducing user bounce rates.",
+    ],
+    job_scope_zh: [
+      "为 Astro Awani、Gempak、Stadium Astro、Xuan 和 Ulagam 推出了 PageBuilder CMS。",
+      "使用 Storybook 引入了一个设计系统，并在 NPM 上以开源形式发布。",
+      "从 ReactJS 迁移到 NextJS，以提高 SEO 评分和页面性能，将 Gempak 的页面浏览量提高了 89%，DAU 提高了 50%，将 Xuan 的页面浏览量提高了 53%，DAU 提高了 34%。",
+      "管理 AWS 基础设施，包括 CloudFront、ECS、EC2、Lambda、S3、Route 53 等。",
+      "在 Cloudflare 上管理 CDN、DNS、网站重定向和缓存优化，以提高性能和可靠性。",
+      "使用 Google Analytics 监控网站流量，并不断优化性能，以便在 Google Search Console 上更好地索引，将总展示次数从 21 万提高到 46.5 万，总点击次数从 9.4 千提高到 3 万。",
+      "通过修复各种错误、提高网站性能和降低用户跳出率来改善核心网页指标。",
+    ],
   },
   {
     title: "Qumon Intelligence",
@@ -318,6 +336,18 @@ export const CAREER_LIST = [
     ],
     period: "Aug 2020 - Sept 2022",
     logo: "/images/qumon.png",
+    job_scope: [
+      "Develop Android application with Kotlin in MVVM architecture by using Jetpack library, LiveData, Coroutines, Retrofit",
+      "Develop hybrid application with React Native, Redux, Redux Saga, RealmDB",
+      "Release and Maintain production application in Google Play Store",
+      "Develop and maintain websites with ReactJS, NextJS, Redux",
+    ],
+    job_scope_zh: [
+      "使用 Jetpack 库、LiveData、协程、Retrofit，以 MVVM 架构使用 Kotlin 开发 Android 应用程序。",
+      "使用 React Native、Redux、Redux Saga、RealmDB 开发混合应用程序。",
+      "在 Google Play 商店中发布和维护生产应用程序。",
+      "使用 ReactJS、NextJS、Redux 开发和维护网站。",
+    ],
   },
   {
     title: "TimeTec Cloud Sdn Bhd",
@@ -327,6 +357,18 @@ export const CAREER_LIST = [
     skills: ["Java", "Android", "C#", "Appium Automation Testing", "AWS"],
     period: "Jul 2019 - Jan 2020",
     logo: "/images/timetec.png",
+    job_scope: [
+      " Native Android development in TimeTec Patrol and QF Master.",
+      "Complete project stated in Software Requirement Specification (SRS) within assigned duration.",
+      "Debug and fix bugs that reported from either Quality Control (QC) team or feedback from client.",
+      "Research in DevOps and modify code to ease automation testing using Appium or Mockito.",
+    ],
+    job_scope_zh: [
+      "在 TimeTec Patrol 和 QF Master 中进行原生 Android 开发。",
+      "在分配的期限内完成软件需求规格 (SRS) 中声明的项目。",
+      "调试并修复质量控制 (QC) 团队报告的错误或来自客户的反馈。",
+      "研究 DevOps 并修改代码以使用 Appium 或 Mockito 简化自动化测试。",
+    ],
   },
 ];
 

@@ -1,13 +1,20 @@
 import React from "react";
 import { CAREER_LIST } from "@/constants";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardFooter, CardHeader } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
 import { MotionDiv, MotionSection } from "@/utils/motion-div";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 
 const CareerTabs = () => {
   const t = useTranslations();
+  const locale = useLocale();
+
   return (
     <>
       <MotionSection
@@ -72,6 +79,17 @@ const CareerTabs = () => {
                   </div>
                 </div>
               </CardHeader>
+
+              <CardContent>
+                <ul className="ml-5 text-sm">
+                  {(locale === "en"
+                    ? career.job_scope
+                    : career.job_scope_zh
+                  )?.map((job) => (
+                    <li key={job}>{job}</li>
+                  ))}
+                </ul>
+              </CardContent>
 
               <CardFooter className="flex flex-row flex-wrap gap-1">
                 {career.skills?.map((skill) => (
