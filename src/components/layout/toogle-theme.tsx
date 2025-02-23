@@ -10,6 +10,8 @@ export const ToggleTheme = () => {
       size="sm"
       variant="secondary"
       className="py-5"
+      aria-label="theme-toggle
+      "
     >
       <LuMoon className="dark:hidden" size={20} />
       <LuSun className="hidden dark:block" size={20} />
