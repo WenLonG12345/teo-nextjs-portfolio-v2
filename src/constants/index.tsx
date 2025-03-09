@@ -132,7 +132,7 @@ export const PROJECT_LIST: {
       summary:
         "CMS Assistant Portal for building website with components and make configuration easier",
       summary_zh: "用于构建带有组件的网站并简化配置的 CMS 辅助门户。",
-      link: "https://de-digital-fortress-assistant-stg.eco.astro.com.my/",
+      link: "",
       tech: ["React", "ReactQuery", "TailwindCSS", "MantineUI", "Typescript"],
     },
     {
