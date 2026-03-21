@@ -1,123 +1,129 @@
-import React from "react";
-import { CAREER_LIST } from "@/constants";
-import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
-import { MotionDiv, MotionSection } from "@/utils/motion-div";
-import { useLocale, useTranslations } from "next-intl";
+"use client";
+
 import Image from "next/image";
+import { useLocale, useTranslations } from "next-intl";
+import { LuCalendar, LuChevronRight } from "react-icons/lu";
 import {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
 } from "@/components/ui/accordion";
-import { AccordionContent } from "@radix-ui/react-accordion";
+import { Badge } from "@/components/ui/badge";
+import { CAREER_LIST } from "@/constants";
+import { MotionDiv, MotionSection } from "@/utils/motion-div";
 
 const CareerTabs = () => {
-  const t = useTranslations();
-  const locale = useLocale();
+	const t = useTranslations();
+	const locale = useLocale();
 
-  return (
-    <>
-      <MotionSection
-        animationProps={{
-          initial: { opacity: 0, y: 50 },
-          whileInView: { opacity: 1, y: 0 },
-          transition: {
-            duration: 0.5,
-          },
-          className: "mb-5",
-        }}
-      >
-        <h2 className="mb-2 text-lg tracking-wider text-center text-primary">
-          {t("about.badge")}
-        </h2>
+	return (
+		<>
+			<MotionSection
+				animationProps={{
+					initial: { opacity: 0, y: 30 },
+					whileInView: { opacity: 1, y: 0 },
+					transition: { duration: 0.5 },
+					className: "mb-10 text-center",
+				}}
+			>
+				<h2 className="mb-3 text-3xl font-bold md:text-4xl">
+					{t("about.title_career")}
+				</h2>
+				<p className="mx-auto text-base md:w-1/2 text-muted-foreground">
+					{t("about.summary_career")}
+				</p>
+			</MotionSection>
 
-        <h2 className="mb-4 text-3xl font-bold text-center md:text-4xl">
-          {t("about.title_career")}
-        </h2>
+			<div className="relative max-w-3xl mx-auto">
+				{/* Vertical timeline line */}
+				<div className="absolute left-[27px] top-4 bottom-4 w-px bg-border hidden md:block" />
 
-        <h3 className="mx-auto text-base text-center md:text-xl md:w-1/2 text-muted-foreground">
-          {t("about.summary_career")}
-        </h3>
-      </MotionSection>
+				{CAREER_LIST.map((career, i) => (
+					<MotionDiv
+						key={career.title}
+						initial={{ opacity: 0, y: 20 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						viewport={{ once: true }}
+						transition={{ duration: 0.4, delay: i * 0.1 }}
+						className="relative mb-5"
+					>
+						{/* Timeline dot */}
+						<div className="absolute left-[21px] top-7 w-3.5 h-3.5 rounded-full border-2 border-primary bg-background z-10 hidden md:block" />
 
-      <MotionSection
-        animationProps={{
-          initial: { opacity: 0, y: 50 },
-          whileInView: { opacity: 1, y: 0 },
-          transition: {
-            duration: 0.5,
-          },
-        }}
-      >
-        {CAREER_LIST.map((career) => (
-          <MotionDiv
-            whileHover={{ y: -5 }}
-            className="h-full mb-3"
-            key={career.title}
-          >
-            <Card className="hover:bg-muted">
-              <Accordion type="single" collapsible>
-                <AccordionItem value={career.title}>
-                  <AccordionTrigger>
-                    <CardHeader className="w-full">
-                      <div className="flex flex-col justify-between gap-3 space-y-0 md:items-center md:flex-row">
-                        <div className="flex flex-row items-center gap-3">
-                          <Image
-                            src={career.logo}
-                            alt={career.alt}
-                            width={70}
-                            height={70}
-                            className="object-cover rounded-full"
-                          />
-                          <div className="text-left">
-                            <div className="text-xl font-semibold">
-                              {career.title}
-                            </div>
-                            <div className="text-muted-foreground">
-                              {career.role}
-                            </div>
-                          </div>
-                        </div>
+						<div className="md:ml-16">
+							<div className="overflow-hidden transition-all duration-300 border rounded-2xl border-border bg-card hover:border-primary/30 hover:shadow-md">
+								<Accordion type="single" collapsible>
+									<AccordionItem value={career.title} className="border-none">
+										<AccordionTrigger className="px-6 py-5 hover:no-underline hover:bg-muted/40 transition-colors [&>svg]:text-muted-foreground [&>svg]:shrink-0">
+											<div className="flex flex-col w-full gap-3 text-left sm:flex-row sm:items-center sm:justify-between">
+												<div className="flex items-center gap-4">
+													<div className="relative overflow-hidden border w-14 h-14 shrink-0 rounded-xl border-border bg-muted">
+														<Image
+															src={career.logo}
+															alt={career.alt}
+															fill
+															className="object-cover"
+														/>
+													</div>
+													<div>
+														<div className="text-lg font-semibold leading-tight">
+															{career.title}
+														</div>
+														<div className="mt-1 text-sm font-medium text-primary">
+															{career.role}
+														</div>
+													</div>
+												</div>
+												<div className="flex items-center gap-1.5 text-sm mr-2 text-muted-foreground shrink-0 self-start sm:self-auto">
+													<LuCalendar size={12} />
+													<span>{career.period}</span>
+												</div>
+											</div>
+										</AccordionTrigger>
 
-                        <div className="items-start self-start text-muted-foreground">
-                          {career.period}
-                        </div>
-                      </div>
-                    </CardHeader>
-                  </AccordionTrigger>
+										<AccordionContent>
+											<div className="px-6 pt-1 pb-3 border-t border-border/50">
+												<ul className="mt-3 space-y-2">
+													{(locale === "en"
+														? career.job_scope
+														: career.job_scope_zh
+													)?.map((job) => (
+														<li
+															key={job}
+															className="flex items-start gap-2 text-sm text-muted-foreground"
+														>
+															<LuChevronRight
+																size={14}
+																className="text-primary mt-0.5 shrink-0"
+															/>
+															<span>{job}</span>
+														</li>
+													))}
+												</ul>
+											</div>
+										</AccordionContent>
+									</AccordionItem>
+								</Accordion>
 
-                  <AccordionContent>
-                    <CardContent>
-                      <ul className="ml-5 text-sm">
-                        {(locale === "en"
-                          ? career.job_scope
-                          : career.job_scope_zh
-                        )?.map((job) => (
-                          <li key={job}>{job}</li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-
-              <CardFooter className="flex flex-row flex-wrap gap-1">
-                {career.skills?.map((skill) => (
-                  <Badge key={skill}>{skill}</Badge>
-                ))}
-              </CardFooter>
-            </Card>
-          </MotionDiv>
-        ))}
-      </MotionSection>
-    </>
-  );
+								<div className="flex flex-row flex-wrap gap-1.5 px-6 pb-5 pt-2">
+									{career.skills?.map((skill) => (
+										<Badge
+											key={skill}
+											variant="secondary"
+											className="text-xs font-normal"
+										>
+											{skill}
+										</Badge>
+									))}
+								</div>
+							</div>
+						</div>
+					</MotionDiv>
+				))}
+			</div>
+		</>
+	);
 };
 
 export default CareerTabs;

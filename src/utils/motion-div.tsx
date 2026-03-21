@@ -1,32 +1,36 @@
 "use client";
 
-import { randomUUID } from "crypto";
 import {
-  AnimatePresence,
-  AnimationProps,
-  HTMLMotionProps,
-  motion,
+	type AnimationProps,
+	type HTMLMotionProps,
+	motion,
 } from "motion/react";
 import { useEffect, useState } from "react";
 
 export const MotionDiv = motion.div;
 
 export const MotionSection = ({
-  children,
-  animationProps,
+	children,
+	animationProps,
 }: {
-  children: React.ReactNode;
-  animationProps: HTMLMotionProps<"div"> & AnimationProps;
+	children: React.ReactNode;
+	animationProps: HTMLMotionProps<"div"> & AnimationProps;
 }) => {
-  const [domLoaded, setDomLoaded] = useState(false);
+	const [domLoaded, setDomLoaded] = useState(false);
 
-  useEffect(() => {
-    if (!domLoaded) {
-      setDomLoaded(true);
-    }
-  }, []);
+	useEffect(() => {
+		setDomLoaded(true);
+	}, []);
 
-  if (domLoaded) return <motion.div {...animationProps}>{children}</motion.div>;
+	// Always render a motion.div so the DOM structure is stable across
+	// server → hydration → client. Before mount, omit animation props so
+	// content is fully visible (no opacity:0 flash). After mount, apply
+	// the full animation props.
+	const { className, ...motionProps } = animationProps;
 
-  return children;
+	return (
+		<motion.div className={className} {...(domLoaded ? motionProps : {})}>
+			{children}
+		</motion.div>
+	);
 };

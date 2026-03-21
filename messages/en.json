@@ -1,66 +1,90 @@
 {
-  "navbar": {
-    "home": "Home",
-    "repo": "Repositories",
-    "article": "Articles",
-    "about": "About",
-    "contact": "Contact",
-    "switch_to_v1": "Switch to V1"
-  },
-  "home": {
-    "hero_1": "Hey, I am",
-    "hero_2": "Frontend Engineer from Malaysia 🇲🇾",
-    "hero_3": "Focused on Web & Mobile Development (Android & iOS). Passionate about beautiful UI/UX and a Tech Writer on Medium. 🔥",
-    "resume": "Resume",
-    "contact_me": "Contact Me"
-  }, 
-  "repo": {
-    "badge": "Repositories",
-    "title": "My Github Repositories",
-    "description_1": "A list of my top featured GitHub repositories. 🔖",
-    "description_2": "Feel free to visit and don't forget to leave a star! ⭐"
-  },
-  "article": {
-    "badge": "Articles",
-    "title": "My Latest Articles",
-    "description_1": "A list of my latest articles on Medium. 📝",
-    "description_2": "Stay tuned for more articles. Feel free to visit and don't forget to clap! 👏"
-  },
-  "project": {
-    "badge": "Projects",
-    "title": "My Projects",
-    "description_1": "A list of my top featured projects. 🚀",
-    "description_2": "List of projects that I involved or have made in the past. ⭐",
-    "works": "Works",
-    "freelance": "Freelance",
-    "opensource": "Open Source"
-  },
-  "about": {
-    "badge": "About Me",
-    "title_career": "Career",
-    "title_education": "Education",
-    "summary_career": "An overview of my professional journey, showcasing significant roles and accomplishments.",
-    "summary_education": "An overview of my educational background, highlighting important courses and achievements."
-  },
-  "contact": {
-    "badge": "Contact",
-    "title": "Get in Touch with Me",
-    "description_1": "Have a project in mind or need more information? I am here to help!",
-    "description_2": "Reach out to me for any inquiries, and I'll get back to you promptly.",
-    "first_name": "First Name",
-    "last_name": "Last Name",
-    "email": "Email",
-    "subject": "Subject",
-    "message": "Message",
-    "send_message": "Send Message",
-    "project_inquiry": "Project Inquiry",
-    "web_development": "Web Development",
-    "mobile_development": "Mobile Development",
-    "seo_and_website_ranking": "SEO and Website Ranking",
-    "api_development": "API Development"
-  },
-  "skills": {
-    "badge": "Skills",
-    "title": "Top and latest technologies that I always use. 🛠️"
-  }
+	"navbar": {
+		"home": "Home",
+		"repo": "Repositories",
+		"article": "Articles",
+		"about": "About",
+		"contact": "Contact",
+		"switch_to_v1": "Switch to V1"
+	},
+	"home": {
+		"hero_1": "Hey, I am",
+		"hero_2": "Frontend Engineer from Malaysia",
+		"hero_3": "Focused on Web & Mobile Development (Android & iOS). Passionate about beautiful UI/UX and a Tech Writer on Medium.",
+		"resume": "Resume",
+		"contact_me": "Contact Me",
+		"available": "Available for opportunities"
+	},
+	"stats": {
+		"badge": "My Impact",
+		"title": "Numbers That Define My Journey",
+		"years": "Years of Experience",
+		"mau": "Monthly Active Users",
+		"projects": "Projects Delivered",
+		"companies": "Companies Worked With"
+	},
+	"testimonials": {
+		"badge": "Testimonials",
+		"title": "What People Say About Me"
+	},
+	"repo": {
+		"badge": "Repositories",
+		"title": "My Github Repositories",
+		"description_1": "A list of my top featured GitHub repositories.",
+		"description_2": "Feel free to visit and don't forget to leave a star!"
+	},
+	"article": {
+		"badge": "Articles",
+		"title": "My Latest Articles",
+		"description_1": "A list of my latest articles on Medium.",
+		"description_2": "Stay tuned for more articles. Feel free to visit and don't forget to clap!"
+	},
+	"project": {
+		"badge": "Projects",
+		"title": "My Projects",
+		"description_1": "A list of my top featured projects.",
+		"description_2": "List of projects that I involved or have made in the past.",
+		"works": "Works",
+		"freelance": "Freelance",
+		"opensource": "Open Source"
+	},
+	"about": {
+		"badge": "About Me",
+		"title_career": "Career",
+		"title_education": "Education",
+		"summary_career": "An overview of my professional journey, showcasing significant roles and accomplishments.",
+		"summary_education": "An overview of my educational background, highlighting important courses and achievements."
+	},
+	"contact": {
+		"badge": "Contact",
+		"title": "Get in Touch with Me",
+		"description_1": "Have a project in mind or need more information? I am here to help!",
+		"description_2": "Reach out to me for any inquiries, and I'll get back to you promptly.",
+		"first_name": "First Name",
+		"last_name": "Last Name",
+		"email": "Email",
+		"subject": "Subject",
+		"message": "Message",
+		"send_message": "Send Message",
+		"project_inquiry": "Project Inquiry",
+		"web_development": "Web Development",
+		"mobile_development": "Mobile Development",
+		"seo_and_website_ranking": "SEO and Website Ranking",
+		"api_development": "API Development",
+		"sent_success_title": "Email Client Opened!",
+		"sent_success_desc": "Your email client has been opened with the message pre-filled. Please send the email to complete your inquiry.",
+		"send_another": "Send Another Message"
+	},
+	"skills": {
+		"badge": "Skills",
+		"title": "Top and latest technologies that I always use."
+	},
+	"footer": {
+		"quick_links": "Quick Links",
+		"connect": "Connect With Me"
+	},
+	"notFound": {
+		"description": "Oops! The page you're looking for doesn't exist or has been moved.",
+		"back_home": "Back to Home"
+	}
 }

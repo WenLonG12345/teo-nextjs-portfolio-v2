@@ -1,148 +1,133 @@
 "use client";
-import { GiHamburgerMenu } from "react-icons/gi";
-import React from "react";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "../ui/sheet";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-} from "../ui/navigation-menu";
-import { Button } from "../ui/button";
+
 import Image from "next/image";
-import { ToggleTheme } from "./toogle-theme";
+import { useTranslations } from "next-intl";
+import React, { useEffect, useRef } from "react";
+import { LuMenu, LuX } from "react-icons/lu";
 import { NAV_ITEM_LIST } from "@/constants";
-import ToggleLanguage from "./toggle-language";
 import { Link, usePathname } from "@/i18n/routing";
 import { cn } from "@/utils/cn";
-import { useTranslations } from "next-intl";
-import { LuLink } from "react-icons/lu";
+import { Button } from "../ui/button";
+import ToggleLanguage from "./toggle-language";
+import { ToggleTheme } from "./toogle-theme";
 
 export const Navbar = () => {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const t = useTranslations();
-  const pathname = usePathname();
-  return (
-    <header className="shadow-md bg-opacity-15 w-[90%] md:w-[70%] lg:w-[70%] lg:max-w-screen-xl top-5 mx-auto sticky border border-secondary z-40 rounded-2xl flex justify-between items-center p-2 bg-card">
-      <Link
-        href="/"
-        className="flex-row items-center hidden gap-2 text-lg font-bold lg:flex"
-      >
-        <Image src="/logo.png" width={50} height={50} alt="logo" />
-      </Link>
-      {/* <!-- Mobile --> */}
-      <div className="flex items-center lg:hidden">
-        <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild>
-            <Button
-              variant="secondary"
-              onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden"
-              aria-label="menu"
-            >
-              <GiHamburgerMenu size={20} />
-            </Button>
-          </SheetTrigger>
+	const [isOpen, setIsOpen] = React.useState(false);
+	const t = useTranslations();
+	const pathname = usePathname();
+	const menuRef = useRef<HTMLElement>(null);
 
-          <SheetContent
-            side="left"
-            className="flex flex-col justify-between rounded-tr-2xl rounded-br-2xl bg-card border-secondary"
-          >
-            <div>
-              <SheetHeader className="mb-4 ml-4">
-                <SheetTitle className="flex items-center">
-                  <Link href="/" className="flex items-center gap-2">
-                    <Image src="/logo.png" width={50} height={50} alt="logo" />
-                  </Link>
-                </SheetTitle>
-              </SheetHeader>
+	// Close on route change
+	useEffect(() => {
+		if (pathname) {
+			setIsOpen(false);
+		}
+	}, [pathname]);
 
-              <div className="flex flex-col gap-2">
-                {NAV_ITEM_LIST.map(({ href, label }) => (
-                  <Button
-                    key={href}
-                    onClick={() => setIsOpen(false)}
-                    asChild
-                    variant="ghost"
-                    className="justify-start text-base"
-                  >
-                    <Link href={href}>{t(`${label}`)}</Link>
-                  </Button>
-                ))}
-                <Button
-                  onClick={() => setIsOpen(false)}
-                  asChild
-                  variant="ghost"
-                  className="justify-start text-base"
-                >
-                  <Link
-                    href="https://v1.teowenlong.com"
-                    target="_blank"
-                    className="flex flex-row gap-2"
-                  >
-                    {t("navbar.switch_to_v1")}
-                    <LuLink size={20} />
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </SheetContent>
-        </Sheet>
-        <Link
-          href="/"
-          className="flex flex-row items-center gap-2 ml-2 text-lg font-bold "
-        >
-          <Image
-            src="/logo.png"
-            width={50}
-            height={50}
-            alt="logo"
-            className="block lg:hidden"
-          />
-        </Link>
-      </div>
+	// Close on outside click
+	useEffect(() => {
+		const handleClickOutside = (e: MouseEvent) => {
+			if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+				setIsOpen(false);
+			}
+		};
+		if (isOpen) document.addEventListener("mousedown", handleClickOutside);
+		return () => document.removeEventListener("mousedown", handleClickOutside);
+	}, [isOpen]);
 
-      {/* <!-- Desktop --> */}
-      <NavigationMenu className="hidden mx-auto lg:block">
-        <NavigationMenuList>
-          <NavigationMenuItem>
-            {NAV_ITEM_LIST.map(({ href, label }) => (
-              <NavigationMenuLink key={href} asChild>
-                <Link
-                  href={href}
-                  className={cn(
-                    "px-4 text-base hover:text-primary",
-                    pathname === href && "text-primary"
-                  )}
-                >
-                  {t(`${label}`)}
-                </Link>
-              </NavigationMenuLink>
-            ))}
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
+	return (
+		<header
+			ref={menuRef}
+			className="sticky top-4 z-40 w-[92%] md:w-[80%] lg:w-[75%] lg:max-w-screen-xl mx-auto overflow-hidden rounded-2xl border border-border/60 bg-background/80 backdrop-blur-md shadow-sm"
+		>
+			{/* ── Main bar ── */}
+			<div className="flex items-center justify-between px-4 py-2.5">
+				{/* Logo */}
+				<Link href="/" className="flex items-center gap-2.5 shrink-0">
+					<Image src="/logo.png" width={38} height={38} alt="Teo logo" />
+				</Link>
 
-      <div className="flex flex-row items-center gap-1">
-        <ToggleTheme />
-        <ToggleLanguage />
-        <Link
-          href="https://v1.teowenlong.com"
-          target="_blank"
-          className="hidden md:block"
-        >
-          <Button variant={"secondary"}>
-            <LuLink size={20} className="mr-2" />
-            v1
-          </Button>
-        </Link>
-      </div>
-    </header>
-  );
+				{/* Desktop nav links */}
+				<nav
+					className="hidden lg:flex items-center gap-0.5"
+					aria-label="Main navigation"
+				>
+					{NAV_ITEM_LIST.map(({ href, label }) => {
+						const active = pathname === href;
+						return (
+							<Link
+								key={href}
+								href={href}
+								className={cn(
+									"relative px-4 py-2 font-medium rounded-lg transition-colors duration-200",
+									active
+										? "text-primary"
+										: "text-foreground/60 hover:text-foreground hover:bg-muted/60",
+								)}
+							>
+								{t(label)}
+								{active && (
+									<span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-4 h-[2px] rounded-full bg-primary" />
+								)}
+							</Link>
+						);
+					})}
+				</nav>
+
+				{/* Right controls */}
+				<div className="flex items-center gap-0.5">
+					<ToggleTheme />
+					<ToggleLanguage />
+
+					{/* Mobile hamburger / close */}
+					<Button
+						variant="ghost"
+						size="icon"
+						className="ml-1 lg:hidden h-9 w-9"
+						onClick={() => setIsOpen((prev) => !prev)}
+						aria-label={isOpen ? "Close menu" : "Open menu"}
+						aria-expanded={isOpen}
+					>
+						{isOpen ? <LuX size={18} /> : <LuMenu size={18} />}
+					</Button>
+				</div>
+			</div>
+
+			{/* ── Mobile dropdown ── */}
+			{isOpen && (
+				<nav
+					className="border-t lg:hidden border-border/60 bg-background/95"
+					aria-label="Mobile navigation"
+				>
+					<ul className="flex flex-col gap-1 p-3">
+						{NAV_ITEM_LIST.map(({ href, label }) => {
+							const active = pathname === href;
+							return (
+								<li key={href}>
+									<Link
+										href={href}
+										onClick={() => setIsOpen(false)}
+										className={cn(
+											"flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-colors duration-200",
+											active
+												? "text-primary bg-primary/8"
+												: "text-foreground/70 hover:text-foreground hover:bg-muted/60",
+										)}
+									>
+										<span
+											className={cn(
+												"w-1.5 h-1.5 rounded-full shrink-0 transition-colors",
+												active ? "bg-primary" : "bg-border",
+											)}
+										/>
+										{t(label)}
+									</Link>
+								</li>
+							);
+						})}
+					</ul>
+				</nav>
+			)}
+		</header>
+	);
 };
