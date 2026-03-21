@@ -94,7 +94,7 @@ export const PROJECT_LIST: {
 				"AI voice agent management platform for enterprises to build, deploy and manage AI voice agents",
 			summary_zh:
 				"企业级 AI 语音代理管理平台，用于构建、部署和管理 AI 语音代理。",
-			link: "https://www.revolab.com/revocall",
+			link: "https://revocall.ai",
 			tech: ["React", "NextJS", "Typescript", "Golang", "AWS"],
 		},
 		{
@@ -105,7 +105,6 @@ export const PROJECT_LIST: {
 				"AI voice agent for Arab Bank digital mobile app (Reflect), providing customers with a seamless banking experience through natural language interactions",
 			summary_zh:
 				"Arab Bank数字移动应用（Reflect）的 AI 语音代理，通过自然语言交互为客户提供无缝的银行体验。",
-			link: "https://www.revolab.com/revocall",
 			tech: ["React", "NextJS", "Typescript", "Golang", "AWS"],
 		},
 		{
