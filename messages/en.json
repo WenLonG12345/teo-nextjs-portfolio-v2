@@ -3,6 +3,7 @@
 		"home": "Home",
 		"repo": "Repositories",
 		"article": "Articles",
+		"blog": "Blog",
 		"about": "About",
 		"contact": "Contact",
 		"switch_to_v1": "Switch to V1"
@@ -37,7 +38,9 @@
 		"badge": "Articles",
 		"title": "My Latest Articles",
 		"description_1": "A list of my latest articles on Medium.",
-		"description_2": "Stay tuned for more articles. Feel free to visit and don't forget to clap!"
+		"description_2": "Stay tuned for more articles. Feel free to visit and don't forget to clap!",
+		"tab_label": "Medium Articles",
+		"tab_desc": "Published on Medium"
 	},
 	"project": {
 		"badge": "Projects",
@@ -82,6 +85,14 @@
 	"footer": {
 		"quick_links": "Quick Links",
 		"connect": "Connect With Me"
+	},
+	"blog": {
+		"badge": "Writing",
+		"title": "My Blog & Articles",
+		"description_1": "Technical posts I write here and on Medium — tutorials, insights, and lessons from real projects.",
+		"description_2": "Written from experience. Feel free to share!",
+		"empty": "No posts yet. Check back soon!",
+		"tab_label": "Blog Posts"
 	},
 	"notFound": {
 		"description": "Oops! The page you're looking for doesn't exist or has been moved.",

@@ -138,3 +138,16 @@ export type IMediumArticleRes = {
 	};
 	items: IMediumArticle[];
 };
+
+export type BlogPostMeta = {
+	slug: string;
+	title: string;
+	date: string;
+	description: string;
+	tags: string[];
+	coverImage: string;
+};
+
+export type BlogPost = BlogPostMeta & {
+	content: string;
+};

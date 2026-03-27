@@ -3,6 +3,7 @@
 		"home": "首页",
 		"repo": "代码库",
 		"article": "文章",
+		"blog": "博客",
 		"about": "关于",
 		"contact": "联系",
 		"switch_to_v1": "切换到 V1"
@@ -37,7 +38,9 @@
 		"badge": "文章",
 		"title": "我最新的文章",
 		"description_1": "我在 Medium 上的最新文章列表。",
-		"description_2": "敬请期待更多文章。欢迎访问，别忘了鼓掌！"
+		"description_2": "敬请期待更多文章。欢迎访问，别忘了鼓掌！",
+		"tab_label": "Medium 文章",
+		"tab_desc": "发布于 Medium"
 	},
 	"project": {
 		"badge": "项目",
@@ -82,6 +85,15 @@
 	"footer": {
 		"quick_links": "快速导航",
 		"connect": "联系方式"
+	},
+	"blog": {
+		"badge": "写作",
+		"title": "博客与文章",
+		"description_1": "我在此网站和 Medium 上发表的技术文章——教程、见解与真实项目经验。",
+		"description_2": "源于实践，欢迎分享！",
+		"empty": "暂无文章，敬请期待！",
+		"tab_label": "博客文章",
+		"tab_desc": "发布于此网站"
 	},
 	"notFound": {
 		"description": "抱歉！您正在寻找的页面不存在或已被移动。",

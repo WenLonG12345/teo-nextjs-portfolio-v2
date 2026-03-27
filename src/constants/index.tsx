@@ -22,8 +22,8 @@ export const NAV_ITEM_LIST: NavItemProps[] = [
 		label: "navbar.repo",
 	},
 	{
-		href: "/articles",
-		label: "navbar.article",
+		href: "/blog",
+		label: "navbar.blog",
 	},
 	{
 		href: "/contact",
