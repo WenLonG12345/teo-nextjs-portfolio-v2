@@ -5,7 +5,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 	const posts = getAllPosts();
 
 	const blogPostEntries: MetadataRoute.Sitemap = posts.map((post) => ({
-		url: `https://teowenlong.com/blog/${post.slug}`,
+		url: `https://teowenlong.vercel.app/blog/${post.slug}`,
 		lastModified: new Date(post.date),
 		changeFrequency: "monthly",
 		priority: 0.8,
@@ -13,37 +13,37 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
 	return [
 		{
-			url: "https://teowenlong.com",
+			url: "https://teowenlong.vercel.app",
 			lastModified: new Date(),
 			changeFrequency: "yearly",
 			priority: 1,
 		},
 		{
-			url: "https://teowenlong.com/about",
+			url: "https://teowenlong.vercel.app/about",
 			lastModified: new Date(),
 			changeFrequency: "yearly",
 			priority: 1,
 		},
 		{
-			url: "https://teowenlong.com/repos",
+			url: "https://teowenlong.vercel.app/repos",
 			lastModified: new Date(),
 			changeFrequency: "yearly",
 			priority: 1,
 		},
 		{
-			url: "https://teowenlong.com/articles",
+			url: "https://teowenlong.vercel.app/articles",
 			lastModified: new Date(),
 			changeFrequency: "yearly",
 			priority: 1,
 		},
 		{
-			url: "https://teowenlong.com/blog",
+			url: "https://teowenlong.vercel.app/blog",
 			lastModified: new Date(),
 			changeFrequency: "weekly",
 			priority: 1,
 		},
 		{
-			url: "https://teowenlong.com/contact",
+			url: "https://teowenlong.vercel.app/contact",
 			lastModified: new Date(),
 			changeFrequency: "yearly",
 			priority: 1,

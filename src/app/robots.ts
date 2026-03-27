@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
 			userAgent: "*",
 			allow: "/",
 		},
-		sitemap: "https://teowenlong.com/sitemap.xml",
+		sitemap: "https://teowenlong.vercel.app/sitemap.xml",
 	};
 }
