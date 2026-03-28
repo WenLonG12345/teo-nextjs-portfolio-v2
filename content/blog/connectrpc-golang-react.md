@@ -12,12 +12,14 @@ coverImage: "/images/connectrpc-golang-react.png"
 - [Use Case: Conversation API](#use-case-conversation-api)
 - [Project Folder Structure](#project-folder-structure)
 - [Step 1: Define the Proto](#step-1-define-the-proto)
+- [Understanding idempotency_level](#understanding-idempotency_level)
 - [Step 2: Generate Code with Buf](#step-2-generate-code-with-buf)
 - [Step 3: Go Backend](#step-3-go-backend)
 - [Step 4: React Frontend](#step-4-react-frontend)
 - [Bonus: Protobuf Timestamp Conversion](#bonus-protobuf-timestamp-conversion)
 - [Error Handling](#error-handling)
 - [Key Takeaways](#key-takeaways)
+- [Conclusion](#conclusion)
 
 ---
 
@@ -50,37 +52,91 @@ This covers mutations, authenticated requests, and paginated queries — everyth
 
 ```
 my-app/
-├── proto/                          # Shared protobuf definitions
+├── proto/                               # Shared protobuf definitions
 │   ├── buf.yaml
 │   ├── buf.gen.yaml
 │   ├── auth/v1/
 │   │   └── auth.proto
-│   └── conversation/v1/
-│       └── conversation.proto
+│   ├── conversation/v1/
+│   │   └── conversation.proto
+│   └── gen/                             # Auto-generated (never edit by hand)
+│       ├── go/
+│       │   └── conversation/v1/
+│       │       ├── conversation.pb.go
+│       │       └── conversationv1connect/
+│       │           └── conversation.connect.go
+│       └── ts/
+│           └── chat/                    # Published as @your-org/chat-proto workspace package
+│               ├── package.json
+│               └── conversation/v1/
+│                   ├── conversation_pb.ts
+│                   └── conversation-ConversationService_connectquery.ts
 │
-├── backend/                        # Go server
-│   ├── cmd/
-│   │   └── server/
-│   │       ├── main.go             # HTTP server + route registration
-│   │       └── middleware.go       # Auth + CORS middleware
+├── backend/                             # Go server
+│   ├── go.mod                           # replace directive points to proto/gen/go
+│   ├── cmd/server/
+│   │   ├── main.go
+│   │   └── middleware.go
 │   └── conversation/
-│       ├── handler.go              # ConnectRPC handler (implements interface)
-│       └── service.go              # Business logic
+│       ├── handler.go
+│       └── service.go
 │
-└── frontend/                       # React app (Vite or Next.js)
-    └── src/
-        ├── gen/                    # Auto-generated from proto (never edit)
-        │   └── ts/
-        │       └── conversation/v1/
-        │           ├── conversation_pb.ts
-        │           └── conversation-ConversationService_connectquery.ts
-        ├── lib/
-        │   └── transport.ts        # ConnectRPC transport + typed clients
-        └── hooks/
-            └── useConversation.ts  # Business logic hook
+├── frontend/                            # React app (Vite or Next.js)
+│   ├── package.json                     # "@your-org/chat-proto": "workspace:*"
+│   └── src/
+│       ├── lib/
+│       │   └── transport.ts
+│       └── hooks/
+│           └── useConversation.ts
+│
+└── pnpm-workspace.yaml                  # lists proto/gen/ts/chat as a workspace package
 ```
 
-The `proto/` folder is the single source of truth. The `gen/` folder is always auto-generated — never commit hand-edits to it.
+The `proto/` folder is the single source of truth. Generated code lives in `proto/gen/` — not inside each app. Both the Go backend and the React frontend consume the generated code as proper packages.
+
+**Go — `go.mod` replace directive:**
+
+```go
+// backend/go.mod
+module github.com/your-org/my-app/backend
+
+require (
+    github.com/your-org/my-app/proto/gen/go/chat v0.0.0
+)
+
+// Point to the local generated code instead of a published module
+replace github.com/your-org/my-app/proto/gen/go/chat => ../proto/gen/go/chat
+```
+
+**TypeScript — pnpm workspace:**
+
+```yaml
+# pnpm-workspace.yaml
+packages:
+  - "frontend"
+  - "proto/gen/ts/chat"   # treat generated TS as a local workspace package
+```
+
+```json
+// proto/gen/ts/chat/package.json
+{
+  "name": "@your-org/chat-proto",
+  "exports": {
+    "./*": { "types": "./*.ts", "default": "./*" }
+  }
+}
+```
+
+```json
+// frontend/package.json  (excerpt)
+{
+  "dependencies": {
+    "@your-org/chat-proto": "workspace:*"
+  }
+}
+```
+
+This way `import { create } from "@your-org/chat-proto/conversation/v1/..."` works in the frontend with full TypeScript types, and `go build` resolves the generated Go module locally — no publishing required.
 
 ---
 
@@ -155,6 +211,35 @@ message HistoryResponse {
 ```
 
 Note `created_at` uses `google.protobuf.Timestamp` — a protobuf well-known type. We'll cover how to convert it on the frontend [below](#bonus-protobuf-timestamp-conversion).
+
+---
+
+## Understanding idempotency_level
+
+You may have noticed the `option idempotency_level` annotation on each RPC. This is a proto option that tells ConnectRPC (and the generated clients) how an RPC behaves with respect to side effects:
+
+| Value | HTTP method | Meaning |
+|---|---|---|
+| `IDEMPOTENCY_UNKNOWN` | POST | Default. Use for mutations — the server may change state on each call |
+| `NO_SIDE_EFFECTS` | GET | Read-only. Safe to retry and cache. ConnectRPC will use HTTP GET automatically |
+| `IDEMPOTENT` | POST | Safe to retry (calling twice produces the same result), but may have side effects |
+
+In our example:
+
+- `AuthService.Init` and `ConversationService.Create` are mutations → `IDEMPOTENCY_UNKNOWN` → ConnectRPC sends them as POST
+- `ConversationService.History` is a pure read → `NO_SIDE_EFFECTS` → ConnectRPC sends it as GET when `useHttpGet: true` is set in the transport
+
+The GET behaviour matters because browsers and CDNs can cache GET responses. Set `useHttpGet: true` on your authed transport and your `History` calls become cache-eligible for free:
+
+```typescript
+export function createAuthedTransport(baseUrl: string, bearerToken: string) {
+    return createConnectTransport({
+        baseUrl,
+        useHttpGet: true,   // History RPC → GET → cacheable
+        interceptors: [ ... ],
+    });
+}
+```
 
 ---
 
@@ -452,101 +537,103 @@ export type Plain<T> = Omit<T, keyof Message<string>>;
 
 ### Conversation Hook
 
-The hook orchestrates the full flow: fetch config → authenticate → create conversation. Each step uses the typed client — no magic strings, no manual JSON parsing:
+Instead of managing loading and error state by hand, use `useMutation` from `@connectrpc/connect-query`. The generated `*_connectquery.ts` file exports a `create` descriptor that `useMutation` understands directly:
 
 ```typescript
 // frontend/src/hooks/useConversation.ts
-import { useCallback, useEffect, useState } from "react";
-import {
-    createAuthClient,
-    createConversationClient,
-} from "@/lib/transport";
+import { useMutation } from "@connectrpc/connect-query";
+import { useState } from "react";
+import { create } from "@your-org/chat-proto/conversation/v1/conversation-ConversationService_connectquery";
+import { createAuthClient, createAuthedTransport } from "@/lib/transport";
 
 export function useConversation(apiBaseUrl: string, botId: string) {
     const [accessToken, setAccessToken] = useState<string | null>(null);
     const [conversationId, setConversationId] = useState<string | null>(null);
-    const [isConnecting, setIsConnecting] = useState(false);
-    const [error, setError] = useState<string | null>(null);
 
-    const connect = useCallback(async (organizationId: string) => {
-        setIsConnecting(true);
-        setError(null);
-        try {
-            // Step 1: Get anonymous auth token (public endpoint)
-            const { accessToken: token } = await createAuthClient(apiBaseUrl)
-                .init({ organizationId });
-            setAccessToken(token);
+    // useMutation wraps the Create RPC — isPending and error are managed automatically
+    const { mutateAsync, isPending, error } = useMutation(create, {
+        transport: createAuthedTransport(apiBaseUrl, accessToken ?? ""),
+    });
 
-            // Step 2: Create conversation (authenticated endpoint)
-            const res = await createConversationClient(apiBaseUrl, token)
-                .create({ botId });
+    const connect = async (organizationId: string) => {
+        // Step 1: get anonymous access token via public endpoint (direct call)
+        const { accessToken: token } = await createAuthClient(apiBaseUrl).init({ organizationId });
+        setAccessToken(token);
 
-            setConversationId(res.conversationId);
+        // Step 2: create conversation — useMutation tracks isPending + error state
+        const authedTransport = createAuthedTransport(apiBaseUrl, token);
+        const res = await mutateAsync({ botId }, { transport: authedTransport } as any);
+        setConversationId(res.conversationId);
 
-            // res.accessToken is the conversation session token
-            return { conversationToken: res.accessToken, conversationId: res.conversationId };
-        } catch (err) {
-            const msg = err instanceof Error ? err.message : "Connection failed";
-            setError(msg);
-            return null;
-        } finally {
-            setIsConnecting(false);
-        }
-    }, [apiBaseUrl, botId]);
+        return { conversationToken: res.accessToken, conversationId: res.conversationId };
+    };
 
-    return { connect, accessToken, conversationId, isConnecting, error };
+    return { connect, accessToken, conversationId, isConnecting: isPending, error };
 }
 ```
 
-### Fetching History with Pagination
+### Fetching History with useQuery
+
+`useQuery` replaces the `useEffect` + manual loading state. Pass `enabled` so the query only runs once both `conversationId` and `accessToken` are available:
 
 ```typescript
 // frontend/src/hooks/useConversationHistory.ts
-import { useCallback, useEffect, useState } from "react";
-import { fromTimestamp } from "@/lib/transport";
-import { createConversationClient } from "@/lib/transport";
+import { useQuery } from "@connectrpc/connect-query";
+import { history } from "@your-org/chat-proto/conversation/v1/conversation-ConversationService_connectquery";
+import type { HistoryResponse_Message } from "@your-org/chat-proto/conversation/v1/conversation_pb";
+import { createAuthedTransport, fromTimestamp } from "@/lib/transport";
+
+interface Message {
+    id: string;
+    content: string;
+    sender: string;
+    createdAt: string;
+}
 
 export function useConversationHistory(
     apiBaseUrl: string,
     accessToken: string | null,
     conversationId: string | null,
 ) {
-    const [messages, setMessages] = useState<Message[]>([]);
-    const [nextToken, setNextToken] = useState<string | undefined>();
-    const [isLoading, setIsLoading] = useState(false);
+    const transport = accessToken
+        ? createAuthedTransport(apiBaseUrl, accessToken)
+        : undefined;
 
-    useEffect(() => {
-        if (!conversationId || !accessToken) return;
-        let cancelled = false;
+    // useQuery handles caching, deduplication, and background refetch automatically.
+    // Because History has idempotency_level = NO_SIDE_EFFECTS, ConnectRPC sends it
+    // as an HTTP GET — making the response eligible for browser and CDN caching.
+    const { data, isLoading, error } = useQuery(
+        history,
+        { conversationId: conversationId ?? "" },
+        {
+            transport,
+            enabled: !!conversationId && !!accessToken,
+        },
+    );
 
-        async function load() {
-            setIsLoading(true);
-            try {
-                const client = createConversationClient(apiBaseUrl, accessToken!);
-                const res = await client.history({ conversationId: conversationId! });
-                if (!cancelled) {
-                    setMessages(res.messages.map(toMessage));
-                    setNextToken(res.next || undefined);
-                }
-            } finally {
-                if (!cancelled) setIsLoading(false);
-            }
-        }
-        load();
-        return () => { cancelled = true; };
-    }, [conversationId, accessToken, apiBaseUrl]);
+    return {
+        messages: data?.messages.map(toMessage) ?? [],
+        nextToken: data?.next,
+        isLoading,
+        error,
+    };
+}
 
-    const fetchMore = useCallback(async () => {
-        if (!nextToken || !conversationId || !accessToken) return;
-        const client = createConversationClient(apiBaseUrl, accessToken);
-        const res = await client.history({ conversationId, paginationToken: nextToken });
-        setMessages((prev) => [...res.messages.map(toMessage), ...prev]);
-        setNextToken(res.next || undefined);
-    }, [nextToken, conversationId, accessToken, apiBaseUrl]);
-
-    return { messages, isLoading, hasMore: Boolean(nextToken), fetchMore };
+function toMessage(m: HistoryResponse_Message): Message {
+    return {
+        id: String(m.id),
+        content: m.content,
+        sender: m.sender,
+        createdAt: fromTimestamp(m.createdAt, "HH:mm"),
+    };
 }
 ```
+
+Key advantages over the manual `useEffect` approach:
+
+- **No cancelled-fetch bookkeeping** — React Query handles stale requests automatically
+- **Automatic caching** — calling the hook from two components doesn't fire two network requests
+- **`enabled` flag** — the query waits until both IDs are available without any `if (!x) return` guards
 
 ---
 
@@ -638,16 +725,18 @@ try {
 
 ---
 
-## Key Takeaways
+## Conclusion
 
-1. **One `.proto` file, two generated clients** — your Go server and TypeScript client are always in sync. Rename a field and the compiler catches every usage.
+ConnectRPC sits at a sweet spot: you get the type-safety and schema-enforcement of gRPC without the browser-incompatibility, and you get HTTP/JSON compatibility without hand-written API clients.
 
-2. **Use `h2c` for local dev** — ConnectRPC needs HTTP/2. In production, TLS gives you HTTP/2 for free. Locally, wrap your mux with `h2c.NewHandler`.
+In the Revocall conversation API, a single `.proto` file gave us:
 
-3. **Two transports, one interceptor** — keep a bare transport for public endpoints and an authed transport that injects the Bearer token. Swap transports when the user authenticates.
+- A **Go server interface** that the compiler enforces — rename a field and every unupdated call site becomes a compile error
+- **TypeScript message types and React Query hooks** via `protoc-gen-connect-query` — no more guessing at response shapes or writing fetch wrappers
+- **Automatic GET for idempotent reads** (`History`) via `idempotency_level = NO_SIDE_EFFECTS`, enabling browser and CDN caching with no extra code
+- **Bearer token injection** as a one-line interceptor, shared across all authenticated RPCs
+- **Typed error codes** that map cleanly from Go's `connect.NewError` to TypeScript's `ConnectError` and HTTP statuses
 
-4. **`authn.GetInfo(ctx)` is your identity store** — whatever you return from `AuthFunc` is available in every handler. No globals, no middleware chains.
+The monorepo workspace pattern — `proto/gen/go` consumed via a `go.mod` `replace` directive, `proto/gen/ts/chat` consumed via `pnpm workspace:*` — keeps generated code co-located with the `.proto` source while making it importable as a real package from both the backend and the frontend.
 
-5. **`fromTimestamp` for proto Timestamps** — `int64` fields arrive as `BigInt` in the browser. Always use `Number(ts.seconds)` before arithmetic to avoid runtime errors.
-
-6. **`useHttpGet: true` for queries** — ConnectRPC supports HTTP GET for idempotent RPCs. This enables browser and CDN caching for read-heavy endpoints like `History`.
+If you're building a Go backend with a React frontend, ConnectRPC is worth evaluating. The upfront cost is a `buf.gen.yaml` and a few minutes of toolchain setup. The payoff is end-to-end type safety that scales as your API grows.

@@ -18,12 +18,12 @@ export const NAV_ITEM_LIST: NavItemProps[] = [
 		label: "navbar.about",
 	},
 	{
-		href: "/repos",
-		label: "navbar.repo",
-	},
-	{
 		href: "/blog",
 		label: "navbar.blog",
+	},
+	{
+		href: "/repos",
+		label: "navbar.repo",
 	},
 	{
 		href: "/contact",

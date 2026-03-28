@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import { BookOpenIcon, CalendarIcon, PenLineIcon } from "lucide-react";
+import { CalendarIcon } from "lucide-react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
@@ -72,13 +72,12 @@ const BlogClient = ({ posts }: BlogClientProps) => {
 								className="flex flex-col items-center gap-0.5 px-6 py-2.5 data-[state=active]:text-primary"
 							>
 								<div className="flex items-center gap-1.5 font-semibold">
-									<PenLineIcon className="w-3.5 h-3.5" />
-									{t("blog.tab_label")}
 									{posts.length > 0 && (
 										<span className="inline-flex items-center justify-center w-5 h-5 text-xs font-bold leading-none rounded-full bg-primary text-primary-foreground">
 											{posts.length}
 										</span>
 									)}
+									{t("blog.tab_label")}
 								</div>
 							</TabsTrigger>
 
@@ -87,13 +86,12 @@ const BlogClient = ({ posts }: BlogClientProps) => {
 								className="flex flex-col items-center gap-0.5 px-6 py-2.5 data-[state=active]:text-primary"
 							>
 								<div className="flex items-center gap-1.5 font-semibold">
-									<BookOpenIcon className="w-3.5 h-3.5" />
-									{t("article.tab_label")}
 									{articles.length > 0 && (
 										<span className="inline-flex items-center justify-center w-5 h-5 text-xs font-bold leading-none rounded-full bg-primary text-primary-foreground">
 											{articles.length}
 										</span>
 									)}
+									{t("article.tab_label")}
 								</div>
 							</TabsTrigger>
 						</TabsList>
