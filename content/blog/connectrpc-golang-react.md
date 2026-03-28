@@ -18,7 +18,6 @@ coverImage: "/images/connectrpc-golang-react.png"
 - [Step 4: React Frontend](#step-4-react-frontend)
 - [Bonus: Protobuf Timestamp Conversion](#bonus-protobuf-timestamp-conversion)
 - [Error Handling](#error-handling)
-- [Key Takeaways](#key-takeaways)
 - [Conclusion](#conclusion)
 
 ---
@@ -733,22 +732,6 @@ try {
 
 ---
 
-## Key Takeaways
-
-1. **One `.proto` file, two generated clients** — your Go server and TypeScript client are always in sync. Rename a field and the compiler catches every usage.
-
-2. **Use `h2c` for local dev** — ConnectRPC needs HTTP/2. In production, TLS gives you HTTP/2 for free. Locally, wrap your mux with `h2c.NewHandler`.
-
-3. **Two transports, one interceptor** — keep a bare transport for public endpoints and an authed transport that injects the Bearer token. Swap transports when the user logs in.
-
-4. **`authn.GetInfo(ctx)` is your identity store** — whatever you return from `AuthFunc` is available in every handler. No globals, no middleware chains.
-
-5. **`fromTimestamp` for proto Timestamps** — `int64` fields arrive as `BigInt` in the browser. Always use `Number(ts.seconds)` before arithmetic to avoid runtime errors.
-
-6. **`useHttpGet: true` for queries** — ConnectRPC supports HTTP GET for idempotent RPCs. This enables browser and CDN caching for read-heavy endpoints like `List`.
-
----
-
 ## Conclusion
 
 ConnectRPC sits at a sweet spot: you get the type-safety and schema-enforcement of gRPC without the browser-incompatibility, and you get HTTP/JSON compatibility without hand-written API clients.
@@ -762,5 +745,3 @@ In this note-taking API example, a single `.proto` file gave us:
 - **Typed error codes** that map cleanly from Go's `connect.NewError` to TypeScript's `ConnectError` and HTTP statuses
 
 The monorepo workspace pattern — `proto/gen/go` consumed via a `go.mod` `replace` directive, `proto/gen/ts/notes` consumed via `pnpm workspace:*` — keeps generated code co-located with the `.proto` source while making it importable as a real package from both the backend and the frontend.
-
-If you're learning ConnectRPC, starting with a CRUD app is the right move. The upfront cost is a `buf.gen.yaml` and a few minutes of toolchain setup. The payoff is end-to-end type safety that scales as your API grows.
