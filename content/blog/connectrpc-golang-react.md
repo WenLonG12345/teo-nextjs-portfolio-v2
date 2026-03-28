@@ -18,7 +18,6 @@ coverImage: "/images/connectrpc-golang-react.png"
 - [Step 4: React Frontend](#step-4-react-frontend)
 - [Bonus: Protobuf Timestamp Conversion](#bonus-protobuf-timestamp-conversion)
 - [Error Handling](#error-handling)
-- [Key Takeaways](#key-takeaways)
 - [Conclusion](#conclusion)
 
 ---
