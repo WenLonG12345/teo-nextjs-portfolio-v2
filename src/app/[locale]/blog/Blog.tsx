@@ -67,7 +67,7 @@ const BlogClient = ({ posts }: BlogClientProps) => {
 					{/* Tab triggers */}
 					<div className="flex justify-center mb-8">
 						<TabsList className="h-auto gap-1 p-1">
-							<TabsTrigger
+							{/* <TabsTrigger
 								value="blog"
 								className="flex flex-col items-center gap-0.5 px-6 py-2.5 data-[state=active]:text-primary"
 							>
@@ -79,7 +79,7 @@ const BlogClient = ({ posts }: BlogClientProps) => {
 									)}
 									{t("blog.tab_label")}
 								</div>
-							</TabsTrigger>
+							</TabsTrigger> */}
 
 							<TabsTrigger
 								value="articles"
@@ -98,7 +98,7 @@ const BlogClient = ({ posts }: BlogClientProps) => {
 					</div>
 
 					{/* ── Blog Posts Tab ── */}
-					<TabsContent value="blog">
+					{/* <TabsContent value="blog">
 						{posts.length === 0 ? (
 							<p className="py-16 text-center text-muted-foreground">
 								{t("blog.empty")}
@@ -164,7 +164,7 @@ const BlogClient = ({ posts }: BlogClientProps) => {
 								))}
 							</div>
 						)}
-					</TabsContent>
+					</TabsContent> */}
 
 					{/* ── Medium Articles Tab ── */}
 					<TabsContent value="articles">

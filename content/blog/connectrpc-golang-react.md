@@ -1,7 +1,7 @@
 ---
 title: "Building Type-Safe APIs with ConnectRPC: Go Backend + React Frontend"
 date: "2025-03-27"
-description: "A practical guide to using ConnectRPC to build fully type-safe APIs with a Golang backend and React frontend — with real production patterns from the Revocall AI voice agent platform."
+description: "A practical guide to using ConnectRPC to build fully type-safe APIs with a Golang backend and React frontend — covering protobuf definitions, code generation, and React Query hooks."
 tags: ["Golang", "React", "ConnectRPC", "TypeScript", "Protobuf"]
 coverImage: "/images/connectrpc-golang-react.png"
 ---
@@ -24,7 +24,7 @@ coverImage: "/images/connectrpc-golang-react.png"
 
 ## Why ConnectRPC?
 
-At [Revolab](https://www.revolab.com/), building the Revocall AI voice agent platform meant choosing a communication layer between Go microservices and a React frontend. We needed something:
+While building a side project with a Go backend and a React frontend, I had to choose a communication layer between the two. I needed something:
 
 - **Type-safe end-to-end** — no hand-written API clients that drift from the server
 - **Browser-compatible** — unlike plain gRPC, which requires an Envoy proxy for browsers
@@ -36,7 +36,7 @@ At [Revolab](https://www.revolab.com/), building the Revocall AI voice agent pla
 
 ## Use Case: Conversation API
 
-We'll walk through a real scenario from Revocall: **creating and fetching a conversation** with an AI voice agent. The flow is:
+We'll walk through a concrete example: **creating and fetching a conversation** with an AI voice agent. The flow is:
 
 1. Client authenticates and gets an access token
 2. Client creates a conversation (passing a `bot_id`)
@@ -728,7 +728,7 @@ try {
 
 ConnectRPC sits at a sweet spot: you get the type-safety and schema-enforcement of gRPC without the browser-incompatibility, and you get HTTP/JSON compatibility without hand-written API clients.
 
-In the Revocall conversation API, a single `.proto` file gave us:
+In this conversation API example, a single `.proto` file gave us:
 
 - A **Go server interface** that the compiler enforces — rename a field and every unupdated call site becomes a compile error
 - **TypeScript message types and React Query hooks** via `protoc-gen-connect-query` — no more guessing at response shapes or writing fetch wrappers
