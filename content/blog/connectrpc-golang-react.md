@@ -9,7 +9,7 @@ coverImage: "/images/connectrpc-golang-react.png"
 ## Table of Contents
 
 - [Why ConnectRPC?](#why-connectrpc)
-- [Use Case: Conversation API](#use-case-conversation-api)
+- [Use Case: Note-Taking API](#use-case-note-taking-api)
 - [Project Folder Structure](#project-folder-structure)
 - [Step 1: Define the Proto](#step-1-define-the-proto)
 - [Understanding idempotency_level](#understanding-idempotency_level)
@@ -18,13 +18,14 @@ coverImage: "/images/connectrpc-golang-react.png"
 - [Step 4: React Frontend](#step-4-react-frontend)
 - [Bonus: Protobuf Timestamp Conversion](#bonus-protobuf-timestamp-conversion)
 - [Error Handling](#error-handling)
+- [Key Takeaways](#key-takeaways)
 - [Conclusion](#conclusion)
 
 ---
 
 ## Why ConnectRPC?
 
-While building a side project with a Go backend and a React frontend, I had to choose a communication layer between the two. I needed something:
+While learning how to connect a Go backend with a React frontend, I evaluated a few options — REST, tRPC, plain gRPC — before settling on ConnectRPC. I needed something:
 
 - **Type-safe end-to-end** — no hand-written API clients that drift from the server
 - **Browser-compatible** — unlike plain gRPC, which requires an Envoy proxy for browsers
@@ -34,16 +35,15 @@ While building a side project with a Go backend and a React frontend, I had to c
 
 ---
 
-## Use Case: Conversation API
+## Use Case: Note-Taking API
 
-We'll walk through a concrete example: **creating and fetching a conversation** with an AI voice agent. The flow is:
+We'll walk through a concrete example: **a simple authenticated note-taking app**. The flow is:
 
-1. Client authenticates and gets an access token
-2. Client creates a conversation (passing a `bot_id`)
-3. Server returns a conversation token + conversation ID
-4. Client fetches conversation history with pagination
+1. User logs in and receives an access token
+2. User creates, lists, updates, and deletes notes (all authenticated)
+3. List supports pagination via a page token
 
-This covers mutations, authenticated requests, and paginated queries — everything you'd encounter in a real app.
+This covers all four CRUD operations, authenticated requests, and paginated queries — a representative slice of what you'd build in a real app.
 
 ---
 
@@ -56,39 +56,39 @@ my-app/
 │   ├── buf.gen.yaml
 │   ├── auth/v1/
 │   │   └── auth.proto
-│   ├── conversation/v1/
-│   │   └── conversation.proto
+│   ├── note/v1/
+│   │   └── note.proto
 │   └── gen/                             # Auto-generated (never edit by hand)
 │       ├── go/
-│       │   └── conversation/v1/
-│       │       ├── conversation.pb.go
-│       │       └── conversationv1connect/
-│       │           └── conversation.connect.go
+│       │   └── note/v1/
+│       │       ├── note.pb.go
+│       │       └── notev1connect/
+│       │           └── note.connect.go
 │       └── ts/
-│           └── chat/                    # Published as @your-org/chat-proto workspace package
+│           └── notes/                   # Published as @your-org/note-proto workspace package
 │               ├── package.json
-│               └── conversation/v1/
-│                   ├── conversation_pb.ts
-│                   └── conversation-ConversationService_connectquery.ts
+│               └── note/v1/
+│                   ├── note_pb.ts
+│                   └── note-NoteService_connectquery.ts
 │
 ├── backend/                             # Go server
 │   ├── go.mod                           # replace directive points to proto/gen/go
 │   ├── cmd/server/
 │   │   ├── main.go
 │   │   └── middleware.go
-│   └── conversation/
+│   └── note/
 │       ├── handler.go
 │       └── service.go
 │
 ├── frontend/                            # React app (Vite or Next.js)
-│   ├── package.json                     # "@your-org/chat-proto": "workspace:*"
+│   ├── package.json                     # "@your-org/note-proto": "workspace:*"
 │   └── src/
 │       ├── lib/
 │       │   └── transport.ts
 │       └── hooks/
-│           └── useConversation.ts
+│           └── useNotes.ts
 │
-└── pnpm-workspace.yaml                  # lists proto/gen/ts/chat as a workspace package
+└── pnpm-workspace.yaml                  # lists proto/gen/ts/notes as a workspace package
 ```
 
 The `proto/` folder is the single source of truth. Generated code lives in `proto/gen/` — not inside each app. Both the Go backend and the React frontend consume the generated code as proper packages.
@@ -100,11 +100,11 @@ The `proto/` folder is the single source of truth. Generated code lives in `prot
 module github.com/your-org/my-app/backend
 
 require (
-    github.com/your-org/my-app/proto/gen/go/chat v0.0.0
+    github.com/your-org/my-app/proto/gen/go/notes v0.0.0
 )
 
 // Point to the local generated code instead of a published module
-replace github.com/your-org/my-app/proto/gen/go/chat => ../proto/gen/go/chat
+replace github.com/your-org/my-app/proto/gen/go/notes => ../proto/gen/go/notes
 ```
 
 **TypeScript — pnpm workspace:**
@@ -113,13 +113,13 @@ replace github.com/your-org/my-app/proto/gen/go/chat => ../proto/gen/go/chat
 # pnpm-workspace.yaml
 packages:
   - "frontend"
-  - "proto/gen/ts/chat"   # treat generated TS as a local workspace package
+  - "proto/gen/ts/notes"   # treat generated TS as a local workspace package
 ```
 
 ```json
-// proto/gen/ts/chat/package.json
+// proto/gen/ts/notes/package.json
 {
-  "name": "@your-org/chat-proto",
+  "name": "@your-org/note-proto",
   "exports": {
     "./*": { "types": "./*.ts", "default": "./*" }
   }
@@ -130,86 +130,110 @@ packages:
 // frontend/package.json  (excerpt)
 {
   "dependencies": {
-    "@your-org/chat-proto": "workspace:*"
+    "@your-org/note-proto": "workspace:*"
   }
 }
 ```
 
-This way `import { create } from "@your-org/chat-proto/conversation/v1/..."` works in the frontend with full TypeScript types, and `go build` resolves the generated Go module locally — no publishing required.
+This way `import { listNotes } from "@your-org/note-proto/note/v1/..."` works in the frontend with full TypeScript types, and `go build` resolves the generated Go module locally — no publishing required.
 
 ---
 
 ## Step 1: Define the Proto
 
-Two services for our use case: `AuthService` (public) and `ConversationService` (protected).
+Two services: `AuthService` (public) and `NoteService` (protected).
 
 ```protobuf
 // proto/auth/v1/auth.proto
 syntax = "proto3";
-package chat.auth.v1;
+package notes.auth.v1;
 
 service AuthService {
-  rpc Init(InitRequest) returns (InitResponse) {
+  rpc Login(LoginRequest) returns (LoginResponse) {
     option idempotency_level = IDEMPOTENCY_UNKNOWN;
   }
 }
 
-message InitRequest {
-  string organization_id = 1;
+message LoginRequest {
+  string email    = 1;
+  string password = 2;
 }
 
-message InitResponse {
+message LoginResponse {
   string access_token = 1;
 }
 ```
 
 ```protobuf
-// proto/conversation/v1/conversation.proto
+// proto/note/v1/note.proto
 syntax = "proto3";
-package chat.conversation.v1;
+package notes.note.v1;
 
 import "google/protobuf/timestamp.proto";
 
-service ConversationService {
-  rpc Create(CreateRequest) returns (CreateResponse) {
+service NoteService {
+  rpc Create(CreateNoteRequest) returns (CreateNoteResponse) {
     option idempotency_level = IDEMPOTENCY_UNKNOWN;
   }
 
-  rpc History(HistoryRequest) returns (HistoryResponse) {
+  rpc List(ListNotesRequest) returns (ListNotesResponse) {
     option idempotency_level = NO_SIDE_EFFECTS;
   }
-}
 
-message CreateRequest {
-  string bot_id = 1;
-}
-
-message CreateResponse {
-  string access_token    = 1;
-  string conversation_id = 2;
-}
-
-message HistoryRequest {
-  string          conversation_id  = 1;
-  optional int32  limit            = 2;
-  optional string pagination_token = 3;
-}
-
-message HistoryResponse {
-  message Message {
-    string                    conversation_id = 1;
-    int64                     id              = 2;
-    string                    content         = 3;
-    string                    sender          = 4;
-    google.protobuf.Timestamp created_at      = 5;
+  rpc Update(UpdateNoteRequest) returns (UpdateNoteResponse) {
+    option idempotency_level = IDEMPOTENT;
   }
 
-  repeated Message messages = 1;
-  string           next     = 2;
+  rpc Delete(DeleteNoteRequest) returns (DeleteNoteResponse) {
+    option idempotency_level = IDEMPOTENT;
+  }
 }
+
+message Note {
+  string                    id         = 1;
+  string                    title      = 2;
+  string                    content    = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+}
+
+message CreateNoteRequest {
+  string title   = 1;
+  string content = 2;
+}
+
+message CreateNoteResponse {
+  Note note = 1;
+}
+
+message ListNotesRequest {
+  optional int32  page_size  = 1;
+  optional string page_token = 2;
+}
+
+message ListNotesResponse {
+  repeated Note notes          = 1;
+  string        next_page_token = 2;
+}
+
+message UpdateNoteRequest {
+  string id      = 1;
+  string title   = 2;
+  string content = 3;
+}
+
+message UpdateNoteResponse {
+  Note note = 1;
+}
+
+message DeleteNoteRequest {
+  string id = 1;
+}
+
+message DeleteNoteResponse {}
 ```
 
-Note `created_at` uses `google.protobuf.Timestamp` — a protobuf well-known type. We'll cover how to convert it on the frontend [below](#bonus-protobuf-timestamp-conversion).
+Note `created_at` and `updated_at` use `google.protobuf.Timestamp` — a protobuf well-known type. We'll cover how to convert it on the frontend [below](#bonus-protobuf-timestamp-conversion).
 
 ---
 
@@ -225,16 +249,17 @@ You may have noticed the `option idempotency_level` annotation on each RPC. This
 
 In our example:
 
-- `AuthService.Init` and `ConversationService.Create` are mutations → `IDEMPOTENCY_UNKNOWN` → ConnectRPC sends them as POST
-- `ConversationService.History` is a pure read → `NO_SIDE_EFFECTS` → ConnectRPC sends it as GET when `useHttpGet: true` is set in the transport
+- `AuthService.Login` and `NoteService.Create` are mutations → `IDEMPOTENCY_UNKNOWN` → POST
+- `NoteService.List` is a pure read → `NO_SIDE_EFFECTS` → GET (cacheable)
+- `NoteService.Update` and `NoteService.Delete` are safe to retry → `IDEMPOTENT` → POST
 
-The GET behaviour matters because browsers and CDNs can cache GET responses. Set `useHttpGet: true` on your authed transport and your `History` calls become cache-eligible for free:
+The GET behaviour matters because browsers and CDNs can cache GET responses. Set `useHttpGet: true` on your authed transport and your `List` calls become cache-eligible for free:
 
 ```typescript
 export function createAuthedTransport(baseUrl: string, bearerToken: string) {
     return createConnectTransport({
         baseUrl,
-        useHttpGet: true,   // History RPC → GET → cacheable
+        useHttpGet: true,   // List RPC → GET → cacheable
         interceptors: [ ... ],
     });
 }
@@ -313,9 +338,9 @@ import (
     "golang.org/x/net/http2"
     "golang.org/x/net/http2/h2c"
 
-    authconnect       "github.com/your-org/my-app/proto/gen/go/auth/v1/authv1connect"
-    conversationconn  "github.com/your-org/my-app/proto/gen/go/conversation/v1/conversationv1connect"
-    "github.com/your-org/my-app/backend/conversation"
+    authconnect "github.com/your-org/my-app/proto/gen/go/auth/v1/authv1connect"
+    noteconnect "github.com/your-org/my-app/proto/gen/go/note/v1/notev1connect"
+    "github.com/your-org/my-app/backend/note"
 )
 
 func run() error {
@@ -328,8 +353,8 @@ func run() error {
     mux.Handle(authconnect.NewAuthServiceHandler(newAuthServer()))
 
     // Protected: requires valid Bearer token
-    path, handler := conversationconn.NewConversationServiceHandler(
-        conversation.NewHandler(conversationService),
+    path, handler := noteconnect.NewNoteServiceHandler(
+        note.NewHandler(noteService),
     )
     mux.Handle(path, authMW.Wrap(handler))
 
@@ -356,15 +381,12 @@ func authenticate(queries Queries) authn.AuthFunc {
         }
         token = strings.TrimPrefix(token, "Bearer ")
 
-        session, err := queries.ValidateToken(ctx, token)
+        user, err := queries.ValidateToken(ctx, token)
         if err != nil {
             return nil, authn.Errorf("invalid token: %v", err)
         }
 
-        return Participant{
-            ID:             session.UserID,
-            OrganizationID: session.OrganizationID,
-        }, nil
+        return User{ID: user.ID}, nil
     }
 }
 
@@ -388,17 +410,18 @@ func corsMiddleware(next http.Handler) http.Handler {
 
 ### Implement the Handler
 
-Handlers implement the generated interface. Key types: `connect.Request[T]` wraps your proto request, `connect.Response[T]` wraps the response, and `connect.NewError(code, err)` gives typed errors:
+Handlers implement the generated interface. The full CRUD:
 
 ```go
-// backend/conversation/handler.go
-package conversation
+// backend/note/handler.go
+package note
 
 import (
     "connectrpc.com/authn"
     "connectrpc.com/connect"
+    "google.golang.org/protobuf/types/known/timestamppb"
 
-    conversationv1 "github.com/your-org/my-app/proto/gen/go/conversation/v1"
+    notev1 "github.com/your-org/my-app/proto/gen/go/note/v1"
 )
 
 type Handler struct{ svc *Service }
@@ -407,72 +430,90 @@ func NewHandler(svc *Service) *Handler { return &Handler{svc: svc} }
 
 func (h *Handler) Create(
     ctx context.Context,
-    req *connect.Request[conversationv1.CreateRequest],
-) (*connect.Response[conversationv1.CreateResponse], error) {
-
-    participant, ok := authn.GetInfo(ctx).(Participant)
+    req *connect.Request[notev1.CreateNoteRequest],
+) (*connect.Response[notev1.CreateNoteResponse], error) {
+    user, ok := authn.GetInfo(ctx).(User)
     if !ok {
-        return nil, connect.NewError(connect.CodeUnauthenticated,
-            errors.New("invalid session"))
+        return nil, connect.NewError(connect.CodeUnauthenticated, errors.New("invalid session"))
+    }
+    if req.Msg.GetTitle() == "" {
+        return nil, connect.NewError(connect.CodeInvalidArgument, errors.New("title is required"))
     }
 
-    if req.Msg.GetBotId() == "" {
-        return nil, connect.NewError(connect.CodeInvalidArgument,
-            errors.New("bot_id is required"))
-    }
-
-    token, conv, err := h.svc.Create(ctx, participant.OrganizationID, req.Msg.GetBotId())
+    n, err := h.svc.Create(ctx, user.ID, req.Msg.GetTitle(), req.Msg.GetContent())
     if err != nil {
         return nil, connect.NewError(connect.CodeInternal, err)
     }
 
-    return connect.NewResponse(&conversationv1.CreateResponse{
-        AccessToken:    token,
-        ConversationId: conv.ID,
+    return connect.NewResponse(&notev1.CreateNoteResponse{Note: toProto(n)}), nil
+}
+
+func (h *Handler) List(
+    ctx context.Context,
+    req *connect.Request[notev1.ListNotesRequest],
+) (*connect.Response[notev1.ListNotesResponse], error) {
+    user, ok := authn.GetInfo(ctx).(User)
+    if !ok {
+        return nil, connect.NewError(connect.CodeUnauthenticated, errors.New("invalid session"))
+    }
+
+    notes, nextToken, err := h.svc.List(ctx, user.ID, req.Msg.PageToken)
+    if err != nil {
+        return nil, connect.NewError(connect.CodeInternal, err)
+    }
+
+    protoNotes := make([]*notev1.Note, len(notes))
+    for i, n := range notes {
+        protoNotes[i] = toProto(n)
+    }
+
+    return connect.NewResponse(&notev1.ListNotesResponse{
+        Notes:         protoNotes,
+        NextPageToken: nextToken,
     }), nil
 }
 
-func (h *Handler) History(
+func (h *Handler) Update(
     ctx context.Context,
-    req *connect.Request[conversationv1.HistoryRequest],
-) (*connect.Response[conversationv1.HistoryResponse], error) {
-
-    participant, ok := authn.GetInfo(ctx).(Participant)
+    req *connect.Request[notev1.UpdateNoteRequest],
+) (*connect.Response[notev1.UpdateNoteResponse], error) {
+    user, ok := authn.GetInfo(ctx).(User)
     if !ok {
-        return nil, connect.NewError(connect.CodeUnauthenticated,
-            errors.New("invalid session"))
+        return nil, connect.NewError(connect.CodeUnauthenticated, errors.New("invalid session"))
     }
 
-    // Authorization: only participants can fetch history
-    ok, err := h.svc.IsParticipant(ctx, req.Msg.ConversationId, participant.ID)
-    if err != nil {
-        return nil, connect.NewError(connect.CodeInternal, err)
-    }
-    if !ok {
-        return nil, connect.NewError(connect.CodePermissionDenied,
-            errors.New("not a participant in this conversation"))
-    }
-
-    messages, next, err := h.svc.History(ctx, req.Msg.ConversationId, req.Msg.PaginationToken)
+    n, err := h.svc.Update(ctx, user.ID, req.Msg.GetId(), req.Msg.GetTitle(), req.Msg.GetContent())
     if err != nil {
         return nil, connect.NewError(connect.CodeInternal, err)
     }
 
-    protoMessages := make([]*conversationv1.HistoryResponse_Message, len(messages))
-    for i, m := range messages {
-        protoMessages[i] = &conversationv1.HistoryResponse_Message{
-            ConversationId: m.ConversationID,
-            Id:             m.ID,
-            Content:        m.Content,
-            Sender:         m.Sender,
-            CreatedAt:      timestamppb.New(m.CreatedAt),
-        }
+    return connect.NewResponse(&notev1.UpdateNoteResponse{Note: toProto(n)}), nil
+}
+
+func (h *Handler) Delete(
+    ctx context.Context,
+    req *connect.Request[notev1.DeleteNoteRequest],
+) (*connect.Response[notev1.DeleteNoteResponse], error) {
+    user, ok := authn.GetInfo(ctx).(User)
+    if !ok {
+        return nil, connect.NewError(connect.CodeUnauthenticated, errors.New("invalid session"))
     }
 
-    return connect.NewResponse(&conversationv1.HistoryResponse{
-        Messages: protoMessages,
-        Next:     next,
-    }), nil
+    if err := h.svc.Delete(ctx, user.ID, req.Msg.GetId()); err != nil {
+        return nil, connect.NewError(connect.CodeInternal, err)
+    }
+
+    return connect.NewResponse(&notev1.DeleteNoteResponse{}), nil
+}
+
+func toProto(n *Note) *notev1.Note {
+    return &notev1.Note{
+        Id:        n.ID,
+        Title:     n.Title,
+        Content:   n.Content,
+        CreatedAt: timestamppb.New(n.CreatedAt),
+        UpdatedAt: timestamppb.New(n.UpdatedAt),
+    }
 }
 ```
 
@@ -482,18 +523,15 @@ func (h *Handler) History(
 
 ### Transport Setup
 
-Create two transports — one bare (for public endpoints), one with an injected `Authorization` header (for protected endpoints). Typed clients are created from the generated service definitions:
+Create two transports — one bare (for public endpoints), one with an injected `Authorization` header (for protected endpoints):
 
 ```typescript
 // frontend/src/lib/transport.ts
 import type { Message } from "@bufbuild/protobuf";
-import type { Timestamp } from "@bufbuild/protobuf/wkt";
 import { createClient } from "@connectrpc/connect";
 import { createConnectTransport } from "@connectrpc/connect-web";
-import dayjs from "dayjs";
 
-import { AuthService } from "@/gen/ts/auth/v1/auth_pb";
-import { ConversationService } from "@/gen/ts/conversation/v1/conversation_pb";
+import { AuthService } from "@your-org/note-proto/auth/v1/auth_pb";
 
 // ── Transports ──────────────────────────────────────────────────────────────
 
@@ -519,120 +557,90 @@ export function createAuthedTransport(baseUrl: string, bearerToken: string) {
 export const createAuthClient = (baseUrl: string) =>
     createClient(AuthService, createBaseTransport(baseUrl));
 
-export const createConversationClient = (baseUrl: string, token: string) =>
-    createClient(ConversationService, createAuthedTransport(baseUrl, token));
-
 // ── Type Utils ───────────────────────────────────────────────────────────────
 
-/**
- * Strip protobuf Message internals so you can spread the object safely.
- * Useful when passing proto messages as plain props/state.
- */
 export type Plain<T> = Omit<T, keyof Message<string>>;
 
 // ── Timestamp Conversion ─────────────────────────────────────────────────────
 // (see next section)
 ```
 
-### Conversation Hook
+### Notes Hook
 
-Instead of managing loading and error state by hand, use `useMutation` from `@connectrpc/connect-query`. The generated `*_connectquery.ts` file exports a `create` descriptor that `useMutation` understands directly:
-
-```typescript
-// frontend/src/hooks/useConversation.ts
-import { useMutation } from "@connectrpc/connect-query";
-import { useState } from "react";
-import { create } from "@your-org/chat-proto/conversation/v1/conversation-ConversationService_connectquery";
-import { createAuthClient, createAuthedTransport } from "@/lib/transport";
-
-export function useConversation(apiBaseUrl: string, botId: string) {
-    const [accessToken, setAccessToken] = useState<string | null>(null);
-    const [conversationId, setConversationId] = useState<string | null>(null);
-
-    // useMutation wraps the Create RPC — isPending and error are managed automatically
-    const { mutateAsync, isPending, error } = useMutation(create, {
-        transport: createAuthedTransport(apiBaseUrl, accessToken ?? ""),
-    });
-
-    const connect = async (organizationId: string) => {
-        // Step 1: get anonymous access token via public endpoint (direct call)
-        const { accessToken: token } = await createAuthClient(apiBaseUrl).init({ organizationId });
-        setAccessToken(token);
-
-        // Step 2: create conversation — useMutation tracks isPending + error state
-        const authedTransport = createAuthedTransport(apiBaseUrl, token);
-        const res = await mutateAsync({ botId }, { transport: authedTransport } as any);
-        setConversationId(res.conversationId);
-
-        return { conversationToken: res.accessToken, conversationId: res.conversationId };
-    };
-
-    return { connect, accessToken, conversationId, isConnecting: isPending, error };
-}
-```
-
-### Fetching History with useQuery
-
-`useQuery` replaces the `useEffect` + manual loading state. Pass `enabled` so the query only runs once both `conversationId` and `accessToken` are available:
+Use `useQuery` for listing notes and `useMutation` for create, update, and delete. The generated `*_connectquery.ts` file exports descriptors that these hooks understand directly:
 
 ```typescript
-// frontend/src/hooks/useConversationHistory.ts
-import { useQuery } from "@connectrpc/connect-query";
-import { history } from "@your-org/chat-proto/conversation/v1/conversation-ConversationService_connectquery";
-import type { HistoryResponse_Message } from "@your-org/chat-proto/conversation/v1/conversation_pb";
-import { createAuthedTransport, fromTimestamp } from "@/lib/transport";
+// frontend/src/hooks/useNotes.ts
+import { useMutation, useQuery } from "@connectrpc/connect-query";
+import {
+    createNote,
+    deleteNote,
+    listNotes,
+    updateNote,
+} from "@your-org/note-proto/note/v1/note-NoteService_connectquery";
+import { createAuthedTransport } from "@/lib/transport";
 
-interface Message {
-    id: string;
-    content: string;
-    sender: string;
-    createdAt: string;
-}
-
-export function useConversationHistory(
-    apiBaseUrl: string,
-    accessToken: string | null,
-    conversationId: string | null,
-) {
+export function useNotes(apiBaseUrl: string, accessToken: string | null) {
     const transport = accessToken
         ? createAuthedTransport(apiBaseUrl, accessToken)
         : undefined;
 
-    // useQuery handles caching, deduplication, and background refetch automatically.
-    // Because History has idempotency_level = NO_SIDE_EFFECTS, ConnectRPC sends it
-    // as an HTTP GET — making the response eligible for browser and CDN caching.
-    const { data, isLoading, error } = useQuery(
-        history,
-        { conversationId: conversationId ?? "" },
-        {
-            transport,
-            enabled: !!conversationId && !!accessToken,
-        },
+    // useQuery fetches the list automatically and re-fetches when accessToken changes.
+    // Because List has idempotency_level = NO_SIDE_EFFECTS, ConnectRPC sends it as
+    // an HTTP GET — making the response eligible for browser and CDN caching.
+    const { data, isLoading } = useQuery(
+        listNotes,
+        {},
+        { transport, enabled: !!accessToken },
     );
 
-    return {
-        messages: data?.messages.map(toMessage) ?? [],
-        nextToken: data?.next,
-        isLoading,
-        error,
-    };
-}
+    const { mutateAsync: create, isPending: isCreating } = useMutation(createNote, { transport });
+    const { mutateAsync: update, isPending: isUpdating } = useMutation(updateNote, { transport });
+    const { mutateAsync: remove, isPending: isDeleting } = useMutation(deleteNote, { transport });
 
-function toMessage(m: HistoryResponse_Message): Message {
     return {
-        id: String(m.id),
-        content: m.content,
-        sender: m.sender,
-        createdAt: fromTimestamp(m.createdAt, "HH:mm"),
+        notes: data?.notes ?? [],
+        nextPageToken: data?.nextPageToken,
+        isLoading,
+        create,    // (input: CreateNoteRequest) => Promise<CreateNoteResponse>
+        update,    // (input: UpdateNoteRequest) => Promise<UpdateNoteResponse>
+        remove,    // (input: DeleteNoteRequest) => Promise<DeleteNoteResponse>
+        isCreating,
+        isUpdating,
+        isDeleting,
     };
 }
 ```
 
-Key advantages over the manual `useEffect` approach:
+Usage in a component:
+
+```typescript
+function NotesPage({ apiBaseUrl, accessToken }: { apiBaseUrl: string; accessToken: string }) {
+    const { notes, isLoading, create, update, remove } = useNotes(apiBaseUrl, accessToken);
+
+    if (isLoading) return <p>Loading...</p>;
+
+    return (
+        <ul>
+            {notes.map((note) => (
+                <li key={note.id}>
+                    <strong>{note.title}</strong>
+                    <button onClick={() => update({ id: note.id, title: "Updated", content: note.content })}>
+                        Edit
+                    </button>
+                    <button onClick={() => remove({ id: note.id })}>Delete</button>
+                </li>
+            ))}
+        </ul>
+    );
+}
+```
+
+Key advantages over manual `fetch`:
 
 - **No cancelled-fetch bookkeeping** — React Query handles stale requests automatically
 - **Automatic caching** — calling the hook from two components doesn't fire two network requests
-- **`enabled` flag** — the query waits until both IDs are available without any `if (!x) return` guards
+- **`enabled` flag** — the query waits until the token is available without any `if (!x) return` guards
 
 ---
 
@@ -652,8 +660,8 @@ import dayjs from "dayjs";
  * before arithmetic. Nanos are divided by 1_000_000 to get milliseconds.
  *
  * @example
- * fromTimestamp(message.createdAt)           // "2025-03-27 14:30:00"
- * fromTimestamp(message.createdAt, "MMM D")  // "Mar 27"
+ * fromTimestamp(note.createdAt)           // "2025-03-27 14:30:00"
+ * fromTimestamp(note.createdAt, "MMM D")  // "Mar 27"
  */
 export function fromTimestamp(
     ts?: Timestamp,
@@ -668,12 +676,13 @@ export function fromTimestamp(
 Use it when mapping proto messages to your UI types:
 
 ```typescript
-function toMessage(m: HistoryResponse_Message): Message {
+function toNote(n: Note) {
     return {
-        id: String(m.id),
-        content: m.content,
-        sender: m.sender,
-        createdAt: fromTimestamp(m.createdAt, "HH:mm"),   // e.g. "14:30"
+        id: n.id,
+        title: n.title,
+        content: n.content,
+        createdAt: fromTimestamp(n.createdAt, "MMM D, YYYY"),  // e.g. "Mar 27, 2025"
+        updatedAt: fromTimestamp(n.updatedAt, "HH:mm"),         // e.g. "14:30"
     };
 }
 ```
@@ -696,8 +705,8 @@ ConnectRPC maps typed error codes to HTTP statuses automatically. Use the right 
 
 **Go (server):**
 ```go
-return nil, connect.NewError(connect.CodePermissionDenied,
-    errors.New("not a participant in this conversation"))
+return nil, connect.NewError(connect.CodeNotFound,
+    errors.New("note not found"))
 ```
 
 **TypeScript (client):**
@@ -705,15 +714,15 @@ return nil, connect.NewError(connect.CodePermissionDenied,
 import { ConnectError, Code } from "@connectrpc/connect";
 
 try {
-    await client.create({ botId });
+    await create({ title, content });
 } catch (err) {
     if (err instanceof ConnectError) {
         switch (err.code) {
             case Code.Unauthenticated:
                 // redirect to login
                 break;
-            case Code.PermissionDenied:
-                // show access denied
+            case Code.InvalidArgument:
+                // show validation error
                 break;
             default:
                 console.error(err.message);
@@ -724,18 +733,34 @@ try {
 
 ---
 
+## Key Takeaways
+
+1. **One `.proto` file, two generated clients** — your Go server and TypeScript client are always in sync. Rename a field and the compiler catches every usage.
+
+2. **Use `h2c` for local dev** — ConnectRPC needs HTTP/2. In production, TLS gives you HTTP/2 for free. Locally, wrap your mux with `h2c.NewHandler`.
+
+3. **Two transports, one interceptor** — keep a bare transport for public endpoints and an authed transport that injects the Bearer token. Swap transports when the user logs in.
+
+4. **`authn.GetInfo(ctx)` is your identity store** — whatever you return from `AuthFunc` is available in every handler. No globals, no middleware chains.
+
+5. **`fromTimestamp` for proto Timestamps** — `int64` fields arrive as `BigInt` in the browser. Always use `Number(ts.seconds)` before arithmetic to avoid runtime errors.
+
+6. **`useHttpGet: true` for queries** — ConnectRPC supports HTTP GET for idempotent RPCs. This enables browser and CDN caching for read-heavy endpoints like `List`.
+
+---
+
 ## Conclusion
 
 ConnectRPC sits at a sweet spot: you get the type-safety and schema-enforcement of gRPC without the browser-incompatibility, and you get HTTP/JSON compatibility without hand-written API clients.
 
-In this conversation API example, a single `.proto` file gave us:
+In this note-taking API example, a single `.proto` file gave us:
 
 - A **Go server interface** that the compiler enforces — rename a field and every unupdated call site becomes a compile error
 - **TypeScript message types and React Query hooks** via `protoc-gen-connect-query` — no more guessing at response shapes or writing fetch wrappers
-- **Automatic GET for idempotent reads** (`History`) via `idempotency_level = NO_SIDE_EFFECTS`, enabling browser and CDN caching with no extra code
+- **Automatic GET for idempotent reads** (`List`) via `idempotency_level = NO_SIDE_EFFECTS`, enabling browser and CDN caching with no extra code
 - **Bearer token injection** as a one-line interceptor, shared across all authenticated RPCs
 - **Typed error codes** that map cleanly from Go's `connect.NewError` to TypeScript's `ConnectError` and HTTP statuses
 
-The monorepo workspace pattern — `proto/gen/go` consumed via a `go.mod` `replace` directive, `proto/gen/ts/chat` consumed via `pnpm workspace:*` — keeps generated code co-located with the `.proto` source while making it importable as a real package from both the backend and the frontend.
+The monorepo workspace pattern — `proto/gen/go` consumed via a `go.mod` `replace` directive, `proto/gen/ts/notes` consumed via `pnpm workspace:*` — keeps generated code co-located with the `.proto` source while making it importable as a real package from both the backend and the frontend.
 
-If you're building a Go backend with a React frontend, ConnectRPC is worth evaluating. The upfront cost is a `buf.gen.yaml` and a few minutes of toolchain setup. The payoff is end-to-end type safety that scales as your API grows.
+If you're learning ConnectRPC, starting with a CRUD app is the right move. The upfront cost is a `buf.gen.yaml` and a few minutes of toolchain setup. The payoff is end-to-end type safety that scales as your API grows.
