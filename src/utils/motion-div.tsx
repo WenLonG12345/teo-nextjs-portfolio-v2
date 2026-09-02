@@ -1,7 +1,6 @@
 "use client";
 
 import {
-	type AnimationProps,
 	type HTMLMotionProps,
 	motion,
 } from "motion/react";
@@ -14,7 +13,7 @@ export const MotionSection = ({
 	animationProps,
 }: {
 	children: React.ReactNode;
-	animationProps: HTMLMotionProps<"div"> & AnimationProps;
+	animationProps: HTMLMotionProps<"div">;
 }) => {
 	const [domLoaded, setDomLoaded] = useState(false);
 

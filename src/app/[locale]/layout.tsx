@@ -1,7 +1,7 @@
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
+import { Bricolage_Grotesque, Manrope } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -20,7 +20,11 @@ import "./globals.css";
 //   ssr: false,
 // });
 
-const outfit = Outfit({ subsets: ["latin"] });
+const display = Bricolage_Grotesque({
+	subsets: ["latin"],
+	variable: "--font-bricolage",
+});
+const body = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
 
 export const metadata: Metadata = {
 	title: {
@@ -36,14 +40,12 @@ export const metadata: Metadata = {
 		title: METADATA.title,
 		url: METADATA.url,
 		description: METADATA.description,
-		images: ["/og_image.png"],
 	},
 	twitter: {
 		card: "summary_large_image",
 		title: METADATA.title,
 		site: METADATA.url,
 		description: METADATA.description,
-		images: ["/og_image.png"],
 	},
 	metadataBase: new URL(METADATA.url),
 	alternates: {
@@ -76,7 +78,13 @@ export default async function RootLayout({
 
 	return (
 		<html lang={locale} suppressHydrationWarning>
-			<body className={cn("min-h-screen bg-background", outfit.className)}>
+			<body
+				className={cn(
+					"min-h-screen bg-background",
+					display.variable,
+					body.variable,
+				)}
+			>
 				<NextIntlClientProvider messages={messages}>
 					<ReactQueryProvider>
 						<ThemeProvider

@@ -24,7 +24,7 @@ const HeroSection = () => {
 
 	return (
 		<section className="container w-full">
-			<div className="relative grid items-center grid-cols-1 gap-12 py-16 mx-auto md:px-20 lg:grid-cols-2 md:py-40 lg:max-w-screen-xl">
+			<div className="relative grid items-center grid-cols-1 gap-12 py-16 mx-auto md:px-20 lg:grid-cols-2 md:py-40 lg:max-w-(--breakpoint-xl)">
 				<div className="absolute top-2 lg:-top-20 left-1/2 transform -translate-x-1/2 w-[90%] mx-auto h-24 lg:h-60 bg-primary/50 rounded-full blur-3xl -z-10" />
 
 				{/* Text column */}
@@ -54,9 +54,9 @@ const HeroSection = () => {
 							},
 						}}
 					>
-						<h1 className="max-w-screen-lg text-4xl font-bold md:text-6xl">
+						<h1 className="max-w-(--breakpoint-lg) text-4xl font-bold md:text-6xl">
 							{t("home.hero_1")}{" "}
-							<span className="text-transparent px-2 bg-gradient-to-r from-[#6089CF] to-primary bg-clip-text">
+							<span className="text-transparent px-2 bg-linear-to-r from-[#6089CF] to-primary bg-clip-text">
 								Teo
 							</span>
 						</h1>
@@ -69,10 +69,10 @@ const HeroSection = () => {
 							transition: { delay: 0.5, duration: 0.8 },
 						}}
 					>
-						<p className="max-w-screen-sm text-xl text-muted-foreground">
+						<p className="max-w-(--breakpoint-sm) text-xl text-muted-foreground">
 							{t("home.hero_2")}
 						</p>
-						<p className="max-w-screen-sm mt-2 text-xl text-muted-foreground">
+						<p className="max-w-(--breakpoint-sm) mt-2 text-xl text-muted-foreground">
 							{t("home.hero_3")}
 						</p>
 
@@ -120,12 +120,12 @@ const HeroSection = () => {
 					}}
 				>
 					<div className="relative">
-						<div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/30 to-[#6089CF]/30 blur-2xl scale-110" />
+						<div className="absolute inset-0 rounded-full bg-linear-to-br from-primary/30 to-[#6089CF]/30 blur-2xl scale-110" />
 						<div className="relative hidden w-56 h-56 overflow-hidden border-4 rounded-full shadow-2xl md:block lg:w-80 lg:h-80 border-primary/20 bg-muted">
 							<Image
 								src="/images/profile_picture.png"
 								fill
-								alt="Teo - Frontend Engineer"
+								alt="Teo - Software Engineer"
 								className="object-cover"
 								priority
 							/>

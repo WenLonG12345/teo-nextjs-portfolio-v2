@@ -104,7 +104,7 @@ const ContactClient = () => {
 				<h2 className="text-3xl font-bold md:text-4xl">{t("contact.title")}</h2>
 			</MotionSection>
 
-			<div className="grid grid-cols-1 gap-10 mx-auto lg:grid-cols-2 lg:max-w-screen-xl">
+			<div className="grid grid-cols-1 gap-10 mx-auto lg:grid-cols-2 lg:max-w-(--breakpoint-xl)">
 				{/* Left: info + socials */}
 				<MotionSection
 					animationProps={{

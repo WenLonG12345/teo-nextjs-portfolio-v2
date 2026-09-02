@@ -38,7 +38,7 @@ export const Navbar = () => {
 	return (
 		<header
 			ref={menuRef}
-			className="sticky top-4 z-40 w-[92%] md:w-[80%] lg:w-[75%] lg:max-w-screen-xl mx-auto overflow-hidden rounded-2xl border border-border/60 bg-background/80 backdrop-blur-md shadow-sm"
+			className="sticky top-4 z-40 w-[92%] md:w-[80%] lg:w-[75%] lg:max-w-(--breakpoint-xl) mx-auto overflow-hidden rounded-2xl border border-border/60 bg-background/80 backdrop-blur-md shadow-xs"
 		>
 			{/* ── Main bar ── */}
 			<div className="flex items-center justify-between px-4 py-2.5">

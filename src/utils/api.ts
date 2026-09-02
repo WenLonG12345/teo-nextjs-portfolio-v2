@@ -1,34 +1,6 @@
 import dayjs from "dayjs";
-import type {
-	IGitRepo,
-	IMediumArticleRes,
-	ISpotifySongRes,
-} from "@/constants/types";
+import type { IMediumArticleRes } from "@/constants/types";
 import { shortenDescription } from "./shortenDescription";
-
-export const getSpotifyNowPlaying = async (): Promise<ISpotifySongRes> => {
-	return fetch("/api/spotify").then((res) => res.json());
-};
-
-export const getGithubRepos = async (username: string): Promise<IGitRepo[]> => {
-	try {
-		const fetchRes = await fetch(
-			`https://api.github.com/users/${username}/repos?per_page=100&sort=updated&direction=desc`,
-		);
-
-		const repos = (await fetchRes.json()) as IGitRepo[];
-
-		if (repos?.length === 0 || !repos) return [];
-
-		const result = repos
-			?.sort((a, b) => b.stargazers_count - a.stargazers_count)
-			.slice(0, 10);
-		return result;
-	} catch (err) {
-		console.error(err);
-		return [];
-	}
-};
 
 export const getMediumArticles = async (username: string) => {
 	try {

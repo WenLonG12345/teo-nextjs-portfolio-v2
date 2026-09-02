@@ -19,14 +19,14 @@ const AboutClient = () => {
 					<TabsList className="h-auto gap-1 p-1">
 						<TabsTrigger
 							value="career"
-							className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg data-[state=active]:shadow-sm"
+							className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg data-[state=active]:shadow-xs"
 						>
 							<LuBriefcase size={15} />
 							{t("about.title_career")}
 						</TabsTrigger>
 						<TabsTrigger
 							value="education"
-							className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg data-[state=active]:shadow-sm"
+							className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg data-[state=active]:shadow-xs"
 						>
 							<LuGraduationCap size={15} />
 							{t("about.title_education")}

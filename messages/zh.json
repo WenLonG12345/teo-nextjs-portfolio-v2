@@ -1,8 +1,6 @@
 {
 	"navbar": {
 		"home": "首页",
-		"repo": "代码库",
-		"article": "文章",
 		"blog": "博客",
 		"about": "关于",
 		"contact": "联系",
@@ -10,8 +8,8 @@
 	},
 	"home": {
 		"hero_1": "嗨，我是",
-		"hero_2": "来自马来西亚的前端工程师",
-		"hero_3": "专注于网页和移动开发（Android 和 iOS）。热衷于精简的 UI/UX，并在 Medium 上撰写技术文章。",
+		"hero_2": "来自马来西亚的软件工程师，拥有 7 年以上经验",
+		"hero_3": "软件工程师，帮助企业推进数字化转型。为企业设计并交付其赖以运转的网页与移动平台。同时在 Medium 上撰写技术文章。",
 		"resume": "简历",
 		"contact_me": "联系我",
 		"available": "开放机会"
@@ -28,19 +26,8 @@
 		"badge": "推荐语",
 		"title": "人们对我的评价"
 	},
-	"repo": {
-		"badge": "代码库",
-		"title": "我的 Github 代码库",
-		"description_1": "我的精选 GitHub 代码库列表。",
-		"description_2": "欢迎访问，别忘了留下你的星星！"
-	},
 	"article": {
-		"badge": "文章",
-		"title": "我最新的文章",
-		"description_1": "我在 Medium 上的最新文章列表。",
-		"description_2": "敬请期待更多文章。欢迎访问，别忘了鼓掌！",
-		"tab_label": "Medium 文章",
-		"tab_desc": "发布于 Medium"
+		"tab_label": "Medium 文章"
 	},
 	"project": {
 		"badge": "项目",

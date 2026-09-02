@@ -26,7 +26,7 @@ function Footer() {
 
 	return (
 		<footer className="w-full border-t border-border mt-8">
-			<div className="container max-w-screen-xl mx-auto py-12">
+			<div className="container max-w-(--breakpoint-xl) mx-auto py-12">
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
 					{/* Brand */}
 					<div>
@@ -34,7 +34,7 @@ function Footer() {
 							{SITE_CONFIG.footer.name}
 						</div>
 						<p className="text-sm text-muted-foreground leading-relaxed">
-							Frontend Engineer from Malaysia. Building beautiful web &amp;
+							Software Engineer from Malaysia. Building beautiful web &amp;
 							mobile experiences.
 						</p>
 					</div>

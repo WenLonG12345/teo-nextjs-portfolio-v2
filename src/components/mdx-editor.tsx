@@ -7,7 +7,6 @@ import {
 	CodeToggle,
 	headingsPlugin,
 	InsertImage,
-	InsertSandpack,
 	InsertTable,
 	InsertThematicBreak,
 	imagePlugin,
@@ -64,8 +63,7 @@ const Editor: React.FC<EditorProps> = ({
 							<ListsToggle />
 							<InsertThematicBreak />
 							<InsertTable />
-							<InsertSandpack />
-							<InsertImage />
+								<InsertImage />
 						</>
 					),
 				}),

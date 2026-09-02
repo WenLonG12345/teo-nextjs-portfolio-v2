@@ -66,7 +66,7 @@ const ProjectCard = ({
 
 					{/* Private badge — no-link projects */}
 					{!project.link && (
-						<div className="absolute top-3 right-3 flex items-center gap-1 text-xs bg-background/80 text-muted-foreground px-2.5 py-1 rounded-full backdrop-blur-sm border border-border/60">
+						<div className="absolute top-3 right-3 flex items-center gap-1 text-xs bg-background/80 text-muted-foreground px-2.5 py-1 rounded-full backdrop-blur-xs border border-border/60">
 							<LuLock size={10} />
 							Private
 						</div>
@@ -144,7 +144,7 @@ const ProjectSection = () => {
 
 			<Tabs
 				defaultValue={Object.keys(PROJECT_LIST)[0]}
-				className="w-full mx-auto lg:max-w-screen-xl"
+				className="w-full mx-auto lg:max-w-(--breakpoint-xl)"
 			>
 				{/* Tab triggers */}
 				<div className="flex justify-center mb-8">
@@ -170,7 +170,7 @@ const ProjectSection = () => {
 								<TabsTrigger
 									key={category}
 									value={category}
-									className="px-4 py-2 text-sm font-medium rounded-lg data-[state=active]:shadow-sm flex items-center gap-2"
+									className="px-4 py-2 text-sm font-medium rounded-lg data-[state=active]:shadow-xs flex items-center gap-2"
 								>
 									{icon}
 									{t(category)}

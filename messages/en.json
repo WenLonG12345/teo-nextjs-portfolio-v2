@@ -1,8 +1,6 @@
 {
 	"navbar": {
 		"home": "Home",
-		"repo": "Repositories",
-		"article": "Articles",
 		"blog": "Blog",
 		"about": "About",
 		"contact": "Contact",
@@ -10,8 +8,8 @@
 	},
 	"home": {
 		"hero_1": "Hey, I am",
-		"hero_2": "Frontend Engineer from Malaysia",
-		"hero_3": "Focused on Web & Mobile Development (Android & iOS). Passionate about beautiful UI/UX and a Tech Writer on Medium.",
+		"hero_2": "Software Engineer from Malaysia with 7+ years of experience",
+		"hero_3": "Software Engineer helping businesses through digital transformation. I design and deliver the web and mobile platforms they run on. Tech Writer on Medium.",
 		"resume": "Resume",
 		"contact_me": "Contact Me",
 		"available": "Available for opportunities"
@@ -28,19 +26,8 @@
 		"badge": "Testimonials",
 		"title": "What People Say About Me"
 	},
-	"repo": {
-		"badge": "Repositories",
-		"title": "My Github Repositories",
-		"description_1": "A list of my top featured GitHub repositories.",
-		"description_2": "Feel free to visit and don't forget to leave a star!"
-	},
 	"article": {
-		"badge": "Articles",
-		"title": "My Latest Articles",
-		"description_1": "A list of my latest articles on Medium.",
-		"description_2": "Stay tuned for more articles. Feel free to visit and don't forget to clap!",
-		"tab_label": "Medium Articles",
-		"tab_desc": "Published on Medium"
+		"tab_label": "Medium Articles"
 	},
 	"project": {
 		"badge": "Projects",
