@@ -1,41 +1,78 @@
 import type { MetadataRoute } from "next";
+import { METADATA } from "@/constants";
+import { routing } from "@/i18n/routing";
 import { getAllPosts } from "@/utils/blog";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-	const posts = getAllPosts();
+const BASE_URL = METADATA.url.replace(/\/+$/, "");
 
-	const blogPostEntries: MetadataRoute.Sitemap = posts.map((post) => ({
-		url: `https://teowenlong.vercel.app/blog/${post.slug}`,
-		lastModified: new Date(post.date),
-		changeFrequency: "monthly",
-		priority: 0.8,
+type Route = {
+	path: string;
+	lastModified: Date;
+	changeFrequency: NonNullable<
+		MetadataRoute.Sitemap[number]["changeFrequency"]
+	>;
+	priority: number;
+};
+
+// localePrefix is "as-needed", so the default locale is served without a prefix
+function localizedUrl(locale: string, path: string) {
+	const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;
+	return `${BASE_URL}${prefix}${path}`;
+}
+
+function localizedEntries(route: Route): MetadataRoute.Sitemap {
+	const languages = Object.fromEntries([
+		...routing.locales.map((locale) => [
+			locale,
+			localizedUrl(locale, route.path),
+		]),
+		["x-default", localizedUrl(routing.defaultLocale, route.path)],
+	]);
+
+	return routing.locales.map((locale) => ({
+		url: localizedUrl(locale, route.path),
+		lastModified: route.lastModified,
+		changeFrequency: route.changeFrequency,
+		priority: route.priority,
+		alternates: { languages },
 	}));
+}
 
-	return [
+export default function sitemap(): MetadataRoute.Sitemap {
+	const now = new Date();
+
+	const staticRoutes: Route[] = [
+		{ path: "", lastModified: now, changeFrequency: "monthly", priority: 1 },
 		{
-			url: "https://teowenlong.vercel.app",
-			lastModified: new Date(),
-			changeFrequency: "yearly",
-			priority: 1,
+			path: "/about",
+			lastModified: now,
+			changeFrequency: "monthly",
+			priority: 0.8,
 		},
 		{
-			url: "https://teowenlong.vercel.app/about",
-			lastModified: new Date(),
-			changeFrequency: "yearly",
-			priority: 1,
-		},
-		{
-			url: "https://teowenlong.vercel.app/blog",
-			lastModified: new Date(),
+			path: "/blog",
+			lastModified: now,
 			changeFrequency: "weekly",
-			priority: 1,
+			priority: 0.8,
 		},
 		{
-			url: "https://teowenlong.vercel.app/contact",
-			lastModified: new Date(),
+			path: "/contact",
+			lastModified: now,
 			changeFrequency: "yearly",
-			priority: 1,
+			priority: 0.5,
 		},
-		...blogPostEntries,
 	];
+
+	const postRoutes: Route[] = getAllPosts().map((post) => {
+		const date = new Date(post.date);
+
+		return {
+			path: `/blog/${post.slug}`,
+			lastModified: Number.isNaN(date.getTime()) ? now : date,
+			changeFrequency: "monthly",
+			priority: 0.6,
+		};
+	});
+
+	return [...staticRoutes, ...postRoutes].flatMap(localizedEntries);
 }

@@ -165,7 +165,7 @@ export default function Image() {
 				}}
 			>
 				<div style={{ display: "flex", color: t.ink, fontWeight: 600 }}>
-					teowenlong.vercel.app
+					www.twlworks.com
 				</div>
 				<div style={{ display: "flex", gap: 11 }}>
 					{["React", "Next.js", "TypeScript", "AWS"].map((tech) => (

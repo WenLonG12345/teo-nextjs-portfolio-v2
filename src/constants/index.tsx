@@ -5,7 +5,7 @@ export const METADATA = {
 	titleTemplate: "%s | Teo",
 	description:
 		"Software Engineer helping businesses through digital transformation. I design and deliver the web and mobile platforms they run on.",
-	url: "https://teowenlong.vercel.app/",
+	url: "https://www.twlworks.com/",
 };
 
 export const NAV_ITEM_LIST: NavItemProps[] = [
