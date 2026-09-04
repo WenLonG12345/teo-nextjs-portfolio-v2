@@ -44,6 +44,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
 	const staticRoutes: Route[] = [
 		{ path: "", lastModified: now, changeFrequency: "monthly", priority: 1 },
 		{
+			path: "/services",
+			lastModified: now,
+			changeFrequency: "monthly",
+			priority: 0.9,
+		},
+		{
+			path: "/work",
+			lastModified: now,
+			changeFrequency: "monthly",
+			priority: 0.9,
+		},
+		{
 			path: "/about",
 			lastModified: now,
 			changeFrequency: "monthly",

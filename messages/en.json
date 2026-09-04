@@ -4,15 +4,25 @@
 		"blog": "Blog",
 		"about": "About",
 		"contact": "Contact",
-		"switch_to_v1": "Switch to V1"
+		"switch_to_v1": "Switch to V1",
+		"services": "Services",
+		"work": "Work"
 	},
 	"home": {
-		"hero_1": "Hey, I am",
-		"hero_2": "Software Engineer from Malaysia with 7+ years of experience",
-		"hero_3": "Software Engineer helping businesses through digital transformation. I design and deliver the web and mobile platforms they run on. Tech Writer on Medium.",
+		"hero_2": "I build the system your business runs on.",
+		"hero_3": "Custom platforms, CRM and integrations for businesses in Malaysia — so your team, your customers and your partners all work in one place.",
 		"resume": "Resume",
 		"contact_me": "Contact Me",
-		"available": "Available for opportunities"
+		"available": "Taking on 2 projects this quarter",
+		"book_call": "Book a Free Call",
+		"whatsapp": "WhatsApp Me",
+		"founder_role": "Founder · twlworks",
+		"fact_years": "years building software",
+		"fact_projects": "client projects delivered",
+		"wordmark_tagline": "Custom software · Kuala Lumpur",
+		"direct": "You work directly with me — no account manager, no handover to a stranger.",
+		"trusted_by": "Recent client work",
+		"sectors": "Property · Collectibles · F&B · Events · Design"
 	},
 	"stats": {
 		"badge": "My Impact",
@@ -30,20 +40,54 @@
 		"tab_label": "Medium Articles"
 	},
 	"project": {
-		"badge": "Projects",
+		"badge": "Case Studies",
 		"title": "My Projects",
-		"description_1": "A list of my top featured projects.",
+		"description_1": "Systems I have built for real businesses.",
 		"description_2": "List of projects that I involved or have made in the past.",
-		"works": "Works",
-		"freelance": "Freelance",
-		"opensource": "Open Source"
+		"works": "Enterprise Experience",
+		"freelance": "Client Work",
+		"opensource": "Open Source",
+		"problem": "Problem",
+		"outcome": "Outcome",
+		"built_with": "Built with",
+		"view_all": "See all work",
+		"page_description": "Client platforms, internal systems and enterprise work — what the business needed, and what it does now."
 	},
 	"about": {
 		"badge": "About Me",
 		"title_career": "Career",
 		"title_education": "Education",
-		"summary_career": "An overview of my professional journey, showcasing significant roles and accomplishments.",
-		"summary_education": "An overview of my educational background, highlighting important courses and achievements."
+		"summary_career": "Seven years of shipped work — national news platforms, AI voice products inside a bank, and the operational systems small businesses run on every day.",
+		"summary_education": "Computer science at UTM, specialising in network and security. Where the fundamentals came from.",
+		"greeting": "Hello — I'm Teo.",
+		"letter": [
+			"I have spent the last seven years building software for other people's businesses. News portals with millions of readers, an AI voice platform used inside a bank, design systems, mobile apps. Somewhere in there I noticed the work I liked most was the smaller kind: sitting with an owner, understanding how they actually run things, then building the system that holds it.",
+			"That is what twlworks is. One person, working directly with the people who will use what I build. No account manager in between, no team to brief, no handover to a stranger. You talk to the person writing the code.",
+			"Most of my clients are not tech companies. They grade trading cards, run restaurants, manage property. The operations are real; the tools are spreadsheets, WhatsApp threads and three systems that do not talk to each other. I build the thing that replaces all of it.",
+			"I still hold a full-time engineering role, so I take on a small number of projects at a time and I am straight about timelines. It also means I am not desperate for the work — if a project is not right for you, you will hear that from me first."
+		],
+		"principles_title": "How I work",
+		"principles": [
+			{
+				"title": "Understand before building",
+				"body": "Every project starts with a paid audit. If the honest answer is that you do not need custom software, that is a valid outcome and I will say so."
+			},
+			{
+				"title": "One person, start to finish",
+				"body": "The person you brief is the person who designs it, writes it, ships it and fixes it when something breaks at 11pm."
+			},
+			{
+				"title": "Built to be handed over",
+				"body": "Your system, your accounts, your code, documented. No lock-in, no hostage situation if you ever want to move on."
+			},
+			{
+				"title": "Fewer projects, properly finished",
+				"body": "Two or three at a time. Nothing gets parked halfway while I chase the next thing."
+			}
+		],
+		"ps": "p.s. — if you want the formal version:",
+		"resume": "Download my résumé",
+		"book_cta": "Book a free call"
 	},
 	"contact": {
 		"badge": "Contact",
@@ -63,7 +107,23 @@
 		"api_development": "API Development",
 		"sent_success_title": "Email Client Opened!",
 		"sent_success_desc": "Your email client has been opened with the message pre-filled. Please send the email to complete your inquiry.",
-		"send_another": "Send Another Message"
+		"send_another": "Send Another Message",
+		"budget": "Budget",
+		"budget_placeholder": "Select a budget range",
+		"budget_under_5k": "Under RM5k",
+		"budget_5_15k": "RM5k – RM15k",
+		"budget_15_40k": "RM15k – RM40k",
+		"budget_40k_plus": "RM40k+",
+		"budget_unsure": "Not sure yet",
+		"timeline": "Timeline",
+		"timeline_placeholder": "Select a timeline",
+		"timeline_asap": "As soon as possible",
+		"timeline_1_3": "1 – 3 months",
+		"timeline_3_plus": "3+ months",
+		"timeline_exploring": "Just exploring",
+		"current_tools": "What do you use today?",
+		"current_tools_placeholder": "Spreadsheets, WhatsApp, an existing system...",
+		"message_placeholder": "What is not working today?"
 	},
 	"skills": {
 		"badge": "Skills",
@@ -84,5 +144,57 @@
 	"notFound": {
 		"description": "Oops! The page you're looking for doesn't exist or has been moved.",
 		"back_home": "Back to Home"
+	},
+	"services": {
+		"badge": "Services",
+		"title": "How we can work together",
+		"description": "Fixed scopes, clear prices. Every project starts with a paid audit, so we both know what is being built before anyone commits.",
+		"cta": "Book a Free Call",
+		"note": "Starting points, not quotes. What a project actually costs comes out of the audit, once we both know what is being built.",
+		"popular": "Most popular",
+		"items": {
+			"audit": {
+				"title": "System Audit",
+				"description": "A 90-minute session on how your business runs today, followed by a written report: what is worth automating, what is not, and what it would cost.",
+				"points": [
+					"90-minute working session",
+					"Written findings and recommendations",
+					"Rough scope and budget",
+					"Fee credited toward the build"
+				]
+			},
+			"integration": {
+				"title": "Integration & CRM",
+				"description": "Connect the tools you already pay for and pull your customer and order data into one place you can actually work from.",
+				"points": [
+					"Custom CRM built around your process",
+					"Third-party API integrations",
+					"Data migration out of spreadsheets",
+					"Automated reports"
+				]
+			},
+			"platform": {
+				"title": "Custom Platform",
+				"description": "A system built for how your business actually operates, with the right view for every person who touches it.",
+				"points": [
+					"Role-based portals for staff, customers and partners",
+					"Operations, inventory or order pipelines",
+					"Web and mobile",
+					"Deployed, monitored and handed over"
+				]
+			},
+			"care": {
+				"title": "Care Plan",
+				"description": "Hosting, monitoring, fixes and small changes every month, so the system keeps earning its keep after launch.",
+				"points": [
+					"Hosting and monitoring",
+					"Bug fixes and security updates",
+					"A block of change requests each month",
+					"Direct WhatsApp line"
+				]
+			}
+		},
+		"from": "from",
+		"view_pricing": "See what this costs"
 	}
 }

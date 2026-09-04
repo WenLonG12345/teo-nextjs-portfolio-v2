@@ -4,15 +4,25 @@
 		"blog": "博客",
 		"about": "关于",
 		"contact": "联系",
-		"switch_to_v1": "切换到 V1"
+		"switch_to_v1": "切换到 V1",
+		"services": "服务",
+		"work": "作品"
 	},
 	"home": {
-		"hero_1": "嗨，我是",
-		"hero_2": "来自马来西亚的软件工程师，拥有 7 年以上经验",
-		"hero_3": "软件工程师，帮助企业推进数字化转型。为企业设计并交付其赖以运转的网页与移动平台。同时在 Medium 上撰写技术文章。",
+		"hero_2": "我打造你生意运作的核心系统。",
+		"hero_3": "为马来西亚企业提供定制平台、CRM 与系统对接 — 让员工、客户与合作伙伴都在同一个平台上运作。",
 		"resume": "简历",
 		"contact_me": "联系我",
-		"available": "开放机会"
+		"available": "本季度尚可接 2 个项目",
+		"book_call": "预约免费咨询",
+		"whatsapp": "WhatsApp 联系我",
+		"founder_role": "创办人 · twlworks",
+		"fact_years": "年软件开发经验",
+		"fact_projects": "个客户项目交付",
+		"wordmark_tagline": "定制软件 · 吉隆坡",
+		"direct": "你直接对接我 — 没有客户经理，也不会转交给陌生人。",
+		"trusted_by": "近期客户项目",
+		"sectors": "房产 · 收藏品 · 餐饮 · 活动 · 设计"
 	},
 	"stats": {
 		"badge": "我的成就",
@@ -30,20 +40,54 @@
 		"tab_label": "Medium 文章"
 	},
 	"project": {
-		"badge": "项目",
+		"badge": "案例",
 		"title": "我的项目",
-		"description_1": "我的精选项目列表。",
+		"description_1": "我为真实企业打造的系统。",
 		"description_2": "我参与或过去制作的项目列表。",
-		"works": "作品",
-		"freelance": "自由职业",
-		"opensource": "开源"
+		"works": "企业经验",
+		"freelance": "客户项目",
+		"opensource": "开源",
+		"problem": "问题",
+		"outcome": "成果",
+		"built_with": "技术栈",
+		"view_all": "查看全部作品",
+		"page_description": "客户平台、内部系统与企业项目 —— 生意原本卡在哪里，现在怎么运作。"
 	},
 	"about": {
 		"badge": "关于我",
 		"title_career": "职业生涯",
 		"title_education": "教育背景",
-		"summary_career": "我的职业生涯概述，展示了重要的职位和成就。",
-		"summary_education": "我的教育背景概述，重点介绍了重要的课程和成就。"
+		"summary_career": "七年的实战交付 — 全国级新闻平台、银行内部的 AI 语音产品，以及中小企业每天赖以运作的系统。",
+		"summary_education": "在马来西亚工艺大学（UTM）修读计算机科学，主修网络与安全 — 底子是从这里打下的。",
+		"greeting": "你好，我是 Teo。",
+		"letter": [
+			"过去七年，我一直在为别人的生意写软件：数百万读者的新闻门户、银行内部使用的 AI 语音平台、设计系统、移动应用。做着做着我发现，自己最喜欢的其实是更小的那一类工作 — 坐下来听老板讲他们实际怎么运作，然后把撑住这套运作的系统做出来。",
+			"twlworks 就是为此而生。一个人，直接对接真正会使用这套系统的人。中间没有客户经理，不需要转述需求，也不会交接给陌生人。你对话的，就是写代码的那个人。",
+			"我的客户大多不是科技公司。他们做卡牌评级、开餐厅、管理房产。业务是实在的，工具却是 Excel、WhatsApp 对话，以及三套互不相通的系统。我做的，就是把这些通通取代掉的那套东西。",
+			"我目前仍有一份全职工程师工作，所以同时只接少量项目，时间安排我会说清楚。这也意味着我不缺这份活 — 如果某个项目并不适合你，我会先告诉你。"
+		],
+		"principles_title": "我的做事方式",
+		"principles": [
+			{
+				"title": "先弄懂，再动手",
+				"body": "每个项目都从付费诊断开始。如果结论是你其实不需要定制系统，那也是一个有效的答案，我会照实说。"
+			},
+			{
+				"title": "一个人，从头到尾",
+				"body": "跟你开会的人，就是负责设计、开发、上线，以及深夜出问题时来修的那个人。"
+			},
+			{
+				"title": "做出来是要交给你的",
+				"body": "系统是你的，账号是你的，代码也是你的，并附上文档。不绑定、不卡人，你随时可以带走。"
+			},
+			{
+				"title": "少接一些，好好做完",
+				"body": "同时只做两三个项目。不会做到一半就搁着去追下一单。"
+			}
+		],
+		"ps": "附：如果你想看正式版本：",
+		"resume": "下载我的简历",
+		"book_cta": "预约免费咨询"
 	},
 	"contact": {
 		"badge": "联系",
@@ -63,7 +107,23 @@
 		"api_development": "API 开发",
 		"sent_success_title": "邮件客户端已打开！",
 		"sent_success_desc": "您的邮件客户端已预填好消息内容，请发送邮件完成您的询问。",
-		"send_another": "再发一条消息"
+		"send_another": "再发一条消息",
+		"budget": "预算",
+		"budget_placeholder": "选择预算范围",
+		"budget_under_5k": "RM5k 以下",
+		"budget_5_15k": "RM5k – RM15k",
+		"budget_15_40k": "RM15k – RM40k",
+		"budget_40k_plus": "RM40k 以上",
+		"budget_unsure": "还不确定",
+		"timeline": "时间安排",
+		"timeline_placeholder": "选择时间安排",
+		"timeline_asap": "越快越好",
+		"timeline_1_3": "1 – 3 个月",
+		"timeline_3_plus": "3 个月以上",
+		"timeline_exploring": "只是先了解",
+		"current_tools": "你目前用什么工具？",
+		"current_tools_placeholder": "Excel、WhatsApp、现有系统……",
+		"message_placeholder": "目前哪里不顺？"
 	},
 	"skills": {
 		"badge": "技能",
@@ -85,5 +145,57 @@
 	"notFound": {
 		"description": "抱歉！您正在寻找的页面不存在或已被移动。",
 		"back_home": "返回首页"
+	},
+	"services": {
+		"badge": "服务",
+		"title": "我们可以怎样合作",
+		"description": "范围明确，价格透明。每个项目都从付费诊断开始，双方在投入之前就清楚要做什么。",
+		"cta": "预约免费咨询",
+		"note": "以上为起步价，并非报价。实际费用会在诊断之后、双方清楚要做什么时才确定。",
+		"popular": "最多人选择",
+		"items": {
+			"audit": {
+				"title": "系统诊断",
+				"description": "90 分钟深入了解你现在的运作方式，之后提供书面报告：哪些值得自动化、哪些不必动、大概需要多少预算。",
+				"points": [
+					"90 分钟深入会谈",
+					"书面分析与建议",
+					"初步范围与预算",
+					"费用可抵扣后续开发"
+				]
+			},
+			"integration": {
+				"title": "系统对接与 CRM",
+				"description": "把你已经在用的工具连起来，将客户与订单资料整合到一个真正能用的后台。",
+				"points": [
+					"依你流程定制的 CRM",
+					"第三方 API 对接",
+					"从 Excel 迁移资料",
+					"自动化报表"
+				]
+			},
+			"platform": {
+				"title": "定制平台",
+				"description": "依照你生意实际的运作方式打造系统，让每个使用的人都看到属于自己的视图。",
+				"points": [
+					"员工、客户与合作伙伴的权限门户",
+					"运营、库存或订单流程",
+					"网页与移动端",
+					"部署、监控与交接"
+				]
+			},
+			"care": {
+				"title": "维护方案",
+				"description": "每月的托管、监控、修复与小改动，让系统上线之后持续发挥价值。",
+				"points": [
+					"托管与监控",
+					"错误修复与安全更新",
+					"每月固定的修改额度",
+					"WhatsApp 直接联系"
+				]
+			}
+		},
+		"from": "起",
+		"view_pricing": "查看收费方式"
 	}
 }

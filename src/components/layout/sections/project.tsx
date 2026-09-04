@@ -2,16 +2,7 @@
 
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
-import {
-	LuArrowRight,
-	LuBriefcase,
-	LuCode,
-	LuExternalLink,
-	LuGithub,
-	LuLock,
-} from "react-icons/lu";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { LuArrowRight, LuExternalLink, LuLock } from "react-icons/lu";
 import { PROJECT_LIST } from "@/constants";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/utils/cn";
@@ -19,7 +10,7 @@ import { MotionDiv, MotionSection } from "@/utils/motion-div";
 
 type Project = (typeof PROJECT_LIST)[string][number];
 
-const ProjectCard = ({
+export const ProjectCard = ({
 	project,
 	locale,
 	index,
@@ -28,6 +19,11 @@ const ProjectCard = ({
 	locale: string;
 	index: number;
 }) => {
+	const t = useTranslations();
+	const isEn = locale === "en";
+	const problem = isEn ? project.problem : project.problem_zh;
+	const outcome = isEn ? project.outcome : project.outcome_zh;
+
 	const content = (
 		<MotionDiv
 			initial={{ opacity: 0, y: 20 }}
@@ -87,20 +83,40 @@ const ProjectCard = ({
 						)}
 					</div>
 
-					<p className="flex-1 mb-4 text-sm leading-relaxed text-muted-foreground">
-						{locale === "en" ? project.summary : project.summary_zh}
+					<p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+						{isEn ? project.summary : project.summary_zh}
 					</p>
 
-					<div className="flex flex-wrap gap-1.5">
-						{project.tech?.map((stack) => (
-							<Badge
-								key={stack}
-								variant="secondary"
-								className="text-xs font-normal"
-							>
-								{stack}
-							</Badge>
-						))}
+					{(problem || outcome) && (
+						<div className="flex-1 mb-4 space-y-3">
+							{problem && (
+								<div>
+									<p className="text-xs font-semibold tracking-wider uppercase text-muted-foreground/70 mb-0.5">
+										{t("project.problem")}
+									</p>
+									<p className="text-sm leading-relaxed text-muted-foreground">
+										{problem}
+									</p>
+								</div>
+							)}
+							{outcome && (
+								<div>
+									<p className="text-xs font-semibold tracking-wider uppercase text-primary mb-0.5">
+										{t("project.outcome")}
+									</p>
+									<p className="text-sm leading-relaxed text-foreground/90">
+										{outcome}
+									</p>
+								</div>
+							)}
+						</div>
+					)}
+
+					<div className="mt-auto">
+						<p className="text-[11px] leading-relaxed text-muted-foreground/60">
+							<span className="font-medium">{t("project.built_with")}</span>{" "}
+							{project.tech?.join(" · ")}
+						</p>
 					</div>
 				</div>
 			</div>
@@ -120,8 +136,14 @@ const ProjectSection = () => {
 	const t = useTranslations();
 	const locale = useLocale();
 
+	// a project earns a home-page slot by having a written problem -> outcome,
+	// which is exactly the client work worth selling on
+	const featured = PROJECT_LIST["project.freelance"]
+		.filter((project) => project.problem && project.outcome)
+		.slice(0, 6);
+
 	return (
-		<section id="projects" className="container py-16 ">
+		<section id="projects" className="container py-16">
 			<MotionSection
 				animationProps={{
 					initial: { opacity: 0, y: 30 },
@@ -142,60 +164,29 @@ const ProjectSection = () => {
 				</h2>
 			</MotionSection>
 
-			<Tabs
-				defaultValue={Object.keys(PROJECT_LIST)[0]}
-				className="w-full mx-auto lg:max-w-(--breakpoint-xl)"
-			>
-				{/* Tab triggers */}
-				<div className="flex justify-center mb-8">
-					<TabsList className="h-auto gap-1 p-1">
-						{Object.entries(PROJECT_LIST).map(([category]) => {
-							let icon = <LuBriefcase />;
-
-							switch (category) {
-								case "project.work":
-									icon = <LuBriefcase />;
-									break;
-								case "project.freelance":
-									icon = <LuCode />;
-									break;
-								case "project.opensource":
-									icon = <LuGithub />;
-									break;
-								default:
-									break;
-							}
-
-							return (
-								<TabsTrigger
-									key={category}
-									value={category}
-									className="px-4 py-2 text-sm font-medium rounded-lg data-[state=active]:shadow-xs flex items-center gap-2"
-								>
-									{icon}
-									{t(category)}
-								</TabsTrigger>
-							);
-						})}
-					</TabsList>
-				</div>
-
-				{/* Tab content */}
-				{Object.entries(PROJECT_LIST).map(([category, projects]) => (
-					<TabsContent key={category} value={category}>
-						<div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-							{projects.map((project, i) => (
-								<ProjectCard
-									key={project.name}
-									project={project}
-									locale={locale}
-									index={i}
-								/>
-							))}
-						</div>
-					</TabsContent>
+			<div className="grid grid-cols-1 gap-5 mx-auto sm:grid-cols-2 lg:grid-cols-3 lg:max-w-(--breakpoint-xl)">
+				{featured.map((project, i) => (
+					<ProjectCard
+						key={project.name}
+						project={project}
+						locale={locale}
+						index={i}
+					/>
 				))}
-			</Tabs>
+			</div>
+
+			<div className="flex justify-center mt-10">
+				<Link
+					href="/work"
+					className="inline-flex items-center gap-2 text-sm font-semibold transition-colors rounded-md cursor-pointer text-primary hover:text-primary/80 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background group/all"
+				>
+					{t("project.view_all")}
+					<LuArrowRight
+						size={16}
+						className="transition-transform group-hover/all:translate-x-1 motion-reduce:transition-none"
+					/>
+				</Link>
+			</div>
 		</section>
 	);
 };

@@ -1,47 +1,111 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+/* Hallmark · macrostructure: Letter · tone: plain-spoken / austere · anchor hue: project primary
+ * pre-emit critique: P5 H4 E4 S5 R5 V4
+ * enrichment: none (typography only) · reveal: none (Letter)
+ * theme: project palette preserved (shadcn HSL tokens, Bricolage display + Manrope body)
+ */
 
-import { LuBriefcase, LuGraduationCap } from "react-icons/lu";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useTranslations } from "next-intl";
+import { BiPhoneCall } from "react-icons/bi";
+import { CgAlbum } from "react-icons/cg";
+import { Button } from "@/components/ui/button";
+import { SITE_CONFIG } from "@/constants";
+import { Link } from "@/i18n/routing";
 import CareerTabs from "./tabs/CareerTabs";
 import EducationTabs from "./tabs/EducationTabs";
 
+type Principle = { title: string; body: string };
+
 const AboutClient = () => {
 	const t = useTranslations();
+	const letter = t.raw("about.letter") as string[];
+	const principles = t.raw("about.principles") as Principle[];
 
 	return (
-		<div className="container py-16">
-			<div className="absolute top-2 lg:-top-20 left-1/2 transform -translate-x-1/2 w-[90%] mx-auto h-24 lg:h-60 bg-primary/50 rounded-full blur-3xl -z-10" />
+		<div className="container py-16 md:py-24">
+			{/* ── The letter ───────────────────────────────────────── */}
+			<div className="max-w-[60ch] mx-auto">
+				<h1 className="text-3xl font-bold md:text-4xl font-display">
+					{t("about.greeting")}
+				</h1>
 
-			<Tabs defaultValue="career">
-				<div className="flex items-center justify-center mb-10">
-					<TabsList className="h-auto gap-1 p-1">
-						<TabsTrigger
-							value="career"
-							className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg data-[state=active]:shadow-xs"
+				<div className="mt-8 space-y-6">
+					{letter.map((paragraph) => (
+						<p
+							key={paragraph.slice(0, 24)}
+							className="text-base leading-loose text-muted-foreground"
 						>
-							<LuBriefcase size={15} />
-							{t("about.title_career")}
-						</TabsTrigger>
-						<TabsTrigger
-							value="education"
-							className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg data-[state=active]:shadow-xs"
-						>
-							<LuGraduationCap size={15} />
-							{t("about.title_education")}
-						</TabsTrigger>
-					</TabsList>
+							{paragraph}
+						</p>
+					))}
 				</div>
 
-				<TabsContent value="career">
-					<CareerTabs />
-				</TabsContent>
+				<p
+					className="my-14 text-center select-none text-muted-foreground/40 tracking-[0.6em]"
+					aria-hidden="true"
+				>
+					* * *
+				</p>
 
-				<TabsContent value="education">
-					<EducationTabs />
-				</TabsContent>
-			</Tabs>
+				{/* ── How I work ─────────────────────────────────────── */}
+				<h2 className="text-xl font-semibold font-display">
+					{t("about.principles_title")}
+				</h2>
+
+				<dl className="mt-6">
+					{principles.map((principle) => (
+						<div
+							key={principle.title}
+							className="grid gap-1 py-5 border-t border-border sm:grid-cols-[10rem_1fr] sm:gap-6"
+						>
+							<dt className="text-sm font-semibold leading-relaxed">
+								{principle.title}
+							</dt>
+							<dd className="text-sm leading-relaxed text-muted-foreground">
+								{principle.body}
+							</dd>
+						</div>
+					))}
+				</dl>
+			</div>
+
+			{/* ── The record ───────────────────────────────────────── */}
+			<div className="mt-24">
+				<CareerTabs />
+			</div>
+			<div className="mt-24">
+				<EducationTabs />
+			</div>
+
+			{/* ── Sign-off ─────────────────────────────────────────── */}
+			<div className="max-w-[60ch] mx-auto mt-24 pt-8 border-t border-border">
+				<p className="text-sm text-muted-foreground">{t("about.ps")}</p>
+
+				<div className="flex flex-wrap gap-3 mt-4">
+					<Link
+						href={SITE_CONFIG.resume.url}
+						target="_blank"
+						aria-label={t("about.resume")}
+					>
+						<Button variant="outline" className="gap-2">
+							<CgAlbum size={16} />
+							{t("about.resume")}
+						</Button>
+					</Link>
+
+					<Link
+						href={SITE_CONFIG.contact.booking}
+						target="_blank"
+						aria-label={t("about.book_cta")}
+					>
+						<Button className="gap-2">
+							<BiPhoneCall size={16} />
+							{t("about.book_cta")}
+						</Button>
+					</Link>
+				</div>
+			</div>
 		</div>
 	);
 };

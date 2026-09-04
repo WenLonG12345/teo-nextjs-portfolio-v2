@@ -4,13 +4,18 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { BiPhoneCall } from "react-icons/bi";
-import { CgAlbum } from "react-icons/cg";
+import { FaWhatsapp } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { LuChevronDown } from "react-icons/lu";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { SITE_CONFIG } from "@/constants";
+import { CLIENT_LIST, PROJECT_LIST, SITE_CONFIG } from "@/constants";
 import { Link } from "@/i18n/routing";
+import { cn } from "@/utils/cn";
 import { MotionDiv, MotionSection } from "@/utils/motion-div";
+
+const TILE =
+	"group block p-1.5 rounded-lg border border-border/70 bg-card min-w-0";
 
 const HeroSection = () => {
 	const t = useTranslations();
@@ -24,112 +29,214 @@ const HeroSection = () => {
 
 	return (
 		<section className="container w-full">
-			<div className="relative grid items-center grid-cols-1 gap-12 py-16 mx-auto md:px-20 lg:grid-cols-2 md:py-40 lg:max-w-(--breakpoint-xl)">
-				<div className="absolute top-2 lg:-top-20 left-1/2 transform -translate-x-1/2 w-[90%] mx-auto h-24 lg:h-60 bg-primary/50 rounded-full blur-3xl -z-10" />
+			<div className="relative grid items-center grid-cols-1 gap-10 py-16 mx-auto lg:grid-cols-[1.15fr_1fr] lg:gap-16 md:py-28 lg:max-w-(--breakpoint-xl)">
+				<div className="absolute top-2 lg:-top-20 left-1/2 transform -translate-x-1/2 w-[90%] mx-auto h-24 lg:h-60 bg-primary/40 rounded-full blur-3xl -z-10" />
 
-				{/* Text column */}
-				<div className="order-2 space-y-6 text-center lg:text-left lg:order-1">
+				{/* ── Left: the offer ───────────────────────────────── */}
+				<div className="order-1">
 					<MotionSection
 						animationProps={{
-							initial: { opacity: 0, y: 20 },
+							initial: { opacity: 0, y: 16 },
 							animate: { opacity: 1, y: 0 },
-							transition: { delay: 0.1, duration: 0.5 },
+							transition: { delay: 0.05, duration: 0.5 },
+							className: "flex flex-wrap items-center gap-2",
 						}}
 					>
-						<div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-sm font-medium border border-green-200 dark:border-green-800">
-							<span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-							{t("home.available")}
-						</div>
+						<Badge
+							variant="outline"
+							className="uppercase tracking-widest border-primary/25 bg-primary/10 text-primary"
+						>
+							twlworks
+						</Badge>
+						<Badge
+							variant="outline"
+							className="font-medium border-border bg-muted/60 text-muted-foreground"
+						>
+							{t("home.wordmark_tagline")}
+						</Badge>
 					</MotionSection>
 
 					<MotionSection
 						animationProps={{
-							initial: { opacity: 0, y: 50 },
+							initial: { opacity: 0, y: 24 },
 							animate: { opacity: 1, y: 0 },
-							transition: {
-								delay: 0.3,
-								type: "spring",
-								stiffness: 100,
-								damping: 10,
-							},
+							transition: { delay: 0.15, duration: 0.55 },
+							className: "mt-6",
 						}}
 					>
-						<h1 className="max-w-(--breakpoint-lg) text-4xl font-bold md:text-6xl">
-							{t("home.hero_1")}{" "}
-							<span className="text-transparent px-2 bg-linear-to-r from-[#6089CF] to-primary bg-clip-text">
-								Teo
-							</span>
+						<h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-balance md:text-5xl xl:text-6xl">
+							{t("home.hero_2")}
 						</h1>
+						<p className="max-w-xl mt-6 text-lg leading-relaxed text-muted-foreground">
+							{t("home.hero_3")}
+						</p>
+					</MotionSection>
+
+					<MotionSection
+						animationProps={{
+							initial: { opacity: 0, y: 24 },
+							animate: { opacity: 1, y: 0 },
+							transition: { delay: 0.25, duration: 0.55 },
+							className: "flex flex-wrap items-center gap-3 mt-8",
+						}}
+					>
+						<Link
+							href={SITE_CONFIG.contact.booking}
+							target="_blank"
+							aria-label={t("home.book_call")}
+						>
+							<Button
+								size="lg"
+								className="text-base font-semibold cursor-pointer group/arrow"
+							>
+								<BiPhoneCall size={18} className="mr-2" />
+								{t("home.book_call")}
+								<FaArrowRightLong className="ml-2 transition-transform size-4 group-hover/arrow:translate-x-1" />
+							</Button>
+						</Link>
+
+						<Link
+							href={SITE_CONFIG.contact.whatsapp}
+							target="_blank"
+							aria-label={t("home.whatsapp")}
+						>
+							<Button
+								size="lg"
+								variant="outline"
+								className="text-base font-semibold cursor-pointer"
+							>
+								<FaWhatsapp size={18} className="mr-2" />
+								{t("home.whatsapp")}
+							</Button>
+						</Link>
 					</MotionSection>
 
 					<MotionSection
 						animationProps={{
 							initial: { opacity: 0 },
 							animate: { opacity: 1 },
-							transition: { delay: 0.5, duration: 0.8 },
+							transition: { delay: 0.4, duration: 0.5 },
+							className: "mt-5",
 						}}
 					>
-						<p className="max-w-(--breakpoint-sm) text-xl text-muted-foreground">
-							{t("home.hero_2")}
-						</p>
-						<p className="max-w-(--breakpoint-sm) mt-2 text-xl text-muted-foreground">
-							{t("home.hero_3")}
-						</p>
-
-						<div className="flex flex-row justify-center gap-3 mt-6 lg:justify-start">
-							<Link
-								href={SITE_CONFIG.resume.url}
-								target="_blank"
-								aria-label="resume"
-							>
-								<Button
-									className="w-full h-full text-lg font-semibold sm:w-auto group/arrow"
-									aria-label="resume"
-								>
-									<i className="mr-2">
-										<CgAlbum />
-									</i>
-									{t(`${SITE_CONFIG.resume.name}`)}
-									<FaArrowRightLong className="ml-2 transition-transform size-5 group-hover/arrow:translate-x-1" />
-								</Button>
-							</Link>
-
-							<Link href={SITE_CONFIG.contact.url} aria-label="contact me">
-								<Button
-									variant="secondary"
-									className="w-full h-full text-lg font-semibold sm:w-auto"
-									aria-label="contact me"
-								>
-									<i className="mr-2">
-										<BiPhoneCall />
-									</i>
-									{t(`${SITE_CONFIG.contact.name}`)}
-								</Button>
-							</Link>
-						</div>
+						<Badge
+							variant="outline"
+							className="gap-2 font-medium border-green-500/25 bg-green-500/10 text-green-700 dark:text-green-400"
+						>
+							<span className="rounded-full size-1.5 bg-green-500 animate-pulse motion-reduce:animate-none" />
+							{t("home.available")}
+						</Badge>
 					</MotionSection>
 				</div>
 
-				{/* Profile image column */}
+				{/* ── Right: who you're hiring, and for whom ────────── */}
 				<MotionSection
 					animationProps={{
-						initial: { opacity: 0, scale: 0.85 },
-						animate: { opacity: 1, scale: 1 },
-						transition: { delay: 0.4, duration: 0.6, ease: "easeOut" },
-						className: "flex justify-center lg:justify-end order-1 lg:order-2",
+						initial: { opacity: 0, y: 24 },
+						animate: { opacity: 1, y: 0 },
+						transition: { delay: 0.35, duration: 0.6 },
+						className: "order-2 w-full",
 					}}
 				>
-					<div className="relative">
-						<div className="absolute inset-0 rounded-full bg-linear-to-br from-primary/30 to-[#6089CF]/30 blur-2xl scale-110" />
-						<div className="relative hidden w-56 h-56 overflow-hidden border-4 rounded-full shadow-2xl md:block lg:w-80 lg:h-80 border-primary/20 bg-muted">
-							<Image
-								src="/images/profile_picture.png"
-								fill
-								alt="Teo - Software Engineer"
-								className="object-cover"
-								priority
-							/>
+					<div className="overflow-hidden border rounded-2xl border-border bg-card shadow-xs">
+						{/* Signature */}
+						<div className="flex items-center gap-4 p-5">
+							<div className="relative w-14 h-14 overflow-hidden border rounded-full shrink-0 border-border bg-muted">
+								<Image
+									src="/images/profile_picture.png"
+									fill
+									sizes="56px"
+									alt="Teo Wen Long, founder of twlworks"
+									className="object-cover object-top"
+									priority
+								/>
+							</div>
+							<div className="min-w-0">
+								<p className="text-sm font-semibold">Teo Wen Long</p>
+								<p className="text-xs text-muted-foreground">
+									{t("home.founder_role")}
+								</p>
+							</div>
 						</div>
+
+						<p className="px-5 pb-5 text-sm leading-relaxed text-muted-foreground">
+							{t("home.direct")}
+						</p>
+
+						{/* Proof */}
+						<div className="px-5 py-4 border-t border-border bg-muted/30">
+							<p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground">
+								{t("home.trusted_by")}
+							</p>
+
+							<ul className="grid grid-cols-4 gap-2 mt-4">
+								{CLIENT_LIST.map((client) => {
+									// every logo is a wordmark, so a name caption would just repeat it
+									const tile = (
+										// logos are dark-ink/transparent, so the plate stays light in both themes
+										<span className="relative block w-full overflow-hidden rounded-md aspect-4/3 bg-white ring-1 ring-black/5">
+											<Image
+												src={client.logo}
+												alt={client.name}
+												fill
+												sizes="120px"
+												className="object-contain p-2"
+											/>
+										</span>
+									);
+
+									return (
+										<li key={client.name} className="min-w-0">
+											{client.url ? (
+												<Link
+													href={client.url}
+													target="_blank"
+													aria-label={client.name}
+													title={client.name}
+													className={cn(
+														TILE,
+														"cursor-pointer transition-[transform,border-color,box-shadow] duration-200 ease-out",
+														"hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-sm active:translate-y-0",
+														"motion-reduce:hover:translate-y-0",
+														"focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+													)}
+												>
+													{tile}
+												</Link>
+											) : (
+												<span className={TILE} title={client.name}>
+													{tile}
+												</span>
+											)}
+										</li>
+									);
+								})}
+							</ul>
+						</div>
+
+						{/* Numbers */}
+						<dl className="grid grid-cols-2 border-t divide-x border-border divide-border">
+							<div className="px-5 py-3">
+								<dd className="text-lg font-bold tabular-nums text-primary">
+									{PROJECT_LIST["project.freelance"].length}
+								</dd>
+								<dt className="text-xs leading-tight text-muted-foreground">
+									{t("home.fact_projects")}
+								</dt>
+							</div>
+							<div className="px-5 py-3">
+								<dd className="text-lg font-bold tabular-nums text-primary">
+									7+
+								</dd>
+								<dt className="text-xs leading-tight text-muted-foreground">
+									{t("home.fact_years")}
+								</dt>
+							</div>
+						</dl>
+
+						<p className="px-5 py-3 text-xs border-t border-border text-muted-foreground">
+							{t("home.sectors")}
+						</p>
 					</div>
 				</MotionSection>
 			</div>
@@ -149,7 +256,6 @@ const HeroSection = () => {
 					<span className="text-xs tracking-[0.2em] uppercase font-medium text-muted-foreground/60">
 						Scroll
 					</span>
-					{/* Mouse-shaped container */}
 					<div className="w-6 h-10 rounded-full border-2 border-muted-foreground/40 flex justify-center pt-1.5">
 						<MotionDiv
 							animate={{ y: [0, 10, 0], opacity: [1, 0.2, 1] }}

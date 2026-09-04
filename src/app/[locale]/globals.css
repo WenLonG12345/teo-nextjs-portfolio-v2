@@ -469,9 +469,4 @@ html {
 	h4 {
 		font-family: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
 	}
-
-	ul,
-	ol {
-		list-style: revert;
-	}
 }

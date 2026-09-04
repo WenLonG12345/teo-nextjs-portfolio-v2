@@ -50,11 +50,29 @@ const SOCIAL_ICONS: Record<
 	Gmail: { icon: <SiGmail size={15} />, colorClass: "text-[#ea4335]" },
 };
 
+const BUDGET_OPTIONS = [
+	{ value: "Under RM5k", label: "contact.budget_under_5k" },
+	{ value: "RM5k - RM15k", label: "contact.budget_5_15k" },
+	{ value: "RM15k - RM40k", label: "contact.budget_15_40k" },
+	{ value: "RM40k+", label: "contact.budget_40k_plus" },
+	{ value: "Not sure yet", label: "contact.budget_unsure" },
+];
+
+const TIMELINE_OPTIONS = [
+	{ value: "ASAP", label: "contact.timeline_asap" },
+	{ value: "1-3 months", label: "contact.timeline_1_3" },
+	{ value: "3+ months", label: "contact.timeline_3_plus" },
+	{ value: "Just exploring", label: "contact.timeline_exploring" },
+];
+
 const formSchema = z.object({
 	firstName: z.string().min(2).max(255),
 	lastName: z.string().min(2).max(255),
 	email: z.string().email(),
 	subject: z.string().min(2).max(255),
+	budget: z.string().min(1),
+	timeline: z.string().min(1),
+	currentTools: z.string().max(255).optional(),
 	message: z.string(),
 });
 
@@ -69,13 +87,35 @@ const ContactClient = () => {
 			lastName: "",
 			email: "",
 			subject: "Project Inquiry",
+			budget: "",
+			timeline: "",
+			currentTools: "",
 			message: "",
 		},
 	});
 
 	function onSubmit(values: z.infer<typeof formSchema>) {
-		const { firstName, lastName, email, subject, message } = values;
-		const mailToLink = `mailto:${SITE_CONFIG.contact.email}?subject=${subject}&body=Hello I am ${firstName} ${lastName}, my Email is ${email}. %0D%0A${message}`;
+		const {
+			firstName,
+			lastName,
+			email,
+			subject,
+			budget,
+			timeline,
+			currentTools,
+			message,
+		} = values;
+		const body = [
+			`Hello I am ${firstName} ${lastName}, my Email is ${email}.`,
+			`Budget: ${budget}`,
+			`Timeline: ${timeline}`,
+			`Currently using: ${currentTools || "-"}`,
+			"",
+			message,
+		].join("\n");
+		const mailToLink = `mailto:${SITE_CONFIG.contact.email}?subject=${encodeURIComponent(
+			subject,
+		)}&body=${encodeURIComponent(body)}`;
 		window.location.href = mailToLink;
 		setIsSent(true);
 		form.reset();
@@ -301,6 +341,92 @@ const ContactClient = () => {
 										)}
 									/>
 
+									<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+										<FormField
+											control={form.control}
+											name="budget"
+											render={({ field }) => (
+												<FormItem>
+													<FormLabel>{t("contact.budget")}</FormLabel>
+													<Select
+														onValueChange={field.onChange}
+														defaultValue={field.value}
+													>
+														<FormControl>
+															<SelectTrigger>
+																<SelectValue
+																	placeholder={t("contact.budget_placeholder")}
+																/>
+															</SelectTrigger>
+														</FormControl>
+														<SelectContent>
+															{BUDGET_OPTIONS.map((option) => (
+																<SelectItem
+																	key={option.value}
+																	value={option.value}
+																>
+																	{t(option.label)}
+																</SelectItem>
+															))}
+														</SelectContent>
+													</Select>
+													<FormMessage />
+												</FormItem>
+											)}
+										/>
+										<FormField
+											control={form.control}
+											name="timeline"
+											render={({ field }) => (
+												<FormItem>
+													<FormLabel>{t("contact.timeline")}</FormLabel>
+													<Select
+														onValueChange={field.onChange}
+														defaultValue={field.value}
+													>
+														<FormControl>
+															<SelectTrigger>
+																<SelectValue
+																	placeholder={t(
+																		"contact.timeline_placeholder",
+																	)}
+																/>
+															</SelectTrigger>
+														</FormControl>
+														<SelectContent>
+															{TIMELINE_OPTIONS.map((option) => (
+																<SelectItem
+																	key={option.value}
+																	value={option.value}
+																>
+																	{t(option.label)}
+																</SelectItem>
+															))}
+														</SelectContent>
+													</Select>
+													<FormMessage />
+												</FormItem>
+											)}
+										/>
+									</div>
+
+									<FormField
+										control={form.control}
+										name="currentTools"
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>{t("contact.current_tools")}</FormLabel>
+												<FormControl>
+													<Input
+														placeholder={t("contact.current_tools_placeholder")}
+														{...field}
+													/>
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+
 									<FormField
 										control={form.control}
 										name="message"
@@ -310,7 +436,7 @@ const ContactClient = () => {
 												<FormControl>
 													<Textarea
 														rows={5}
-														placeholder="Your message..."
+														placeholder={t("contact.message_placeholder")}
 														className="resize-none"
 														{...field}
 													/>

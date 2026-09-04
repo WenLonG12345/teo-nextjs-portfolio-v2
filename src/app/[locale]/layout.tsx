@@ -10,6 +10,7 @@ import Footer from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
 import ReactQueryProvider from "@/components/layout/react-query-provider";
 import { ThemeProvider } from "@/components/layout/theme-provider";
+import WhatsAppButton from "@/components/layout/whatsapp-button";
 import { METADATA } from "@/constants";
 import { routing } from "@/i18n/routing";
 import { cn } from "@/utils/cn";
@@ -98,6 +99,7 @@ export default async function RootLayout({
 							{children}
 							<Footer />
 							<BackToTop />
+							<WhatsAppButton />
 							{/* </ClickSpark> */}
 						</ThemeProvider>
 						<Analytics />
