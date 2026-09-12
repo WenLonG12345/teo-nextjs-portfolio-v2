@@ -1,7 +1,7 @@
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Manrope } from "next/font/google";
+import { Hanken_Grotesk } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -21,11 +21,12 @@ import "./globals.css";
 //   ssr: false,
 // });
 
-const display = Bricolage_Grotesque({
+// brand kit: Hanken Grotesk for everything, 700 headings / 500 labels / 400 body
+const hanken = Hanken_Grotesk({
 	subsets: ["latin"],
-	variable: "--font-bricolage",
+	weight: ["400", "500", "700", "800"],
+	variable: "--font-hanken",
 });
-const body = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
 
 export const metadata: Metadata = {
 	title: {
@@ -33,20 +34,19 @@ export const metadata: Metadata = {
 		template: METADATA.titleTemplate,
 	},
 	description: METADATA.description,
-	icons: {
-		icon: "/favicon.ico",
-	},
 	openGraph: {
 		type: "website",
 		title: METADATA.title,
 		url: METADATA.url,
 		description: METADATA.description,
+		images: ["/og_image.png"],
 	},
 	twitter: {
 		card: "summary_large_image",
 		title: METADATA.title,
 		site: METADATA.url,
 		description: METADATA.description,
+		images: ["/og_image.png"],
 	},
 	metadataBase: new URL(METADATA.url),
 	alternates: {
@@ -79,13 +79,7 @@ export default async function RootLayout({
 
 	return (
 		<html lang={locale} suppressHydrationWarning>
-			<body
-				className={cn(
-					"min-h-screen bg-background",
-					display.variable,
-					body.variable,
-				)}
-			>
+			<body className={cn("min-h-screen bg-background", hanken.variable)}>
 				<NextIntlClientProvider messages={messages}>
 					<ReactQueryProvider>
 						<ThemeProvider

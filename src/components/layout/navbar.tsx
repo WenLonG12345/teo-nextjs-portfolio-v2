@@ -44,7 +44,23 @@ export const Navbar = () => {
 			<div className="flex items-center justify-between px-4 py-2.5">
 				{/* Logo */}
 				<Link href="/" className="flex items-center gap-2.5 shrink-0">
-					<Image src="/logo.png" width={38} height={38} alt="Teo logo" />
+					{/* lockup is 660x200; light/dark variants swap with the theme class */}
+					<Image
+						src="/logo-light.svg"
+						width={50}
+						height={38}
+						alt="Teo"
+						className="dark:hidden"
+						priority
+					/>
+					<Image
+						src="/logo-dark.svg"
+						width={50}
+						height={38}
+						alt="Teo"
+						className="hidden dark:block"
+						priority
+					/>
 				</Link>
 
 				{/* Desktop nav links */}
