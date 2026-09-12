@@ -387,7 +387,7 @@ export const CLIENT_LIST: { name: string; logo: string; url?: string }[] = [
 	{
 		name: "Hercules Factory",
 		logo: "/images/logo/hercules.png",
-		url: "https://hercules-factory.vercel.app",
+		url: "https://hercules-factory.com",
 	},
 	{
 		name: "Regal Global",
