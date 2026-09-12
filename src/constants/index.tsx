@@ -113,7 +113,7 @@ export const PROJECT_LIST: {
 				"Members book and cancel from their phone against real class capacity, coaches get an accurate roster before each session, and package balances and attendance update themselves instead of being counted by hand.",
 			outcome_zh:
 				"学员用手机按真实名额预约与取消，教练课前就拿到准确名单，配套堂数与出席记录自动更新，不必再人工点算。",
-			link: "https://hercules-factory.vercel.app",
+			link: "https://hercules-factory.com",
 			tech: ["NextJS", "TailwindCSS", "Typescript", "TRPC", "Drizzle"],
 		},
 		{
