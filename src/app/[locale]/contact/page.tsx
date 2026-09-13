@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import type { MetadataProps } from "@/constants/types";
+import { localeAlternates } from "@/utils/seo";
 import ContactClient from "./Contact";
 
 export async function generateMetadata({
@@ -12,6 +13,7 @@ export async function generateMetadata({
 	return {
 		title: t("contact.badge"),
 		description: t("contact.title"),
+		alternates: localeAlternates(locale, "/contact"),
 		icons: {
 			icon: "/favicon.ico",
 		},

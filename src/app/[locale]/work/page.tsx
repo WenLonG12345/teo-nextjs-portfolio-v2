@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import type { MetadataProps } from "@/constants/types";
+import { localeAlternates } from "@/utils/seo";
 import Work from "./Work";
 
 export async function generateMetadata({
@@ -12,6 +13,7 @@ export async function generateMetadata({
 	return {
 		title: t("project.title"),
 		description: t("project.page_description"),
+		alternates: localeAlternates(locale, "/work"),
 		icons: {
 			icon: "/favicon.ico",
 		},

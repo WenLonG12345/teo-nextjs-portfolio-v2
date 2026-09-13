@@ -5,7 +5,6 @@ import { LuBriefcase, LuCode, LuGithub } from "react-icons/lu";
 import { ProjectCard } from "@/components/layout/sections/project";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PROJECT_LIST } from "@/constants";
-import { MotionSection } from "@/utils/motion-div";
 
 const CATEGORY_ICON: Record<string, React.ReactNode> = {
 	"project.works": <LuBriefcase />,
@@ -19,14 +18,7 @@ const Work = () => {
 
 	return (
 		<section className="container py-16">
-			<MotionSection
-				animationProps={{
-					initial: { opacity: 0, y: 30 },
-					animate: { opacity: 1, y: 0 },
-					transition: { duration: 0.5 },
-					className: "mb-10 text-center",
-				}}
-			>
+			<div className="mb-10 text-center">
 				<div className="inline-flex items-center gap-2 mb-3">
 					<div className="w-8 h-px bg-primary/40" />
 					<span className="text-sm font-medium tracking-widest uppercase text-primary">
@@ -38,7 +30,7 @@ const Work = () => {
 				<p className="max-w-2xl mx-auto mt-4 text-lg leading-relaxed text-muted-foreground">
 					{t("project.page_description")}
 				</p>
-			</MotionSection>
+			</div>
 
 			<Tabs
 				defaultValue={Object.keys(PROJECT_LIST)[0]}

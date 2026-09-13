@@ -62,7 +62,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 			priority: 0.8,
 		},
 		{
-			path: "/blog",
+			path: "/insights",
 			lastModified: now,
 			changeFrequency: "weekly",
 			priority: 0.8,
@@ -79,7 +79,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 		const date = new Date(post.date);
 
 		return {
-			path: `/blog/${post.slug}`,
+			path: `/insights/${post.slug}`,
 			lastModified: Number.isNaN(date.getTime()) ? now : date,
 			changeFrequency: "monthly",
 			priority: 0.6,

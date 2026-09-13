@@ -1,40 +1,19 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Mail, MessageCircle, Phone } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type React from "react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 import {
 	FaGithub,
 	FaLinkedin,
 	FaMedium,
 	FaStackOverflow,
 } from "react-icons/fa";
-import { LuCheckCheck, LuMail, LuSend } from "react-icons/lu";
 import { SiGmail } from "react-icons/si";
-import { z } from "zod";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { SITE_CONFIG } from "@/constants";
-import { Link } from "@/i18n/routing";
-import { MotionDiv, MotionSection } from "@/utils/motion-div";
+import { cn } from "@/utils/cn";
 
 const SOCIAL_ICONS: Record<
 	string,
@@ -50,411 +29,132 @@ const SOCIAL_ICONS: Record<
 	Gmail: { icon: <SiGmail size={15} />, colorClass: "text-[#ea4335]" },
 };
 
-const BUDGET_OPTIONS = [
-	{ value: "Under RM5k", label: "contact.budget_under_5k" },
-	{ value: "RM5k - RM15k", label: "contact.budget_5_15k" },
-	{ value: "RM15k - RM40k", label: "contact.budget_15_40k" },
-	{ value: "RM40k+", label: "contact.budget_40k_plus" },
-	{ value: "Not sure yet", label: "contact.budget_unsure" },
-];
-
-const TIMELINE_OPTIONS = [
-	{ value: "ASAP", label: "contact.timeline_asap" },
-	{ value: "1-3 months", label: "contact.timeline_1_3" },
-	{ value: "3+ months", label: "contact.timeline_3_plus" },
-	{ value: "Just exploring", label: "contact.timeline_exploring" },
-];
-
-const formSchema = z.object({
-	firstName: z.string().min(2).max(255),
-	lastName: z.string().min(2).max(255),
-	email: z.string().email(),
-	subject: z.string().min(2).max(255),
-	budget: z.string().min(1),
-	timeline: z.string().min(1),
-	currentTools: z.string().max(255).optional(),
-	message: z.string(),
-});
-
 const ContactClient = () => {
 	const t = useTranslations();
-	const [isSent, setIsSent] = useState(false);
 
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
-		defaultValues: {
-			firstName: "",
-			lastName: "",
-			email: "",
-			subject: "Project Inquiry",
-			budget: "",
-			timeline: "",
-			currentTools: "",
-			message: "",
+	// priority is the order; the first card is the one to take
+	const channels = [
+		{
+			key: "whatsapp",
+			href: SITE_CONFIG.contact.whatsapp,
+			icon: <MessageCircle size={20} />,
+			primary: true,
 		},
-	});
-
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		const {
-			firstName,
-			lastName,
-			email,
-			subject,
-			budget,
-			timeline,
-			currentTools,
-			message,
-		} = values;
-		const body = [
-			`Hello I am ${firstName} ${lastName}, my Email is ${email}.`,
-			`Budget: ${budget}`,
-			`Timeline: ${timeline}`,
-			`Currently using: ${currentTools || "-"}`,
-			"",
-			message,
-		].join("\n");
-		const mailToLink = `mailto:${SITE_CONFIG.contact.email}?subject=${encodeURIComponent(
-			subject,
-		)}&body=${encodeURIComponent(body)}`;
-		window.location.href = mailToLink;
-		setIsSent(true);
-		form.reset();
-	}
+		{
+			key: "call",
+			href: SITE_CONFIG.contact.booking,
+			icon: <Phone size={20} />,
+			primary: false,
+		},
+		{
+			key: "email",
+			href: `mailto:${SITE_CONFIG.contact.email}?subject=${encodeURIComponent(
+				t("contact.email_subject"),
+			)}`,
+			icon: <Mail size={20} />,
+			primary: false,
+		},
+	] as const;
 
 	return (
 		<div className="container py-16">
-			<div className="absolute top-2 lg:-top-20 left-1/2 transform -translate-x-1/2 w-[90%] mx-auto h-24 lg:h-60 bg-primary/50 rounded-full blur-3xl -z-10" />
+			<div className="max-w-2xl">
+				<h1 className="text-3xl font-bold tracking-tight md:text-4xl wrap-anywhere">
+					{t("contact.title")}
+				</h1>
+				<p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+					{t("contact.lede")}
+				</p>
+			</div>
 
-			{/* Section header */}
-			<MotionSection
-				animationProps={{
-					initial: { opacity: 0, y: 30 },
-					whileInView: { opacity: 1, y: 0 },
-					transition: { duration: 0.5 },
-					className: "mb-12 text-center",
-				}}
-			>
-				<div className="inline-flex items-center gap-2 mb-3 md:hidden">
-					<div className="w-8 h-px bg-primary/40" />
-					<span className="text-sm font-medium tracking-widest uppercase text-primary">
-						{t("contact.badge")}
-					</span>
-					<div className="w-8 h-px bg-primary/40" />
-				</div>
-				<h2 className="text-3xl font-bold md:text-4xl">{t("contact.title")}</h2>
-			</MotionSection>
-
-			<div className="grid grid-cols-1 gap-10 mx-auto lg:grid-cols-2 lg:max-w-(--breakpoint-xl)">
-				{/* Left: info + socials */}
-				<MotionSection
-					animationProps={{
-						initial: { opacity: 0, x: -30 },
-						whileInView: { opacity: 1, x: 0 },
-						transition: { duration: 0.5, delay: 0.1 },
-						className: "flex flex-col",
-					}}
-				>
-					<div className="space-y-6">
-						<p className="leading-relaxed text-muted-foreground">
-							{t("contact.description_1")}
-						</p>
-						<p className="leading-relaxed text-muted-foreground">
-							{t("contact.description_2")}
-						</p>
-
-						{/* Email info card */}
-						<div className="flex items-center gap-4 p-4 border rounded-2xl border-border bg-card">
-							<div className="flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10 shrink-0">
-								<LuMail size={18} className="text-primary" />
-							</div>
-							<div>
-								<p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-0.5">
-									Email
-								</p>
-								<p className="text-sm font-medium">
-									{SITE_CONFIG.contact.email}
-								</p>
-							</div>
-						</div>
-
-						{/* Social links */}
-						<div>
-							<p className="mb-3 text-xs font-medium tracking-wider uppercase text-muted-foreground">
-								Find me on
-							</p>
-							<div className="flex flex-wrap gap-2">
-								{SITE_CONFIG.footer.accounts.map((acc) => {
-									const social = SOCIAL_ICONS[acc.name];
-									if (!social) return null;
-									return (
-										<Link
-											key={acc.name}
-											href={acc.url}
-											target="_blank"
-											aria-label={acc.name}
-										>
-											<Button
-												variant="outline"
-												size="sm"
-												className={`gap-2 h-9 px-3 rounded-xl cursor-pointer hover:border-primary/40 transition-colors ${social.colorClass}`}
-											>
-												{social.icon}
-												<span className="text-xs font-medium text-foreground">
-													{acc.name}
-												</span>
-											</Button>
-										</Link>
-									);
-								})}
-							</div>
-						</div>
-					</div>
-				</MotionSection>
-
-				{/* Right: form */}
-				<MotionSection
-					animationProps={{
-						initial: { opacity: 0, x: 30 },
-						whileInView: { opacity: 1, x: 0 },
-						transition: { duration: 0.5, delay: 0.2 },
-					}}
-				>
-					<div className="p-6 border rounded-2xl border-border bg-card sm:p-8">
-						{isSent ? (
-							<MotionDiv
-								initial={{ opacity: 0, scale: 0.9 }}
-								animate={{ opacity: 1, scale: 1 }}
-								transition={{ duration: 0.4 }}
-								className="flex flex-col items-center gap-4 py-12 text-center"
-							>
-								<div className="flex items-center justify-center w-16 h-16 bg-green-100 rounded-full dark:bg-green-900/30">
-									<LuCheckCheck size={32} className="text-green-500" />
-								</div>
-								<h3 className="text-xl font-semibold">
-									{t("contact.sent_success_title")}
-								</h3>
-								<p className="max-w-xs text-sm text-muted-foreground">
-									{t("contact.sent_success_desc")}
-								</p>
-								<Button
-									variant="outline"
-									onClick={() => setIsSent(false)}
-									className="mt-2 rounded-xl"
-								>
-									{t("contact.send_another")}
-								</Button>
-							</MotionDiv>
-						) : (
-							<Form {...form}>
-								<form
-									onSubmit={form.handleSubmit(onSubmit)}
-									className="grid gap-4"
-								>
-									<div className="grid grid-cols-2 gap-4">
-										<FormField
-											control={form.control}
-											name="firstName"
-											render={({ field }) => (
-												<FormItem>
-													<FormLabel>{t("contact.first_name")}</FormLabel>
-													<FormControl>
-														<Input
-															placeholder={t("contact.first_name")}
-															{...field}
-														/>
-													</FormControl>
-													<FormMessage />
-												</FormItem>
-											)}
-										/>
-										<FormField
-											control={form.control}
-											name="lastName"
-											render={({ field }) => (
-												<FormItem>
-													<FormLabel>{t("contact.last_name")}</FormLabel>
-													<FormControl>
-														<Input
-															placeholder={t("contact.last_name")}
-															{...field}
-														/>
-													</FormControl>
-													<FormMessage />
-												</FormItem>
-											)}
-										/>
-									</div>
-
-									<FormField
-										control={form.control}
-										name="email"
-										render={({ field }) => (
-											<FormItem>
-												<FormLabel>{t("contact.email")}</FormLabel>
-												<FormControl>
-													<Input
-														type="email"
-														placeholder={t("contact.email")}
-														{...field}
-													/>
-												</FormControl>
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-
-									<FormField
-										control={form.control}
-										name="subject"
-										render={({ field }) => (
-											<FormItem>
-												<FormLabel>{t("contact.subject")}</FormLabel>
-												<Select
-													onValueChange={field.onChange}
-													defaultValue={field.value}
-												>
-													<FormControl>
-														<SelectTrigger>
-															<SelectValue placeholder="Select a subject" />
-														</SelectTrigger>
-													</FormControl>
-													<SelectContent>
-														<SelectItem value="Project Inquiry">
-															{t("contact.project_inquiry")}
-														</SelectItem>
-														<SelectItem value="Web Development">
-															{t("contact.web_development")}
-														</SelectItem>
-														<SelectItem value="Mobile Development">
-															{t("contact.mobile_development")}
-														</SelectItem>
-														<SelectItem value="SEO and Website Ranking">
-															{t("contact.seo_and_website_ranking")}
-														</SelectItem>
-														<SelectItem value="API Development">
-															{t("contact.api_development")}
-														</SelectItem>
-													</SelectContent>
-												</Select>
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-
-									<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-										<FormField
-											control={form.control}
-											name="budget"
-											render={({ field }) => (
-												<FormItem>
-													<FormLabel>{t("contact.budget")}</FormLabel>
-													<Select
-														onValueChange={field.onChange}
-														defaultValue={field.value}
-													>
-														<FormControl>
-															<SelectTrigger>
-																<SelectValue
-																	placeholder={t("contact.budget_placeholder")}
-																/>
-															</SelectTrigger>
-														</FormControl>
-														<SelectContent>
-															{BUDGET_OPTIONS.map((option) => (
-																<SelectItem
-																	key={option.value}
-																	value={option.value}
-																>
-																	{t(option.label)}
-																</SelectItem>
-															))}
-														</SelectContent>
-													</Select>
-													<FormMessage />
-												</FormItem>
-											)}
-										/>
-										<FormField
-											control={form.control}
-											name="timeline"
-											render={({ field }) => (
-												<FormItem>
-													<FormLabel>{t("contact.timeline")}</FormLabel>
-													<Select
-														onValueChange={field.onChange}
-														defaultValue={field.value}
-													>
-														<FormControl>
-															<SelectTrigger>
-																<SelectValue
-																	placeholder={t(
-																		"contact.timeline_placeholder",
-																	)}
-																/>
-															</SelectTrigger>
-														</FormControl>
-														<SelectContent>
-															{TIMELINE_OPTIONS.map((option) => (
-																<SelectItem
-																	key={option.value}
-																	value={option.value}
-																>
-																	{t(option.label)}
-																</SelectItem>
-															))}
-														</SelectContent>
-													</Select>
-													<FormMessage />
-												</FormItem>
-											)}
-										/>
-									</div>
-
-									<FormField
-										control={form.control}
-										name="currentTools"
-										render={({ field }) => (
-											<FormItem>
-												<FormLabel>{t("contact.current_tools")}</FormLabel>
-												<FormControl>
-													<Input
-														placeholder={t("contact.current_tools_placeholder")}
-														{...field}
-													/>
-												</FormControl>
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-
-									<FormField
-										control={form.control}
-										name="message"
-										render={({ field }) => (
-											<FormItem>
-												<FormLabel>{t("contact.message")}</FormLabel>
-												<FormControl>
-													<Textarea
-														rows={5}
-														placeholder={t("contact.message_placeholder")}
-														className="resize-none"
-														{...field}
-													/>
-												</FormControl>
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-
-									<Button className="gap-2 mt-2">
-										<LuSend size={15} />
-										{t("contact.send_message")}
-									</Button>
-								</form>
-							</Form>
+			<ol className="grid grid-cols-1 gap-5 mt-10 md:grid-cols-3">
+				{channels.map((c, i) => (
+					<li
+						key={c.key}
+						className={cn(
+							"flex flex-col p-6 border rounded-2xl bg-card",
+							c.primary ? "border-primary/50 shadow-lg" : "border-border",
 						)}
-					</div>
-				</MotionSection>
+					>
+						<div className="flex items-center justify-between">
+							<span
+								className={cn(
+									"flex items-center justify-center size-10 rounded-xl",
+									c.primary
+										? "bg-primary text-primary-foreground"
+										: "bg-primary/10 text-primary",
+								)}
+							>
+								{c.icon}
+							</span>
+							{c.primary ? (
+								<Badge>{t("contact.channels.whatsapp.short")}</Badge>
+							) : (
+								<span className="text-xs font-semibold tabular-nums text-muted-foreground">
+									{String(i + 1).padStart(2, "0")}
+								</span>
+							)}
+						</div>
+						<h2 className="mt-5 text-xl font-semibold">
+							{t(`contact.channels.${c.key}.title`)}
+						</h2>
+						{!c.primary && (
+							<p className="mt-0.5 text-sm text-muted-foreground">
+								{t(`contact.channels.${c.key}.short`)}
+							</p>
+						)}
+						<p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+							{t(`contact.channels.${c.key}.description`)}
+						</p>
+						<Button
+							variant={c.primary ? "default" : "outline"}
+							className="mt-6 font-semibold"
+							asChild
+						>
+							<a
+								href={c.href}
+								target={c.key === "email" ? undefined : "_blank"}
+								rel="noopener noreferrer"
+							>
+								{t(`contact.channels.${c.key}.cta`)}
+							</a>
+						</Button>
+					</li>
+				))}
+			</ol>
+
+			{/* Social links */}
+			<div className="mt-12">
+				<p className="mb-3 text-xs font-medium tracking-wider uppercase text-muted-foreground">
+					{t("footer.connect")}
+				</p>
+				<div className="flex flex-wrap gap-2">
+					{SITE_CONFIG.footer.accounts.map((acc) => {
+						const social = SOCIAL_ICONS[acc.name];
+						if (!social) return null;
+						return (
+							<Button
+								key={acc.name}
+								variant="outline"
+								size="sm"
+								className={`gap-2 h-9 px-3 rounded-xl hover:border-primary/40 ${social.colorClass}`}
+								asChild
+							>
+								<a
+									href={acc.url}
+									target="_blank"
+									rel="noopener noreferrer"
+									aria-label={acc.name}
+								>
+									{social.icon}
+									<span className="text-xs font-medium text-foreground">
+										{acc.name}
+									</span>
+								</a>
+							</Button>
+						);
+					})}
+				</div>
 			</div>
 		</div>
 	);

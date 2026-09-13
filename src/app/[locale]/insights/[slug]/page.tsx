@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/routing";
 import { getAllPosts, getPostBySlug } from "@/utils/blog";
+import { localeAlternates } from "@/utils/seo";
 import ShareButtons from "./ShareButtons";
 
 interface BlogPostPageProps {
@@ -33,11 +34,12 @@ export async function generateMetadata({
 	return {
 		title: post.title,
 		description: post.description,
+		alternates: localeAlternates(locale, `/insights/${slug}`),
 		icons: { icon: "/favicon.ico" },
 		openGraph: {
 			type: "article",
 			title: post.title,
-			url: `/blog/${slug}`,
+			url: `/insights/${slug}`,
 			description: post.description,
 			images: post.coverImage ? [post.coverImage] : ["/og_image.png"],
 		},
@@ -60,17 +62,15 @@ const BlogPostPage = async ({ params }: BlogPostPageProps) => {
 
 	return (
 		<div className="container py-24 sm:py-32">
-			<div className="absolute top-2 lg:-top-20 left-1/2 transform -translate-x-1/2 w-[90%] mx-auto h-24 lg:h-60 bg-primary/50 rounded-full blur-3xl" />
-
 			<div className="max-w-3xl mx-auto">
-				<Link href="/blog">
+				<Link href="/insights">
 					<Button
 						variant="ghost"
 						className="gap-2 mb-8 -ml-2 text-muted-foreground hover:text-foreground"
-						aria-label="Back to blog"
+						aria-label="Back to insights"
 					>
 						<ArrowLeftIcon className="w-4 h-4" />
-						Back to Blog
+						Back to Insights
 					</Button>
 				</Link>
 

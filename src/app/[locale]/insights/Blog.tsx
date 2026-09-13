@@ -34,8 +34,6 @@ const BlogClient = ({ posts }: BlogClientProps) => {
 
 	return (
 		<div className="container py-16">
-			<div className="absolute top-2 lg:-top-20 left-1/2 transform -translate-x-1/2 w-[90%] mx-auto h-24 lg:h-60 bg-primary/50 rounded-full blur-3xl" />
-
 			{/* ── Page Header ── */}
 			<MotionSection
 				animationProps={{
@@ -106,7 +104,7 @@ const BlogClient = ({ posts }: BlogClientProps) => {
 						) : (
 							<div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
 								{posts.map((post, index) => (
-									<Link key={post.slug} href={`/blog/${post.slug}`}>
+									<Link key={post.slug} href={`/insights/${post.slug}`}>
 										<MotionDiv
 											initial={{ opacity: 0, y: 20 }}
 											whileInView={{ opacity: 1, y: 0 }}

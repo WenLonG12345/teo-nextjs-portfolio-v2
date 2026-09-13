@@ -1,5 +1,26 @@
 [
 	{
+		"date": "2026-09-13",
+		"macrostructure": "Split Studio (home, sections redesigned)",
+		"theme": "project palette preserved (shadcn HSL amber/cream · Hanken Grotesk)",
+		"enrichment": "none",
+		"brief": "twlworks home — services as step timeline (gradient rail, mono markers, eyebrow + heading left, description per step) · projects 3×2 compact ProjectCard grid (image, name, tagline, stack)"
+	},
+	{
+		"date": "2026-09-13",
+		"macrostructure": "Bento Grid",
+		"theme": "project palette preserved (shadcn HSL amber/cream · Hanken Grotesk)",
+		"enrichment": "none",
+		"brief": "twlworks About — personal portfolio + résumé, utilitarian bento (identity/now/record/twlworks/elsewhere/stack) + existing Career/Education timeline"
+	},
+	{
+		"date": "2026-09-13",
+		"macrostructure": "Split Studio",
+		"theme": "project palette preserved (shadcn HSL amber/cream · Hanken Grotesk)",
+		"enrichment": "none",
+		"brief": "twlworks home — SME custom-software consultancy, H2 diptych hero + F3 services sheet + case rows + Ft1 footer"
+	},
+	{
 		"date": "2026-09-04",
 		"macrostructure": "Letter",
 		"theme": "project palette preserved (shadcn HSL · Bricolage + Manrope)",

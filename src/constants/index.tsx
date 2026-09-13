@@ -26,8 +26,8 @@ export const NAV_ITEM_LIST: NavItemProps[] = [
 		label: "navbar.about",
 	},
 	{
-		href: "/blog",
-		label: "navbar.blog",
+		href: "/insights",
+		label: "navbar.insights",
 	},
 	{
 		href: "/contact",
@@ -92,6 +92,9 @@ export const PROJECT_LIST: {
 		problem_zh?: string;
 		outcome?: string;
 		outcome_zh?: string;
+		// one line for the home grid; falls back to outcome
+		tagline?: string;
+		tagline_zh?: string;
 		link?: string;
 		tech: string[];
 	}[];
@@ -113,6 +116,9 @@ export const PROJECT_LIST: {
 				"Members book and cancel from their phone against real class capacity, coaches get an accurate roster before each session, and package balances and attendance update themselves instead of being counted by hand.",
 			outcome_zh:
 				"学员用手机按真实名额预约与取消，教练课前就拿到准确名单，配套堂数与出席记录自动更新，不必再人工点算。",
+			tagline:
+				"Class booking and memberships for a Muay Thai gym — off WhatsApp and paper.",
+			tagline_zh: "泰拳馆的课程预约与会员管理，告别 WhatsApp 与纸本记录。",
 			link: "https://hercules-factory.com",
 			tech: ["NextJS", "TailwindCSS", "Typescript", "TRPC", "Drizzle"],
 		},
@@ -132,6 +138,9 @@ export const PROJECT_LIST: {
 				"One platform with role-based views for tenant, landlord, agent and admin — everyone works off the same records at their own level of access.",
 			outcome_zh:
 				"一个平台，为租客、房东、经纪与管理员提供各自权限的视图，所有人用的都是同一套资料。",
+			tagline:
+				"One tenancy platform for tenants, landlords, agents and admins.",
+			tagline_zh: "租客、房东、经纪与管理员共用的租赁管理平台。",
 			link: "https://beta.regalglobal.com.my",
 			tech: ["NextJS", "TailwindCSS", "Typescript", "TRPC", "Drizzle"],
 		},
@@ -150,6 +159,9 @@ export const PROJECT_LIST: {
 			outcome:
 				"A single site for events, registration and community content, built to hold up under convention-day traffic.",
 			outcome_zh: "统一的活动、报名与社群内容网站，可承载展会当天的流量高峰。",
+			tagline:
+				"Events, registration and community for a TCG convention, built for show-day traffic.",
+			tagline_zh: "TCG 展会的活动、报名与社群网站，扛得住展会当天的流量。",
 			link: "https://www.tcgkl.com/",
 			tech: [
 				"React",
@@ -176,6 +188,9 @@ export const PROJECT_LIST: {
 				"End-to-end grading pipeline with QR-verified certificates and customer-facing status, holding a 3-4 week turnaround.",
 			outcome_zh:
 				"端到端评级流程，提供可扫码验证的证书与客户端进度查询，稳定维持 3-4 周出证。",
+			tagline:
+				"Card grading pipeline with QR-verified certificates and live order status.",
+			tagline_zh: "卡牌评级流程，附可扫码验证的证书与订单进度查询。",
 			link: "https://maggrading.com/",
 			tech: ["React", "NextJS", "TailwindCSS", "Typescript", "TRPC", "Drizzle"],
 		},
@@ -195,6 +210,9 @@ export const PROJECT_LIST: {
 				"Custody platform covering intake photography, restoration quotes, ringgit pricing and tracked status from intake to return.",
 			outcome_zh:
 				"托管平台涵盖入库拍照、修复报价、马币定价，并全程追踪从收件到寄回的状态。",
+			tagline:
+				"Card custody and overseas submission with ringgit quotes and tracked status.",
+			tagline_zh: "卡牌代送与托管，马币报价，全程追踪进度。",
 			link: "https://aerograding.com/",
 			tech: ["React", "NextJS", "TailwindCSS", "Typescript", "TRPC", "Drizzle"],
 		},
@@ -213,6 +231,9 @@ export const PROJECT_LIST: {
 				"Live inventory system on React and Golang — one stock record, updated as goods move.",
 			outcome_zh:
 				"基于 React 与 Golang 的实时库存系统，共用一份库存记录，随进出即时更新。",
+			tagline:
+				"Live inventory for an F&B business — one stock record instead of stale spreadsheets.",
+			tagline_zh: "餐饮企业的实时库存系统，一份库存记录取代过时的 Excel。",
 			tech: ["NextJS", "TailwindCSS", "Typescript", "TRPC"],
 		},
 		{

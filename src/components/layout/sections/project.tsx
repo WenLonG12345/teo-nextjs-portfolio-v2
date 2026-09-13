@@ -3,10 +3,11 @@
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { LuArrowRight, LuExternalLink, LuLock } from "react-icons/lu";
+import { Button } from "@/components/ui/button";
 import { PROJECT_LIST } from "@/constants";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/utils/cn";
-import { MotionDiv, MotionSection } from "@/utils/motion-div";
+import { MotionDiv } from "@/utils/motion-div";
 
 type Project = (typeof PROJECT_LIST)[string][number];
 
@@ -14,15 +15,21 @@ export const ProjectCard = ({
 	project,
 	locale,
 	index,
+	compact = false,
 }: {
 	project: Project;
 	locale: string;
 	index: number;
+	// compact: image + name + one line + stack — the home grid; /work gets the full story
+	compact?: boolean;
 }) => {
 	const t = useTranslations();
 	const isEn = locale === "en";
 	const problem = isEn ? project.problem : project.problem_zh;
 	const outcome = isEn ? project.outcome : project.outcome_zh;
+	const tagline = isEn
+		? (project.tagline ?? project.summary)
+		: (project.tagline_zh ?? project.summary_zh);
 
 	const content = (
 		<MotionDiv
@@ -84,10 +91,10 @@ export const ProjectCard = ({
 					</div>
 
 					<p className="mb-4 text-sm leading-relaxed text-muted-foreground">
-						{isEn ? project.summary : project.summary_zh}
+						{compact ? tagline : isEn ? project.summary : project.summary_zh}
 					</p>
 
-					{(problem || outcome) && (
+					{!compact && (problem || outcome) && (
 						<div className="flex-1 mb-4 space-y-3">
 							{problem && (
 								<div>
@@ -142,51 +149,35 @@ const ProjectSection = () => {
 		.filter((project) => project.problem && project.outcome)
 		.slice(0, 6);
 
+	/* Hallmark · component: projects section · genre: editorial · theme: project palette
+	 * archetype: F1 card grid, 3 × 2 — same ProjectCard as /work, compact body
+	 */
 	return (
-		<section id="projects" className="container py-16">
-			<MotionSection
-				animationProps={{
-					initial: { opacity: 0, y: 30 },
-					whileInView: { opacity: 1, y: 0 },
-					transition: { duration: 0.5 },
-					className: "mb-10 text-center",
-				}}
-			>
-				<div className="inline-flex items-center gap-2 mb-3">
-					<div className="w-8 h-px bg-primary/40" />
-					<span className="text-sm font-medium tracking-widest uppercase text-primary">
-						{t("project.badge")}
-					</span>
-					<div className="w-8 h-px bg-primary/40" />
-				</div>
-				<h2 className="text-3xl font-bold md:text-4xl">
+		<section id="projects" className="container py-16 md:py-24">
+			<div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+				<h2 className="text-3xl font-bold tracking-tight md:text-4xl wrap-anywhere">
 					{t("project.description_1")}
 				</h2>
-			</MotionSection>
+				<Button variant="outline" asChild>
+					<Link href="/work">
+						{t("project.view_all")}
+						<LuArrowRight size={14} />
+					</Link>
+				</Button>
+			</div>
 
-			<div className="grid grid-cols-1 gap-5 mx-auto sm:grid-cols-2 lg:grid-cols-3 lg:max-w-(--breakpoint-xl)">
-				{featured.map((project, i) => (
-					<ProjectCard
-						key={project.name}
-						project={project}
-						locale={locale}
-						index={i}
-					/>
+			<ul className="grid grid-cols-1 gap-6 mt-10 sm:grid-cols-2 lg:grid-cols-3">
+				{featured.map((project, index) => (
+					<li key={project.name} className="min-w-0">
+						<ProjectCard
+							project={project}
+							locale={locale}
+							index={index}
+							compact
+						/>
+					</li>
 				))}
-			</div>
-
-			<div className="flex justify-center mt-10">
-				<Link
-					href="/work"
-					className="inline-flex items-center gap-2 text-sm font-semibold transition-colors rounded-md cursor-pointer text-primary hover:text-primary/80 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background group/all"
-				>
-					{t("project.view_all")}
-					<LuArrowRight
-						size={16}
-						className="transition-transform group-hover/all:translate-x-1 motion-reduce:transition-none"
-					/>
-				</Link>
-			</div>
+			</ul>
 		</section>
 	);
 };

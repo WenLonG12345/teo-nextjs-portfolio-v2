@@ -2,6 +2,7 @@
 	"navbar": {
 		"home": "Home",
 		"blog": "Blog",
+		"insights": "Insights",
 		"about": "About",
 		"contact": "Contact",
 		"switch_to_v1": "Switch to V1",
@@ -9,11 +10,13 @@
 		"work": "Work"
 	},
 	"home": {
-		"hero_2": "I build the system your business runs on.",
+		"hero_2": "Build the system your business runs on.",
 		"hero_3": "Custom platforms, CRM and integrations for businesses in Malaysia — so your team, your customers and your partners all work in one place.",
 		"resume": "Resume",
 		"contact_me": "Contact Me",
 		"available": "Taking on 2 projects this quarter",
+		"cta_title": "Not sure what you need yet?",
+		"cta_body": "Start with the audit. Ninety minutes on how your business runs today, a written report, and the fee comes off the build if we go ahead.",
 		"book_call": "Book a Free Call",
 		"whatsapp": "WhatsApp Me",
 		"founder_role": "Founder · twlworks",
@@ -57,40 +60,47 @@
 		"badge": "About Me",
 		"title_career": "Career",
 		"title_education": "Education",
+		"seo_title": "Teo Wen Long — Senior Frontend Engineer, Kuala Lumpur",
 		"summary_career": "Seven years of shipped work — national news platforms, AI voice products inside a bank, and the operational systems small businesses run on every day.",
 		"summary_education": "Computer science at UTM, specialising in network and security. Where the fundamentals came from.",
-		"greeting": "Hello — I'm Teo.",
-		"letter": [
-			"I have spent the last seven years building software for other people's businesses. News portals with millions of readers, an AI voice platform used inside a bank, design systems, mobile apps. Somewhere in there I noticed the work I liked most was the smaller kind: sitting with an owner, understanding how they actually run things, then building the system that holds it.",
-			"That is what twlworks is. One person, working directly with the people who will use what I build. No account manager in between, no team to brief, no handover to a stranger. You talk to the person writing the code.",
-			"Most of my clients are not tech companies. They grade trading cards, run restaurants, manage property. The operations are real; the tools are spreadsheets, WhatsApp threads and three systems that do not talk to each other. I build the thing that replaces all of it.",
-			"I still hold a full-time engineering role, so I take on a small number of projects at a time and I am straight about timelines. It also means I am not desperate for the work — if a project is not right for you, you will hear that from me first."
-		],
-		"principles_title": "How I work",
-		"principles": [
-			{
-				"title": "Understand before building",
-				"body": "Every project starts with a paid audit. If the honest answer is that you do not need custom software, that is a valid outcome and I will say so."
-			},
-			{
-				"title": "One person, start to finish",
-				"body": "The person you brief is the person who designs it, writes it, ships it and fixes it when something breaks at 11pm."
-			},
-			{
-				"title": "Built to be handed over",
-				"body": "Your system, your accounts, your code, documented. No lock-in, no hostage situation if you ever want to move on."
-			},
-			{
-				"title": "Fewer projects, properly finished",
-				"body": "Two or three at a time. Nothing gets parked halfway while I chase the next thing."
-			}
-		],
-		"ps": "p.s. — if you want the formal version:",
 		"resume": "Download my résumé",
-		"book_cta": "Book a free call"
+		"book_cta": "Book a free call",
+		"location": "Kuala Lumpur, Malaysia",
+		"summary": "Frontend engineer, seven years in. I have shipped national news platforms, an AI voice product inside a bank, and the operational systems small businesses run on every day. Currently building AI product interfaces at YTL AI Labs, and running twlworks on the side.",
+		"now": "Now",
+		"record": "Record",
+		"years": "years shipping",
+		"projects": "projects on this site",
+		"stack": "Stack",
+		"also": "Also building",
+		"also_body": "twlworks — custom software for Malaysian SMEs, done alongside my full-time role. A small number of projects at a time.",
+		"also_cta": "See services",
+		"elsewhere": "Elsewhere"
 	},
 	"contact": {
 		"badge": "Contact",
+		"lede": "WhatsApp is fastest. A call or an email works too — pick whichever suits you. Either way you reach me, not a sales team.",
+		"email_subject": "Project inquiry — twlworks",
+		"channels": {
+			"whatsapp": {
+				"title": "WhatsApp",
+				"short": "Fastest",
+				"description": "Send a message about your business and I reply personally. Photos of the spreadsheet you are fighting with are welcome.",
+				"cta": "Message on WhatsApp"
+			},
+			"call": {
+				"title": "Book a free call",
+				"short": "Thirty minutes, free, on cal.com",
+				"description": "Thirty minutes on cal.com. Pick a slot and tell me what is not working today.",
+				"cta": "Pick a time"
+			},
+			"email": {
+				"title": "Email",
+				"short": "Write it all down first",
+				"description": "If you would rather write it all down first — what you use today, what is not working, rough timeline.",
+				"cta": "Write an email"
+			}
+		},
 		"title": "Get in Touch with Me",
 		"description_1": "Have a project in mind or need more information? I am here to help!",
 		"description_2": "Reach out to me for any inquiries, and I'll get back to you promptly.",
@@ -130,6 +140,7 @@
 		"title": "Top and latest technologies that I always use."
 	},
 	"footer": {
+		"tagline": "Custom software for businesses in Malaysia — platforms, CRM and integrations, built and supported by one engineer in Kuala Lumpur.",
 		"quick_links": "Quick Links",
 		"connect": "Connect With Me"
 	},
@@ -152,6 +163,11 @@
 		"cta": "Book a Free Call",
 		"note": "Starting points, not quotes. What a project actually costs comes out of the audit, once we both know what is being built.",
 		"popular": "Most popular",
+		"scoped": "Scoped from the audit",
+		"or": "or",
+		"from": "from",
+		"view_pricing": "See what this costs",
+		"eyebrow": "How it works",
 		"items": {
 			"audit": {
 				"title": "System Audit",
@@ -193,8 +209,6 @@
 					"Direct WhatsApp line"
 				]
 			}
-		},
-		"from": "from",
-		"view_pricing": "See what this costs"
+		}
 	}
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import ServicesSection from "@/components/layout/sections/services";
 import type { MetadataProps } from "@/constants/types";
+import { localeAlternates } from "@/utils/seo";
 
 export async function generateMetadata({
 	params,
@@ -12,6 +13,7 @@ export async function generateMetadata({
 	return {
 		title: t("services.badge"),
 		description: t("services.description"),
+		alternates: localeAlternates(locale, "/services"),
 		icons: {
 			icon: "/favicon.ico",
 		},
