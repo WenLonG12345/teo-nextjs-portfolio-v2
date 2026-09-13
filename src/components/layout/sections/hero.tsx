@@ -2,19 +2,78 @@
 
 /* Hallmark · macrostructure: Split Studio · tone: plain-spoken / austere · anchor hue: project primary (amber)
  * pre-emit critique: P5 H4 E4 S5 R5 V4
- * hero: H2 split diptych 7/5 · heads: S2 hanging, no eyebrows · CTA: solid primary + C3 text link
- * enrichment: none (real client logos only) · reveal: hero halves cross-fade, nothing else
+ * hero: H2 split diptych 7/5 · right pane: deck of 3 real screenshots, front cycles to back every 4s
+ * (transform/opacity only, pauses on hover, off under reduced-motion) · proof strip: T4 stats + colour logo row
  * theme: project palette preserved (shadcn HSL tokens, Hanken Grotesk)
  */
 
-import { ArrowRight, MessageCircle, Phone } from "lucide-react";
+import { MessageCircle, Phone } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CLIENT_LIST, PROJECT_LIST, SITE_CONFIG } from "@/constants";
-import { Link } from "@/i18n/routing";
 
+// back to front; the front one is the platform the headline is about
+const STACK = ["TCGKL", "Hercules Factory Management System", "Regal Global"]
+	.map((name) => PROJECT_LIST["project.freelance"].find((p) => p.name === name))
+	.filter((p) => p !== undefined);
+// slot 0 = back, slot 2 = front; x/y are % of the card's own size
+const SLOTS = [
+	{ x: "0%", y: "0%", rotate: -4, scale: 0.92, opacity: 0.7, zIndex: 0 },
+	{ x: "16%", y: "40%", rotate: -2, scale: 0.96, opacity: 0.9, zIndex: 1 },
+	{ x: "32%", y: "80%", rotate: 0, scale: 1, opacity: 1, zIndex: 2 },
+];
+const CYCLE_MS = 4000;
+
+const ScreenshotStack = () => {
+	const reduceMotion = useReducedMotion();
+	const [paused, setPaused] = useState(false);
+	// order[slot] = index into STACK
+	const [order, setOrder] = useState([0, 1, 2]);
+
+	useEffect(() => {
+		if (reduceMotion || paused) return;
+		const id = setInterval(
+			() => setOrder(([back, mid, front]) => [front, back, mid]),
+			CYCLE_MS,
+		);
+		return () => clearInterval(id);
+	}, [reduceMotion, paused]);
+
+	return (
+		<div
+			className="relative aspect-4/3"
+			onMouseEnter={() => setPaused(true)}
+			onMouseLeave={() => setPaused(false)}
+		>
+			{STACK.map((project, i) => {
+				const slot = order.indexOf(i);
+				return (
+					<motion.figure
+						key={project.name}
+						initial={false}
+						animate={SLOTS[slot]}
+						transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+						onClick={() => setOrder((o) => [...o.filter((j) => j !== i), i])}
+						className="absolute top-0 left-0 w-[74%] overflow-hidden rounded-lg border border-border bg-muted aspect-video shadow-2xl shadow-black/15 cursor-pointer origin-bottom-left"
+					>
+						<Image
+							src={project.imageUrl}
+							alt={project.name}
+							fill
+							sizes="(max-width: 1024px) 74vw, 32vw"
+							className="object-cover object-top"
+							priority={i === STACK.length - 1}
+						/>
+					</motion.figure>
+				);
+			})}
+		</div>
+	);
+};
 const HeroSection = () => {
 	const t = useTranslations();
 
@@ -76,100 +135,69 @@ const HeroSection = () => {
 					</Badge>
 				</div>
 
-				{/* ── Right: proof ────────────────────────────────── */}
+				{/* ── Right: three real screenshots, back to front ───────── */}
 				<div className="min-w-0">
-					<div className="flex items-center gap-4">
-						<div className="relative overflow-hidden rounded-full size-12 shrink-0 bg-muted">
-							<Image
-								src="/images/profile_picture.png"
-								fill
-								sizes="48px"
-								alt="Teo Wen Long, founder of twlworks"
-								className="object-cover object-top"
-								priority
-							/>
-						</div>
-						<div className="min-w-0">
-							<p className="text-sm font-semibold">Teo Wen Long</p>
-							<p className="text-xs text-muted-foreground">
-								{t("home.founder_role")}
-							</p>
-						</div>
-					</div>
-					<p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-						{t("home.direct")}
+					<ScreenshotStack />
+					<p className="mt-4 text-xs text-muted-foreground">
+						{t("home.trusted_by")} · {STACK.map((p) => p.name).join(" · ")}
 					</p>
-
-					<p className="mt-8 text-xs font-semibold tracking-wide uppercase text-muted-foreground">
-						{t("home.trusted_by")}
-					</p>
-					<ul className="grid grid-cols-4 gap-3 mt-3">
-						{CLIENT_LIST.map((client) => {
-							// logos are dark ink on transparent, so the plate stays light in both themes
-							const plate = (
-								<span className="relative block w-full overflow-hidden rounded-md aspect-4/3 bg-white">
-									<Image
-										src={client.logo}
-										alt={client.name}
-										fill
-										sizes="120px"
-										className="object-contain p-2"
-									/>
-								</span>
-							);
-							return (
-								<li key={client.name} className="min-w-0">
-									{client.url ? (
-										<a
-											href={client.url}
-											target="_blank"
-											rel="noopener noreferrer"
-											aria-label={client.name}
-											title={client.name}
-											className="block rounded-md focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-										>
-											{plate}
-										</a>
-									) : (
-										<span title={client.name}>{plate}</span>
-									)}
-								</li>
-							);
-						})}
-					</ul>
-
-					<dl className="grid grid-cols-2 gap-6 pt-5 mt-6 border-t border-border">
-						<div>
-							{/* count only the written-up SME work — same filter as the home case list */}
-							<dd className="text-2xl font-bold tabular-nums">
-								{
-									PROJECT_LIST["project.freelance"].filter(
-										(p) => p.problem && p.outcome,
-									).length
-								}
-							</dd>
-							<dt className="text-xs text-muted-foreground">
-								{t("home.fact_projects")}
-							</dt>
-						</div>
-						<div>
-							<dd className="text-2xl font-bold tabular-nums">7+</dd>
-							<dt className="text-xs text-muted-foreground">
-								{t("home.fact_years")}
-							</dt>
-						</div>
-					</dl>
-					<p className="mt-3 text-xs text-muted-foreground">
-						{t("home.sectors")}
-					</p>
-
-					<Button variant="outline" className="mt-6" asChild>
-						<Link href="/work">
-							{t("project.view_all")}
-							<ArrowRight size={14} />
-						</Link>
-					</Button>
 				</div>
+			</div>
+
+			{/* ── Proof strip: numbers, sectors, monochrome logos ──────── */}
+			<div className="grid grid-cols-2 gap-6 py-6 border-t border-b border-border lg:grid-cols-[auto_auto_auto_1fr] lg:items-center lg:gap-12">
+				<div>
+					{/* count only the written-up SME work — same filter as the home case grid */}
+					<p className="text-2xl font-bold tabular-nums">
+						{
+							PROJECT_LIST["project.freelance"].filter(
+								(p) => p.problem && p.outcome,
+							).length
+						}
+					</p>
+					<p className="text-xs text-muted-foreground">
+						{t("home.fact_projects")}
+					</p>
+				</div>
+				<div>
+					<p className="text-2xl font-bold tabular-nums">7+</p>
+					<p className="text-xs text-muted-foreground">
+						{t("home.fact_years")}
+					</p>
+				</div>
+				<p className="col-span-2 text-sm text-muted-foreground lg:col-span-1">
+					{t("home.sectors")}
+				</p>
+				<ul className="flex flex-wrap items-center col-span-2 gap-x-8 gap-y-4 lg:col-span-1 lg:justify-end">
+					{CLIENT_LIST.map((client) => {
+						const mark = (
+							<Image
+								src={client.logo}
+								alt={client.name}
+								width={112}
+								height={40}
+								className="object-contain w-auto h-7"
+							/>
+						);
+						return (
+							<li key={client.name}>
+								{client.url ? (
+									<a
+										href={client.url}
+										target="_blank"
+										rel="noopener noreferrer"
+										title={client.name}
+										className="block rounded-sm focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+									>
+										{mark}
+									</a>
+								) : (
+									<span title={client.name}>{mark}</span>
+								)}
+							</li>
+						);
+					})}
+				</ul>
 			</div>
 		</section>
 	);
